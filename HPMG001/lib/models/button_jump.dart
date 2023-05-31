@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import '../models/entity.dart';
@@ -41,6 +42,7 @@ class ButtonJump extends Entity {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    paint = Paint()..color = const Color.fromARGB(255, 0, 255, 0);
     // renderBody = false;
     // final sprite = backdropSprite;
     // add(SpriteComponent(

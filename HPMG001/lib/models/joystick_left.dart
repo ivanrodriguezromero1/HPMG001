@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import '../models/entity.dart';
@@ -14,7 +16,7 @@ class JoystickLeft extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = Screen.worldSize.x/8;
+    _width = Screen.worldSize.x/4;
     _height = Screen.worldSize.y/4;    
     _x = 0;
     _y = Screen.worldSize.y - _height;
@@ -41,6 +43,7 @@ class JoystickLeft extends Entity {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    paint = Paint()..color = const Color.fromARGB(255, 0, 0, 255);
     // renderBody = false;
     // final sprite = backdropSprite;
     // add(SpriteComponent(

@@ -3,22 +3,21 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import '../models/entity.dart';
 
-class Counter extends Entity {
-  late TextComponent count;
+class DisplayText extends Entity {
   late double _x;
   late double _y;
+  DisplayText({required x, required y}): _x = x, _y = y ;
+  late TextComponent textComponent;
   late double _xScale;
   late double _yScale;
   late double _fontSize;
   
   @override
   void initializing(){
-    _x = 0.2;
-    _y = 0.2;
     _xScale = 0.4;
     _yScale = 0.4;
-    _fontSize = 1;
-    count = TextComponent(
+    _fontSize = 0.5;
+    textComponent = TextComponent(
       position: Vector2.zero(),
       text: '0',
       textRenderer: TextPaint(
@@ -43,6 +42,6 @@ class Counter extends Entity {
   Future<void> onLoad() async {
     await super.onLoad();
     // renderBody = false;
-    add(count);
+    add(textComponent);
   }
 }

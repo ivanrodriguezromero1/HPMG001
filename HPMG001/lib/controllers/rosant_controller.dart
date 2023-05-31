@@ -1,46 +1,28 @@
 import 'package:flame/components.dart';
-import 'package:juego_ingeniero/models/rosant.dart';
-import '../utils/globals.dart';
+import 'package:juego_ingeniero/models/button_shoot.dart';
+import '../models/joystick_left.dart';
+import '../models/button_jump.dart';
+import '../models/rosant.dart';
+import '../services/rosant_services.dart';
 
 class RosantController {
-  static bool _canJump = true;
-  static void setCanJump(Rosant rosant){
-    double positionY = rosant.body.position.y;
-    double positionYOnFloor = horizon - rosant.height/2;
-    _canJump = positionY >= positionYOnFloor - 0.5;
-  }
+  RosantServices rosantServices = RosantServices();
   static void jump(Rosant rosant){
-    if(_canJump){
-      // rosant.body.linearVelocity = Vector2(rosant.body.linearVelocity.x, -7);
-      final force = Vector2(0, -20);
-      rosant.body.applyLinearImpulse(force);
-    }
+    RosantServices.jump(rosant);
   }
   static void walkLeft(Rosant rosant){
-    // rosant.body.linearDamping = 0;
-    // final force = Vector2(-0.45, 0);
-    // rosant.body.applyLinearImpulse(force);
-    rosant.body.linearVelocity = Vector2(-2, rosant.body.linearVelocity.y);
+    RosantServices.walkLeft(rosant);
   }
   static void walkRight(Rosant rosant){
-    // rosant.body.linearDamping = 0;
-    // final force = Vector2(0.45, 0);
-    // rosant.body.applyLinearImpulse(force);
-    rosant.body.linearVelocity = Vector2(2, rosant.body.linearVelocity.y);
+    RosantServices.walkRight(rosant);
   }
-  static void standUp(Rosant rosant){
-    if(_canJump){
-      bool condition = rosant.body.angle.abs().round()!=0 && rosant.body.angle.abs()<=radians(360);
-      if(condition){
-        rosant.body.angularVelocity = radians(360);
-      } else if(!condition){
-        rosant.body.angularVelocity = 0;
-        rosant.body.setTransform(rosant.body.position, 0);
-      }
-    }
+  static bool checkWalkCondition(Rosant rosant, Vector2 touch, JoystickLeft joystickLeft) {
+    return RosantServices.checkWalkCondition(rosant, touch, joystickLeft);
   }
-  static bool hasLost(Rosant rosant){
-    return rosant.body.position.x <= -1*(rosant.width/2);
+  static bool checkJumpCondition(Rosant rosant, Vector2 touch, ButtonJump buttonJump) {
+    return RosantServices.checkJumpCondition(rosant, touch, buttonJump);
   }
-
+  static bool checkShootCondition(Vector2 touch, ButtonShoot buttonShoot) {
+    return RosantServices.checkShootCondition(touch, buttonShoot);
+  }
 }

@@ -1,16 +1,18 @@
+import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import '../models/entity.dart';
 import '../models/screen.dart';
 import '../utils/globals.dart';
 
-class JoystickRight extends Entity {
-  JoystickRight();
+class ButtonShoot extends Entity {
+  ButtonShoot();
   late double _x;
   late double _y;
   late double _width;
   late double _height;
-
+  double get width => _width;
+  double get height => _height;
   @override
   void initializing(){
     _width = Screen.worldSize.x/8;
@@ -27,7 +29,7 @@ class JoystickRight extends Entity {
       type: BodyType.kinematic,
     );
     final shape = PolygonShape()..set(
-      [Vector2(0,0), 
+      [Vector2(0,0),
       Vector2(_width , 0), 
       Vector2(_width , _height), 
       Vector2(0, _height)]);
@@ -40,6 +42,7 @@ class JoystickRight extends Entity {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    paint = Paint()..color = const Color.fromARGB(255, 255, 255, 0);
     // renderBody = false;
     // final sprite = backdropSprite;
     // add(SpriteComponent(

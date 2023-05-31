@@ -21,6 +21,7 @@ class Floor extends Entity {
   Body createBody() {
     initializing();
     final bodyDef = BodyDef(
+      userData: this,
       position: Vector2(_x, _y),
       type: BodyType.kinematic,
     );

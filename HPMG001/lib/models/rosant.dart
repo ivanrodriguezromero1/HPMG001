@@ -2,14 +2,17 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import '../models/screen.dart';
 import '../models/entity.dart';
-
 import '../utils/globals.dart';
+import '../models/direction.dart';
 
 class Rosant extends Entity {
   late double _width;
   late double _height;
   late double _x;
   late double _y;
+  late bool goingToWalkRight;
+  late bool goingToWalkLeft;
+  late Direction direction;
   double get width => _width;
   double get height => _height;
   @override
@@ -17,13 +20,17 @@ class Rosant extends Entity {
     _width = Screen.worldSize.x/20;
     _height = Screen.worldSize.y/5;
     _x = 1;
-    _y = Screen.worldSize.y/5;
+    _y = horizon;
+    goingToWalkRight = false;
+    goingToWalkLeft = false;
+    direction = Direction.right;
   }
   @override
   Body createBody(){
     initializing();
     final bodyDef = BodyDef(
-      position: Vector2(_x,0) + Vector2(_width, _y),
+      userData: this,
+      position: Vector2(_x, _y),
       type: BodyType.dynamic,
     );
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
@@ -31,6 +38,9 @@ class Rosant extends Entity {
       ..density = 10
       ..friction = 0.5
       ..restitution = 0;
+    final filter = Filter();
+    filter.categoryBits = 0x0002;
+    fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
   @override
