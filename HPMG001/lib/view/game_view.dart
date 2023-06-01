@@ -5,6 +5,7 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
+import '../models/alien.dart';
 import '../models/direction.dart';
 import '../models/rosant_bullet.dart';
 import '../models/button_jump.dart';
@@ -55,6 +56,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   late DisplayText displayVelocityX;
   late DisplayText displayVelocityY;
   late List<int> walkPointersId;
+  late Alien alien;
 
   void initialize(){
     // Max X 8.4
@@ -68,6 +70,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     displayVelocityX = DisplayText(x: 0.2,y: 0.3);
     displayVelocityY = DisplayText(x: 0.2,y: 0.6);
     walkPointersId = [];
+    alien = Alien();
   }
   void addToWorld(){
     addAll(backgrounds);
@@ -79,6 +82,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     add(buttonShoot);
     add(displayVelocityX);
     add(displayVelocityY);
+    add(alien);
   }
   void destroyBodies(){
     backgrounds[0].destroy();
@@ -92,6 +96,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     buttonShoot.destroy();
     displayVelocityX.destroy();
     displayVelocityY.destroy();
+    alien.destroy();
   }
   void addComponents(){
     initialize();
@@ -142,6 +147,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     if(rosant.goingToWalkLeft){
       RosantController.walkLeft(rosant);
     }
+    // alien.body.linearVelocity = Vector2(-1, 0);
     displayVelocityX.textComponent.text = "La velocidad en x es ${rosant.body.linearVelocity.x}";
     displayVelocityY.textComponent.text = "La velocidad en y es ${rosant.body.linearVelocity.y}";
   }

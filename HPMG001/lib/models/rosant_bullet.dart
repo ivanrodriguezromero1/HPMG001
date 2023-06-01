@@ -21,6 +21,7 @@ class RosantBullet extends Projectile {
     _width = 0.06;
     _height = 0.06;
     _direction = _rosant.direction;
+    _rosant.body.setTransform(_rosant.body.position, 0);
   }
   @override
   Body createBody(){
@@ -32,7 +33,7 @@ class RosantBullet extends Projectile {
     );
     final shape = PolygonShape()..setAsBoxXY(_width, _height);
     final fixtureDef = FixtureDef(shape)
-      ..density = 50
+      ..density = 100
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();
@@ -44,17 +45,28 @@ class RosantBullet extends Projectile {
   Future<void> onLoad() async {
     await super.onLoad();
     renderBody = true;
-    priority = 10;
+    priority = 5;
     paint = Paint()..color = const Color.fromARGB(255, 255, 0, 0);
-    body.linearDamping = 0;
+    // body.linearDamping = 1;
+    body.gravityOverride = Vector2(0, 0);
     Vector2 force;
+    double fx= 12;
+    double fy = 0;
+    // double vx= 1;
+    // double vy = 0;
     switch(_direction){
       case Direction.right:
-        force = Vector2(25, -1);break;
+        force = Vector2(fx, fy);
+        // body.linearVelocity = Vector2(vx, vy);
+        break;
       case Direction.left:
-        force = Vector2(-25, -1);break;
+        force = Vector2(-fx, fy);
+        // body.linearVelocity = Vector2(-vx, vy);
+        break;
       default:
-        force = Vector2(25, -1);break;
+        force = Vector2(fx, fy);
+        // body.linearVelocity = Vector2(vx, vy);
+        break;
     }    
     body.applyLinearImpulse(force);
   }

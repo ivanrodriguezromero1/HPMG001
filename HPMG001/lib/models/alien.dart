@@ -5,7 +5,7 @@ import '../models/entity.dart';
 import '../utils/globals.dart';
 import '../models/direction.dart';
 
-class Rosant extends Entity {
+class Alien extends Entity {
   late double _width;
   late double _height;
   late double _x;
@@ -16,9 +16,9 @@ class Rosant extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = Screen.worldSize.x/20;
+    _width = Screen.worldSize.x/16;
     _height = Screen.worldSize.y/5;
-    _x = 1;
+    _x = Screen.worldSize.x - 2;
     _y = horizon - _height/2;
     goingToWalkRight = false;
     goingToWalkLeft = false;
@@ -34,11 +34,11 @@ class Rosant extends Entity {
     );
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
     final fixtureDef = FixtureDef(shape)
-      ..density = 10
-      ..friction = 0.5
+      ..density = 100
+      ..friction = 0.8
       ..restitution = 0;
     final filter = Filter();
-    filter.categoryBits = 0x0002;
+    filter.categoryBits = 0x0003;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -47,7 +47,7 @@ class Rosant extends Entity {
     await super.onLoad();
     // renderBody = false;
     priority = 10;
-    body.linearDamping = 3;
+    body.linearDamping = 20;
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,
