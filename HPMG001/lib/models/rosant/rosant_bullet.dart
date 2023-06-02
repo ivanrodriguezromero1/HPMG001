@@ -38,6 +38,7 @@ class RosantBullet extends Projectile {
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();
+    filter.categoryBits = 0x0006;
     filter.maskBits = 0xFFFF & ~0x0002;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);

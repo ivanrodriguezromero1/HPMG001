@@ -40,7 +40,8 @@ class AlienBullet extends Projectile {
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();
-    filter.maskBits = 0xFFFF & ~0x0004;
+    filter.categoryBits = 0x0005;
+    filter.maskBits = 0xFFFF & ~0x0004 & ~0x0005;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }

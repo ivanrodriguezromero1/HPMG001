@@ -19,7 +19,7 @@ class Rosant extends Entity {
   @override
   void initializing(){
     _width = Screen.worldSize.x/40;
-    _height = Screen.worldSize.y/10;
+    _height = Screen.worldSize.y/9;
     _x = 1;
     _y = horizon - _height/2;
     goingToWalkRight = false;
@@ -39,7 +39,7 @@ class Rosant extends Entity {
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
     final fixtureDef = FixtureDef(shape)
       ..density = 10
-      ..friction = 0.5
+      ..friction = 0.4
       ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = 0x0002;
