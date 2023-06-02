@@ -69,7 +69,9 @@ class RosantBullet extends Projectile {
   void beginContact(Object other, Contact contact) {
     super.beginContact(other, contact);
     if(other is Alien){
-      other.life--;
+      if(other.life >= 1){
+        other.life--;
+      }
     }
   }
 }

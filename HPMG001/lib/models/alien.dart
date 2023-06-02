@@ -5,6 +5,7 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:juego_ingeniero/models/alien_configuration.dart';
 import 'package:juego_ingeniero/models/alien_factory.dart';
+import 'package:juego_ingeniero/models/display_text.dart';
 import 'package:juego_ingeniero/models/rosant.dart';
 import '../controllers/alien_controller.dart';
 import '../models/screen.dart';
@@ -27,6 +28,7 @@ class Alien extends Entity with ContactCallbacks {
   late double elapsedTimeSinceFall;
   late double elapsedTimeSinceContact;
   late bool isContacted;
+  late DisplayText displayAlienLife;
   double get height => _height;
   
   @override
@@ -44,6 +46,7 @@ class Alien extends Entity with ContactCallbacks {
     isFallen = false;
     elapsedTimeSinceContact = 0;
     isContacted = false;
+    displayAlienLife = DisplayText(x: 0, y: 0);
   }
   @override
   Body createBody(){
@@ -70,6 +73,7 @@ class Alien extends Entity with ContactCallbacks {
     priority = 10;
     body.linearDamping = 20;
     paint = Paint()..color = const Color.fromARGB(255, 136, 0, 255);
+    add(displayAlienLife);
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,
@@ -84,7 +88,9 @@ class Alien extends Entity with ContactCallbacks {
     super.beginContact(other, contact);
     if(other is Rosant){
       isContacted = true;
-      other.life--;
+      if(other.life >= 1){
+        other.life--;
+      }
     }
   }
   @override
@@ -98,10 +104,12 @@ class Alien extends Entity with ContactCallbacks {
   void update(double dt){
     super.update(dt);
     if(life<=0){
-      destroy();
+      _rosant.numberOfDeadAliens++;
+      destroyBody();
     }
     AlienController.walk(this, _rosant);
-    AlienController.standUp(this, _rosant, dt);
+    AlienController.standUp(this, dt);
     AlienController.contact(this, _rosant, dt);
+    displayAlienLife.textComponent.text = '$life';
   }
 }

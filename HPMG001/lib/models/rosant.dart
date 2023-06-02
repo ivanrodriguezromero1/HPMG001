@@ -14,6 +14,7 @@ class Rosant extends Entity {
   late bool goingToWalkLeft;
   late Direction direction;
   late int life;
+  late int numberOfDeadAliens; 
   double get height => _height;
   @override
   void initializing(){
@@ -25,6 +26,7 @@ class Rosant extends Entity {
     goingToWalkLeft = false;
     direction = Direction.right;
     life = 20;
+    numberOfDeadAliens = 0;
   }
   @override
   Body createBody(){
@@ -63,7 +65,7 @@ class Rosant extends Entity {
   void update(double dt){
     super.update(dt);
     if(life<=0){
-      destroy();
+      destroyBody();
     }
   }
 }

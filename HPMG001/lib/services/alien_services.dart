@@ -6,7 +6,7 @@ import 'package:juego_ingeniero/models/rosant.dart';
 
 class AlienService {
   static void walk(Alien alien, Rosant rosant){
-    if(!alien.isFallen){
+    if(!alien.isFallen && rosant.life != 0){
       if(alien.body.position.x > rosant.body.position.x){
         alien.body.linearVelocity = Vector2(-1, 0);
       }else if(alien.body.position.x < rosant.body.position.x){
@@ -14,7 +14,7 @@ class AlienService {
       }
     }
   }
-  static void standUp(Alien alien, Rosant rosant, double dt){
+  static void standUp(Alien alien, double dt){
     int angleInDegrees = (alien.body.angle*180/pi).round().abs();
     alien.isFallen = angleInDegrees >= 89 && angleInDegrees <= 91;
     if(alien.isFallen){
@@ -30,7 +30,9 @@ class AlienService {
       alien.elapsedTimeSinceContact += dt;
     }
     if(alien.elapsedTimeSinceContact >= 1){
-      rosant.life--;
+      if(rosant.life >= 1) {
+        rosant.life--;
+      }
       alien.elapsedTimeSinceContact = 0;
     }
   }

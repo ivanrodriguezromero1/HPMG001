@@ -6,7 +6,7 @@ import '../models/entity.dart';
 class DisplayText extends Entity {
   late double _x;
   late double _y;
-  DisplayText({required x, required y}): _x = x, _y = y ;
+  DisplayText({required double x, required double y}): _x = x, _y = y ;
   late TextComponent textComponent;
   late double _xScale;
   late double _yScale;
@@ -43,5 +43,6 @@ class DisplayText extends Entity {
     await super.onLoad();
     // renderBody = false;
     add(textComponent);
+    priority = 15;
   }
 }

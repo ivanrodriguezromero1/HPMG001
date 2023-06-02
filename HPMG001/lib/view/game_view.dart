@@ -55,7 +55,8 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   late JoystickLeft joystickLeft;
   late ButtonJump buttonJump;
   late ButtonShoot buttonShoot;
-  late DisplayText displayText;
+  late DisplayText displayRosantLife;
+  late DisplayText displayAlienCount;
   // late DisplayText displayVelocityX;
   // late DisplayText displayVelocityY;
   late List<int> walkPointersId;
@@ -72,7 +73,8 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     joystickLeft = JoystickLeft();
     buttonJump = ButtonJump();
     buttonShoot = ButtonShoot();
-    displayText = DisplayText(x: 0.2,y: 0.3);
+    displayRosantLife = DisplayText(x: 0.2, y: 0.3);
+    displayAlienCount = DisplayText(x: Screen.worldSize.x/2, y: 0.3);
     // displayVelocityX = DisplayText(x: 0.2,y: 0.3);
     // displayVelocityY = DisplayText(x: 0.2,y: 0.6);
     walkPointersId = [];
@@ -87,35 +89,36 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     add(joystickLeft);
     add(buttonJump);
     add(buttonShoot);
-    add(displayText);
+    add(displayRosantLife);
+    add(displayAlienCount);
     // add(displayVelocityX);
     // add(displayVelocityY);
     // add(alien);
   }
-  void destroyBodies(){
-    backgrounds[0].destroy();
-    backgrounds[1].destroy();
-    floors[0].destroy();
-    floors[1].destroy();
-    wall.destroy();
-    rosant.destroy();
-    joystickLeft.destroy();
-    buttonJump.destroy();
-    buttonShoot.destroy();
-    displayText.destroy();
-    // displayVelocityX.destroy();
-    // displayVelocityY.destroy();
-    // alien.destroy();
-  }
+  // void destroyBodies(){
+  //   backgrounds[0].destroy();
+  //   backgrounds[1].destroy();
+  //   floors[0].destroy();
+  //   floors[1].destroy();
+  //   wall.destroy();
+  //   rosant.destroy();
+  //   joystickLeft.destroy();
+  //   buttonJump.destroy();
+  //   buttonShoot.destroy();
+  //   displayRosantLife.destroy();
+  //   // displayVelocityX.destroy();
+  //   // displayVelocityY.destroy();
+  //   // alien.destroy();
+  // }
   void addMainComponents(){
     initialize();
     addToWorld();
   }
-  void resetWorld(){
-    // player.play(AssetSource(loseSoundFilename));
-    destroyBodies();
-    addMainComponents();
-  }
+  // void resetWorld(){
+  //   // player.play(AssetSource(loseSoundFilename));
+  //   // destroyBodies();
+  //   addMainComponents();
+  // }
   void addAliens() {
      late Timer alienTimer;
      int numberOfAliens = 0;
@@ -170,7 +173,8 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
       RosantController.walkLeft(rosant);
     }
 
-    displayText.textComponent.text = "Vida de Rosant ${rosant.life}";
+    displayRosantLife.textComponent.text = 'Rosant\'s life points: ${rosant.life}';
+    displayAlienCount.textComponent.text = 'Number of Aliens: ${maximumAlienCount-rosant.numberOfDeadAliens}';
     // print((alien.body.angle*180/pi).round());
     // alien.body.linearVelocity = Vector2(-1, 0);
     
