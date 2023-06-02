@@ -123,7 +123,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   //   addMainComponents();
   // }
   void addAliens() {
-    int interval = Random().nextInt(4) + 1;
+    int interval = Random().nextInt(3) + 1;
     Future.delayed(Duration(seconds: interval), (){
       if(alienCount < maximumAlienCount){
           Alien alien = Alien(rosant: rosant);
@@ -137,7 +137,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     });
   }
   void addAlienBullet(Alien alien) {
-    int interval = Random().nextInt(2) + 1;    
+    int interval = Random().nextInt(1) + 1;    
     Future.delayed(Duration(seconds: interval), (){
     if(alien.life > 0){
         add(AlienBullet(alien: alien));

@@ -53,7 +53,7 @@ class AlienBullet extends Projectile {
     paint = Paint()..color = const Color.fromARGB(255, 123, 0, 255);
     body.gravityOverride = Vector2(0, 0);
     Vector2 force;
-    double fx= 0.25;
+    double fx= 0.3;
     double fy = 0;
     switch(_direction){
       case AlienDirection.right:
