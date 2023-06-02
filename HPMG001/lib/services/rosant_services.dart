@@ -9,18 +9,16 @@ import '../utils/globals.dart';
 class RosantServices {
   static void jump(Rosant rosant){
       rosant.body.setTransform(rosant.body.position, 0);
-      final force = Vector2(0, -20);
+      final force = Vector2(0, -22);
       rosant.body.applyLinearImpulse(force);
   }
   static void walkLeft(Rosant rosant){
     rosant.body.setTransform(rosant.body.position, 0);
-    // rosant.body.linearVelocity = Vector2(-1, rosant.body.linearVelocity.y);
     final force = Vector2(-1, 0);
     rosant.body.applyLinearImpulse(force);
   }
   static void walkRight(Rosant rosant){
     rosant.body.setTransform(rosant.body.position, 0);
-    // rosant.body.linearVelocity = Vector2(1, rosant.body.linearVelocity.y);
     final force = Vector2(1, 0);
     rosant.body.applyLinearImpulse(force);
   }

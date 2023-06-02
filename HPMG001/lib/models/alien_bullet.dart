@@ -7,9 +7,9 @@ import '../models/projectile.dart';
 import '../utils/globals.dart';
 import '../models/screen.dart';
 
-class RosantBullet extends Projectile {
-  final Rosant _rosant;
-  RosantBullet({required rosant}) :_rosant = rosant;
+class AlienBullet extends Projectile {
+  final Alien _rosant;
+  AlienBullet({required rosant}) :_rosant = rosant;
   late double _x;
   late double _y;
   late double _width;

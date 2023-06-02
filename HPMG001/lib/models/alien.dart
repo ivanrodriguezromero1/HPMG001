@@ -1,11 +1,20 @@
+import 'dart:math';
+
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/material.dart';
+import 'package:juego_ingeniero/models/alien_configuration.dart';
+import 'package:juego_ingeniero/models/alien_factory.dart';
+import 'package:juego_ingeniero/models/rosant.dart';
+import '../controllers/alien_controller.dart';
 import '../models/screen.dart';
 import '../models/entity.dart';
 import '../utils/globals.dart';
 import '../models/direction.dart';
 
-class Alien extends Entity {
+class Alien extends Entity with ContactCallbacks {
+  final Rosant _rosant;
+  Alien({required rosant}): _rosant = rosant;
   late double _width;
   late double _height;
   late double _x;
@@ -13,16 +22,28 @@ class Alien extends Entity {
   late bool goingToWalkRight;
   late bool goingToWalkLeft;
   late Direction direction;
+  late int life;
+  late bool isFallen;
+  late double elapsedTimeSinceFall;
+  late double elapsedTimeSinceContact;
+  late bool isContacted;
   double get height => _height;
+  
   @override
   void initializing(){
-    _width = Screen.worldSize.x/16;
-    _height = Screen.worldSize.y/5;
-    _x = Screen.worldSize.x - 2;
-    _y = horizon - _height/2;
+    AlienConfiguration alienConfiguration = AlienFactory.createRandomAlien();
+    _width = alienConfiguration.width;
+    _height = alienConfiguration.height;
+    life = alienConfiguration.life;
+    _x = Random().nextInt(2) == 0 ? Screen.worldSize.x : 0;
+    _y = horizon - _height/2;    
     goingToWalkRight = false;
     goingToWalkLeft = false;
     direction = Direction.right;
+    elapsedTimeSinceFall = 0;
+    isFallen = false;
+    elapsedTimeSinceContact = 0;
+    isContacted = false;
   }
   @override
   Body createBody(){
@@ -35,7 +56,7 @@ class Alien extends Entity {
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
     final fixtureDef = FixtureDef(shape)
       ..density = 100
-      ..friction = 0.8
+      ..friction = 0.3
       ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = 0x0003;
@@ -48,6 +69,7 @@ class Alien extends Entity {
     // renderBody = false;
     priority = 10;
     body.linearDamping = 20;
+    paint = Paint()..color = const Color.fromARGB(255, 136, 0, 255);
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,
@@ -56,5 +78,30 @@ class Alien extends Entity {
     //   anchor: Anchor.center,
     //   removeOnFinish: false,
     // ));
+  }
+  @override
+  void beginContact(Object other, Contact contact) {
+    super.beginContact(other, contact);
+    if(other is Rosant){
+      isContacted = true;
+      other.life--;
+    }
+  }
+  @override
+  void endContact(Object other, Contact contact) {
+    super.endContact(other, contact);
+    if(other is Rosant){
+      isContacted = false;
+    }
+  }
+  @override
+  void update(double dt){
+    super.update(dt);
+    if(life<=0){
+      destroy();
+    }
+    AlienController.walk(this, _rosant);
+    AlienController.standUp(this, _rosant, dt);
+    AlienController.contact(this, _rosant, dt);
   }
 }

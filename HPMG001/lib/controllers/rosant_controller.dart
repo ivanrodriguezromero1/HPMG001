@@ -1,12 +1,11 @@
 import 'package:flame/components.dart';
-import 'package:juego_ingeniero/models/button_shoot.dart';
+import '../models/button_shoot.dart';
 import '../models/joystick_left.dart';
 import '../models/button_jump.dart';
 import '../models/rosant.dart';
 import '../services/rosant_services.dart';
 
 class RosantController {
-  RosantServices rosantServices = RosantServices();
   static void jump(Rosant rosant){
     RosantServices.jump(rosant);
   }

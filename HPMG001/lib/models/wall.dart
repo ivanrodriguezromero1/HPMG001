@@ -21,16 +21,17 @@ class Wall extends Entity with ContactCallbacks {
       position: Vector2(_x, _y),
       type: BodyType.kinematic,
     );
-    final shape1 = EdgeShape()..set(Vector2(0.01,0), Vector2(0.01, _height));
+    final shape1 = EdgeShape()..set(Vector2(-Screen.worldSize.x/20,0), Vector2(-Screen.worldSize.x/20, _height));
     final fixtureDef1 = FixtureDef(shape1)
       ..density=10
       ..restitution=.01;
     final shape2 = EdgeShape()..set(
-      Vector2(Screen.worldSize.x - 0.01, 0), Vector2(Screen.worldSize.x - 0.01, _height));
+      Vector2(Screen.worldSize.x + Screen.worldSize.x/20, 0), Vector2(Screen.worldSize.x + Screen.worldSize.x/20, _height));
     final fixtureDef2 = FixtureDef(shape2)
       ..density=10
       ..restitution=.01;
     return world.createBody(bodyDef)..createFixture(fixtureDef1)..createFixture(fixtureDef2);
+    // return world.createBody(bodyDef)..createFixture(fixtureDef1);
   }
   @override
   Future<void> onLoad() async {

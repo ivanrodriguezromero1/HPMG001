@@ -1,10 +1,12 @@
 import 'dart:math';
+import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flame/components.dart';
+import 'package:flame/components.dart' hide Timer;
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flutter/material.dart';
+import 'package:juego_ingeniero/controllers/alien_controller.dart';
 import '../models/alien.dart';
 import '../models/direction.dart';
 import '../models/rosant_bullet.dart';
@@ -53,10 +55,13 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   late JoystickLeft joystickLeft;
   late ButtonJump buttonJump;
   late ButtonShoot buttonShoot;
-  late DisplayText displayVelocityX;
-  late DisplayText displayVelocityY;
+  late DisplayText displayText;
+  // late DisplayText displayVelocityX;
+  // late DisplayText displayVelocityY;
   late List<int> walkPointersId;
-  late Alien alien;
+  // late Timer alienTimer;
+  late int maximumAlienCount;
+  // late List<Alien> aliens;
 
   void initialize(){
     // Max X 8.4
@@ -67,10 +72,12 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     joystickLeft = JoystickLeft();
     buttonJump = ButtonJump();
     buttonShoot = ButtonShoot();
-    displayVelocityX = DisplayText(x: 0.2,y: 0.3);
-    displayVelocityY = DisplayText(x: 0.2,y: 0.6);
+    displayText = DisplayText(x: 0.2,y: 0.3);
+    // displayVelocityX = DisplayText(x: 0.2,y: 0.3);
+    // displayVelocityY = DisplayText(x: 0.2,y: 0.6);
     walkPointersId = [];
-    alien = Alien();
+    maximumAlienCount = 20;
+    // alien = Alien();
   }
   void addToWorld(){
     addAll(backgrounds);
@@ -80,9 +87,10 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     add(joystickLeft);
     add(buttonJump);
     add(buttonShoot);
-    add(displayVelocityX);
-    add(displayVelocityY);
-    add(alien);
+    add(displayText);
+    // add(displayVelocityX);
+    // add(displayVelocityY);
+    // add(alien);
   }
   void destroyBodies(){
     backgrounds[0].destroy();
@@ -94,24 +102,38 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     joystickLeft.destroy();
     buttonJump.destroy();
     buttonShoot.destroy();
-    displayVelocityX.destroy();
-    displayVelocityY.destroy();
-    alien.destroy();
+    displayText.destroy();
+    // displayVelocityX.destroy();
+    // displayVelocityY.destroy();
+    // alien.destroy();
   }
-  void addComponents(){
+  void addMainComponents(){
     initialize();
     addToWorld();
   }
   void resetWorld(){
     // player.play(AssetSource(loseSoundFilename));
     destroyBodies();
-    addComponents();
+    addMainComponents();
+  }
+  void addAliens() {
+     late Timer alienTimer;
+     int numberOfAliens = 0;
+     alienTimer = Timer.periodic(const Duration(seconds: 3), (timer) { 
+      if(numberOfAliens < maximumAlienCount){
+        add(Alien(rosant: rosant));
+        numberOfAliens++;
+      }else{
+        alienTimer.cancel();
+      }
+    });
   }
   @override
   Future<void> onLoad() async {
     configCamera(camera);
     await Assets.instance.loadAssets();
-    addComponents();
+    addMainComponents();
+    addAliens();
   }
   @override
   void onTapDown(int pointerId, TapDownInfo info) {
@@ -147,9 +169,13 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     if(rosant.goingToWalkLeft){
       RosantController.walkLeft(rosant);
     }
+
+    displayText.textComponent.text = "Vida de Rosant ${rosant.life}";
+    // print((alien.body.angle*180/pi).round());
     // alien.body.linearVelocity = Vector2(-1, 0);
-    displayVelocityX.textComponent.text = "La velocidad en x es ${rosant.body.linearVelocity.x}";
-    displayVelocityY.textComponent.text = "La velocidad en y es ${rosant.body.linearVelocity.y}";
+    
+    // displayVelocityX.textComponent.text = "La velocidad en x es ${rosant.body.linearVelocity.x}";
+    // displayVelocityY.textComponent.text = "La velocidad en y es ${rosant.body.linearVelocity.y}";
   }
   //--------------------------------------------------------------
 }
