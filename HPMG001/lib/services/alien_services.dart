@@ -1,15 +1,17 @@
 import 'dart:math';
-
 import 'package:flame/components.dart';
-import 'package:juego_ingeniero/models/alien.dart';
-import 'package:juego_ingeniero/models/rosant.dart';
+import 'package:hpmg001/models/aliens/alien_direction.dart';
+import '/models/aliens/alien.dart';
+import '/models/rosant/rosant.dart';
 
 class AlienService {
   static void walk(Alien alien, Rosant rosant){
     if(!alien.isFallen && rosant.life != 0){
       if(alien.body.position.x > rosant.body.position.x){
+        alien.direction = AlienDirection.left;
         alien.body.linearVelocity = Vector2(-1, 0);
       }else if(alien.body.position.x < rosant.body.position.x){
+        alien.direction = AlienDirection.right;
         alien.body.linearVelocity = Vector2(1, 0);
       }
     }

@@ -1,0 +1,4 @@
+enum AlienDirection{
+  right,
+  left,
+}

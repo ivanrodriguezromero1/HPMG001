@@ -1,0 +1,4 @@
+enum RosantDirection{
+  right,
+  left,
+}

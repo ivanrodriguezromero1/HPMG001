@@ -1,6 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
-import '../models/screen.dart';
-import '../models/entity.dart';
+import '/models/scenery/screen.dart';
+import '/models/entity.dart';
 
 class Wall extends Entity with ContactCallbacks {
   late double _x;
@@ -21,12 +21,12 @@ class Wall extends Entity with ContactCallbacks {
       position: Vector2(_x, _y),
       type: BodyType.kinematic,
     );
-    final shape1 = EdgeShape()..set(Vector2(-Screen.worldSize.x/20,0), Vector2(-Screen.worldSize.x/20, _height));
+    final shape1 = EdgeShape()..set(Vector2(-Screen.worldSize.x/40,0), Vector2(-Screen.worldSize.x/40, _height));
     final fixtureDef1 = FixtureDef(shape1)
       ..density=10
       ..restitution=.01;
     final shape2 = EdgeShape()..set(
-      Vector2(Screen.worldSize.x + Screen.worldSize.x/20, 0), Vector2(Screen.worldSize.x + Screen.worldSize.x/20, _height));
+      Vector2(Screen.worldSize.x + Screen.worldSize.x/40, 0), Vector2(Screen.worldSize.x + Screen.worldSize.x/40, _height));
     final fixtureDef2 = FixtureDef(shape2)
       ..density=10
       ..restitution=.01;

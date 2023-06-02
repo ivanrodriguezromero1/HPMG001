@@ -2,9 +2,9 @@ import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import '../models/entity.dart';
-import '../models/screen.dart';
-import '../utils/globals.dart';
+import '/models/entity.dart';
+import '/models/scenery/screen.dart';
+import '/utils/globals.dart';
 
 class JoystickLeft extends Entity {
   JoystickLeft();

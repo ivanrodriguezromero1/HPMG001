@@ -1,26 +1,26 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import '../models/alien.dart';
-import '../models/direction.dart';
-import '../models/rosant.dart';
-import '../models/projectile.dart';
-import '../utils/globals.dart';
-import '../models/screen.dart';
+import '/models/aliens/alien.dart';
+import 'rosant_direction.dart';
+import '/models/rosant/rosant.dart';
+import '/models/projectile.dart';
+import '/utils/globals.dart';
+import '/models/scenery/screen.dart';
 
 class RosantBullet extends Projectile {
   final Rosant _rosant;
-  RosantBullet({required rosant}) :_rosant = rosant;
+  RosantBullet({required Rosant rosant}) :_rosant = rosant;
   late double _x;
   late double _y;
   late double _width;
   late double _height;
-  late Direction _direction;
+  late RosantDirection _direction;
   @override
   void initializing(){
     _x = _rosant.body.position.x;
     _y = _rosant.body.position.y - _rosant.height/5;
-    _width = 0.06;
-    _height = 0.06;
+    _width = 0.05;
+    _height = 0.04;
     _direction = _rosant.direction;
     _rosant.body.setTransform(_rosant.body.position, 0);
   }
@@ -50,13 +50,13 @@ class RosantBullet extends Projectile {
     paint = Paint()..color = const Color.fromARGB(255, 255, 0, 0);
     body.gravityOverride = Vector2(0, 0);
     Vector2 force;
-    double fx= 12;
+    double fx= 8;
     double fy = 0;
     switch(_direction){
-      case Direction.right:
+      case RosantDirection.right:
         force = Vector2(fx, fy);
         break;
-      case Direction.left:
+      case RosantDirection.left:
         force = Vector2(-fx, fy);
         break;
       default:

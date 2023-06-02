@@ -1,6 +1,6 @@
 import '../services/alien_services.dart';
-import '../models/alien.dart';
-import '../models/rosant.dart';
+import '../models/aliens/alien.dart';
+import '../models/rosant/rosant.dart';
 
 class AlienController{
   static void walk(Alien alien, Rosant rosant){

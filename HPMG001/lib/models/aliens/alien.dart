@@ -1,17 +1,18 @@
 import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:juego_ingeniero/models/alien_configuration.dart';
-import 'package:juego_ingeniero/models/alien_factory.dart';
-import 'package:juego_ingeniero/models/display_text.dart';
-import 'package:juego_ingeniero/models/rosant.dart';
-import '../controllers/alien_controller.dart';
-import '../models/screen.dart';
-import '../models/entity.dart';
-import '../utils/globals.dart';
-import '../models/direction.dart';
+import 'package:hpmg001/models/aliens/alien_bullet.dart';
+import 'package:hpmg001/models/aliens/alien_direction.dart';
+import '/models/aliens/alien_configuration.dart';
+import '/models/aliens/alien_factory.dart';
+import '/models/scenery/display_text.dart';
+import '/models/rosant/rosant.dart';
+import '/controllers/alien_controller.dart';
+import '/models/scenery/screen.dart';
+import '/models/entity.dart';
+import '/utils/globals.dart';
+import '../rosant/rosant_direction.dart';
 
 class Alien extends Entity with ContactCallbacks {
   final Rosant _rosant;
@@ -20,28 +21,25 @@ class Alien extends Entity with ContactCallbacks {
   late double _height;
   late double _x;
   late double _y;
-  late bool goingToWalkRight;
-  late bool goingToWalkLeft;
-  late Direction direction;
+  late AlienDirection direction;
   late int life;
   late bool isFallen;
   late double elapsedTimeSinceFall;
   late double elapsedTimeSinceContact;
   late bool isContacted;
   late DisplayText displayAlienLife;
+  late AlienConfiguration alienConfiguration;
+
   double get height => _height;
-  
   @override
   void initializing(){
-    AlienConfiguration alienConfiguration = AlienFactory.createRandomAlien();
+    alienConfiguration = AlienFactory.createRandomAlien();
     _width = alienConfiguration.width;
     _height = alienConfiguration.height;
     life = alienConfiguration.life;
     _x = Random().nextInt(2) == 0 ? Screen.worldSize.x : 0;
-    _y = horizon - _height/2;    
-    goingToWalkRight = false;
-    goingToWalkLeft = false;
-    direction = Direction.right;
+    _y = horizon - _height/2;
+    direction = AlienDirection.right;
     elapsedTimeSinceFall = 0;
     isFallen = false;
     elapsedTimeSinceContact = 0;
@@ -58,11 +56,11 @@ class Alien extends Entity with ContactCallbacks {
     );
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
     final fixtureDef = FixtureDef(shape)
-      ..density = 100
+      ..density = alienConfiguration.density
       ..friction = 0.3
       ..restitution = 0;
     final filter = Filter();
-    filter.categoryBits = 0x0003;
+    filter.categoryBits = 0x0004;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }

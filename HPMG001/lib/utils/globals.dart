@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
-import '../models/screen.dart';
+import '../models/scenery/screen.dart';
 
 late Sprite floorSprite;
 late Sprite backgroundSprite;

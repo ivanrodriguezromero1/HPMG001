@@ -1,9 +1,9 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import '../models/screen.dart';
-import '../models/entity.dart';
-import '../utils/globals.dart';
-import '../models/direction.dart';
+import '/models/scenery/screen.dart';
+import '/models/entity.dart';
+import '/utils/globals.dart';
+import 'rosant_direction.dart';
 
 class Rosant extends Entity {
   late double _width;
@@ -12,19 +12,19 @@ class Rosant extends Entity {
   late double _y;
   late bool goingToWalkRight;
   late bool goingToWalkLeft;
-  late Direction direction;
+  late RosantDirection direction;
   late int life;
   late int numberOfDeadAliens; 
   double get height => _height;
   @override
   void initializing(){
-    _width = Screen.worldSize.x/20;
-    _height = Screen.worldSize.y/5;
+    _width = Screen.worldSize.x/40;
+    _height = Screen.worldSize.y/10;
     _x = 1;
     _y = horizon - _height/2;
     goingToWalkRight = false;
     goingToWalkLeft = false;
-    direction = Direction.right;
+    direction = RosantDirection.right;
     life = 20;
     numberOfDeadAliens = 0;
   }

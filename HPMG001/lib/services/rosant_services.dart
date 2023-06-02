@@ -1,25 +1,25 @@
 import 'package:flame/components.dart';
-import 'package:juego_ingeniero/models/button_shoot.dart';
-import 'package:juego_ingeniero/models/direction.dart';
-import '../models/button_jump.dart';
-import '../models/joystick_left.dart';
-import '../models/rosant.dart';
-import '../utils/globals.dart';
+import '/models/controls/button_shoot.dart';
+import '../models/rosant/rosant_direction.dart';
+import '/models/controls/button_jump.dart';
+import '/models/controls/joystick_left.dart';
+import '/models/rosant/rosant.dart';
+import '/utils/globals.dart';
 
 class RosantServices {
   static void jump(Rosant rosant){
       rosant.body.setTransform(rosant.body.position, 0);
-      final force = Vector2(0, -22);
+      final force = Vector2(0, -5.5);
       rosant.body.applyLinearImpulse(force);
   }
   static void walkLeft(Rosant rosant){
     rosant.body.setTransform(rosant.body.position, 0);
-    final force = Vector2(-1, 0);
+    final force = Vector2(-0.3, 0);
     rosant.body.applyLinearImpulse(force);
   }
   static void walkRight(Rosant rosant){
     rosant.body.setTransform(rosant.body.position, 0);
-    final force = Vector2(1, 0);
+    final force = Vector2(0.3, 0);
     rosant.body.applyLinearImpulse(force);
   }
   static bool checkWalkCondition(Rosant rosant, Vector2 touch, JoystickLeft joystickLeft) {
@@ -29,13 +29,13 @@ class RosantServices {
       && touch.y >= jy && touch.y <= jy + joystickLeft.height) {
       rosant.goingToWalkRight = true;
       rosant.goingToWalkLeft = false;
-      rosant.direction = Direction.right;
+      rosant.direction = RosantDirection.right;
       return true;
     } else if (touch.x >= jx && touch.x < jx + joystickLeft.width/2 
       && touch.y >= jy && touch.y <= jy + joystickLeft.height) {
       rosant.goingToWalkLeft = true;
       rosant.goingToWalkRight = false;
-      rosant.direction = Direction.left;
+      rosant.direction = RosantDirection.left;
       return true;
     } else {
       return false;
@@ -56,14 +56,18 @@ class RosantServices {
       return false;
     }
   }
-  static bool checkShootCondition(Vector2 touch, ButtonShoot buttonShoot){
-    final bx = buttonShoot.body.position.x;
-    final by = buttonShoot.body.position.y;
-    if(touch.x >= bx && touch.x <= bx + buttonShoot.width  
-      && touch.y >= by && touch.y <= by + buttonShoot.height
-      ) {
-        return true;
-    } else {
+  static bool checkShootCondition(Rosant rosant, Vector2 touch, ButtonShoot buttonShoot){
+    if(rosant.life > 0){
+      final bx = buttonShoot.body.position.x;
+      final by = buttonShoot.body.position.y;
+      if(touch.x >= bx && touch.x <= bx + buttonShoot.width  
+        && touch.y >= by && touch.y <= by + buttonShoot.height
+        ) {
+          return true;
+      } else {
+        return false;
+      }
+    }else{
       return false;
     }
   }

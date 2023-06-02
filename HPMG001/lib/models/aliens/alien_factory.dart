@@ -1,8 +1,8 @@
 import 'dart:math';
-import '../models/alien_type.dart';
-import '../models/alien_type_a.dart';
-import '../models/alien_type_b.dart';
-import '../models/alien_configuration.dart';
+import '/models/aliens/alien_type.dart';
+import '/models/aliens/alien_type_a.dart';
+import '/models/aliens/alien_type_b.dart';
+import '/models/aliens/alien_configuration.dart';
 
 class AlienFactory{
   static AlienConfiguration createRandomAlien(){

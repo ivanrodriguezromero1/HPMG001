@@ -1,21 +1,24 @@
+import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import '../models/entity.dart';
-import '../models/screen.dart';
-import '../utils/globals.dart';
+import '/models/entity.dart';
+import '/models/scenery/screen.dart';
+import '/utils/globals.dart';
 
-class Background extends Entity {
-  Background({required double x}):_x = x;
-  late final double _x;
+class ButtonJump extends Entity {
+  ButtonJump();
+  late double _x;
   late double _y;
   late double _width;
   late double _height;
-
+  double get width => _width;
+  double get height => _height;
   @override
   void initializing(){
-    _width = 2*Screen.worldSize.x;
-    _height = 2*Screen.worldSize.y/3;
-    _y = 0;
+    _width = Screen.worldSize.x/8;
+    _height = Screen.worldSize.y/4;    
+    _x = Screen.worldSize.x - 2*Screen.worldSize.x/8;
+    _y = Screen.worldSize.y - _height;
   }
   @override
   Body createBody() {
@@ -25,19 +28,23 @@ class Background extends Entity {
       position: Vector2(_x, _y),
       type: BodyType.kinematic,
     );
-
-    final shape = EdgeShape()..set(Vector2(0, 0), Vector2(_width, 0));
+    final shape = PolygonShape()..set(
+      [Vector2(0,0),
+      Vector2(_width , 0), 
+      Vector2(_width , _height), 
+      Vector2(0, _height)]);
     final fixtureDef = FixtureDef(shape)
       ..density = 10
-      ..friction = 0.8
+      ..friction = .6
       ..restitution = .4;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+    paint = Paint()..color = const Color.fromARGB(255, 0, 255, 0);
     // renderBody = false;
-    // final sprite = backgroundSprite;
+    // final sprite = backdropSprite;
     // add(SpriteComponent(
     //   sprite: sprite,
     //   size: Vector2(_width, _height),

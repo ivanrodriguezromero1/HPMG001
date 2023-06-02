@@ -1,7 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import '../models/entity.dart';
+import '/models/entity.dart';
 
 class DisplayText extends Entity {
   late double _x;
