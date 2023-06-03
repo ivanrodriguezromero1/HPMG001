@@ -67,11 +67,11 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   // late List<Alien> aliens;
 
   void initialize(){
-    // Max X 8.4
-    background = Background();
+    // Max X 8.36
+    rosant = Rosant();
+    background = Background(rosant: rosant);
     floor = Floor();
     wall = Wall();
-    rosant = Rosant();
     joystickLeft = JoystickLeft();
     buttonJump = ButtonJump();
     buttonShoot = ButtonShoot();

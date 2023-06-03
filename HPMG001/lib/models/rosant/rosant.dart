@@ -25,7 +25,7 @@ class Rosant extends Entity {
     goingToWalkRight = false;
     goingToWalkLeft = false;
     direction = RosantDirection.right;
-    life = 20;
+    life = 40;
     numberOfDeadAliens = 0;
   }
   @override
@@ -39,7 +39,7 @@ class Rosant extends Entity {
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
     final fixtureDef = FixtureDef(shape)
       ..density = 10
-      ..friction = 0.4
+      ..friction = 0.3
       ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = 0x0002;
@@ -51,7 +51,7 @@ class Rosant extends Entity {
     await super.onLoad();
     // renderBody = false;
     priority = 10;
-    body.linearDamping = 3;
+    body.linearDamping = 5;
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,

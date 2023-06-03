@@ -12,7 +12,9 @@ class Assets {
   Future<void> loadAssets() async {
     if (!assetsLoaded) {
       // floorSprite = await Sprite.load(floorFilename);
-      // backgroundSprite = await Sprite.load(backgroundFilename);
+      backgroundSprite = await Sprite.load(backgroundFilename);
+      arrowSprite = await Sprite.load(arrowFilename);
+      
       assetsLoaded = true;
     }
 }

@@ -1,4 +1,6 @@
 import 'package:flame/components.dart';
+import 'package:hpmg001/models/scenery/background.dart';
+import 'package:hpmg001/models/scenery/screen.dart';
 import '/models/controls/button_shoot.dart';
 import '../models/rosant/rosant_direction.dart';
 import '/models/controls/button_jump.dart';
@@ -9,18 +11,22 @@ import '/utils/globals.dart';
 class RosantServices {
   static void jump(Rosant rosant){
       rosant.body.setTransform(rosant.body.position, 0);
-      final force = Vector2(0, -5.5);
+      final force = Vector2(0, -7);
       rosant.body.applyLinearImpulse(force);
   }
   static void walkLeft(Rosant rosant){
     rosant.body.setTransform(rosant.body.position, 0);
-    final force = Vector2(-0.3, 0);
-    rosant.body.applyLinearImpulse(force);
+    // if(rosant.body.position.x > Screen.worldSize.x/20){
+      final force = Vector2(-0.1, 0);
+      rosant.body.applyLinearImpulse(force);
+    // }
   }
   static void walkRight(Rosant rosant){
     rosant.body.setTransform(rosant.body.position, 0);
-    final force = Vector2(0.3, 0);
-    rosant.body.applyLinearImpulse(force);
+    // if(rosant.body.position.x < 19*Screen.worldSize.x/20){
+      final force = Vector2(0.1, 0);
+      rosant.body.applyLinearImpulse(force);
+    // }
   }
   static bool checkWalkCondition(Rosant rosant, Vector2 touch, JoystickLeft joystickLeft) {
     final jx = joystickLeft.body.position.x;

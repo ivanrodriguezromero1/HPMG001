@@ -44,13 +44,13 @@ class JoystickLeft extends Entity {
   Future<void> onLoad() async {
     await super.onLoad();
     paint = Paint()..color = const Color.fromARGB(255, 0, 0, 255);
-    // renderBody = false;
-    // final sprite = backdropSprite;
-    // add(SpriteComponent(
-    //   sprite: sprite,
-    //   size: Vector2(_width, _height),
-    //   position: Vector2(0,-.02),
-    //   anchor: Anchor.topLeft
-    // ));
+    renderBody = false;
+    final sprite = arrowSprite;
+    add(SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0,-.02),
+      anchor: Anchor.topLeft
+    ));
   }
 }

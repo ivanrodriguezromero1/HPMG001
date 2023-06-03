@@ -9,10 +9,10 @@ class AlienService {
     if(!alien.isFallen && rosant.life != 0){
       if(alien.body.position.x > rosant.body.position.x){
         alien.direction = AlienDirection.left;
-        alien.body.linearVelocity = Vector2(-1, 0);
+        alien.body.linearVelocity = Vector2(-0.5, 0);
       }else if(alien.body.position.x < rosant.body.position.x){
         alien.direction = AlienDirection.right;
-        alien.body.linearVelocity = Vector2(1, 0);
+        alien.body.linearVelocity = Vector2(0.5, 0);
       }
     }
   }
