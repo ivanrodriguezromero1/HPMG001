@@ -21,7 +21,7 @@ class DisplayText extends Entity {
       position: Vector2.zero(),
       text: '0',
       textRenderer: TextPaint(
-        style: TextStyle(color: Colors.white, fontSize: _fontSize)
+        style: TextStyle(color: const Color.fromARGB(255, 1, 1, 1), fontSize: _fontSize)
       ),
     )..scale = Vector2(_xScale, _yScale);
   }

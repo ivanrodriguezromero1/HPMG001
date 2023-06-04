@@ -19,8 +19,8 @@ class RosantBullet extends Projectile {
   void initializing(){
     _x = _rosant.body.position.x;
     _y = _rosant.body.position.y - _rosant.height/5;
-    _width = 0.05;
-    _height = 0.04;
+    _width = 0.1;
+    _height = 0.08;
     _direction = _rosant.direction;
     _rosant.body.setTransform(_rosant.body.position, 0);
   }
@@ -34,7 +34,7 @@ class RosantBullet extends Projectile {
     );
     final shape = PolygonShape()..setAsBoxXY(_width, _height);
     final fixtureDef = FixtureDef(shape)
-      ..density = 100
+      ..density = 50
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();

@@ -15,10 +15,10 @@ class ButtonShoot extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = Screen.worldSize.x/8;
-    _height = Screen.worldSize.y/4;    
-    _x = Screen.worldSize.x - _width;
-    _y = Screen.worldSize.y - _height;
+    _width = 2*buttonUnit;
+    _height = 2*buttonUnit;    
+    _x = Screen.worldSize.x - 2*buttonUnit;
+    _y = Screen.worldSize.y - 2*buttonUnit;
   }
   @override
   Body createBody() {
@@ -43,13 +43,14 @@ class ButtonShoot extends Entity {
   Future<void> onLoad() async {
     await super.onLoad();
     paint = Paint()..color = const Color.fromARGB(255, 255, 255, 0);
-    // renderBody = false;
-    // final sprite = backdropSprite;
-    // add(SpriteComponent(
-    //   sprite: sprite,
-    //   size: Vector2(_width, _height),
-    //   position: Vector2(0,-.02),
-    //   anchor: Anchor.topLeft
-    // ));
+    renderBody = false;
+    final sprite = buttonAttackSprite;
+    add(SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0,-.02),
+      anchor: Anchor.topLeft,
+      paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.4)
+    ));
   }
 }

@@ -48,7 +48,7 @@ class ButtonUp extends Entity {
     add(SpriteComponent(
       sprite: sprite,
       size: Vector2(_width, _height),
-      position: Vector2(0,-.02),
+      position: Vector2(0, 0),
       anchor: Anchor.topLeft,
       paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.5)
     ));

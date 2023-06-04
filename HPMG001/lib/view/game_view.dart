@@ -90,7 +90,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     // displayVelocityY = DisplayText(x: 0.2,y: 0.6);
     walkPointersId = [];
     alienCount = 0;
-    maximumAlienCount = 0;
+    maximumAlienCount = 20;
     // alien = Alien();
   }
   void addToWorld(){

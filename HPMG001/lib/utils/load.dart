@@ -17,6 +17,8 @@ class Assets {
       rightArrowSprite = await Sprite.load(rightArrowFilename);
       upArrowSprite = await Sprite.load(upArrowFilename);
       downArrowSprite = await Sprite.load(downArrowFilename);
+      buttonJumpSprite = await Sprite.load(buttonJumpFilename);
+      buttonAttackSprite = await Sprite.load(buttonAttackFilename);
       rosantSprite = await Sprite.load(rosantFilename);
       assetsLoaded = true;
     }

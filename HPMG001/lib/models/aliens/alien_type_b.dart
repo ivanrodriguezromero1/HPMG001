@@ -3,11 +3,11 @@ import '/models/aliens/alien_configuration.dart';
 
 class TypeB implements AlienConfiguration{
   @override
-  double width = Screen.worldSize.x/20;
+  double width = Screen.worldSize.x/10;
   @override
-  double height = 1.3 * Screen.worldSize.y/8;
+  double height = 1.3 * Screen.worldSize.y/4;
   @override
   int life = 10;
   @override
-  double density = 200;
+  double density = 100;
 }

@@ -15,10 +15,10 @@ class ButtonJump extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = Screen.worldSize.x/8;
-    _height = Screen.worldSize.y/4;    
-    _x = Screen.worldSize.x - 2*Screen.worldSize.x/8;
-    _y = Screen.worldSize.y - _height;
+    _width = 2*buttonUnit;
+    _height = 2*buttonUnit;    
+    _x = Screen.worldSize.x - 4*buttonUnit;
+    _y = Screen.worldSize.y - 2*buttonUnit;
   }
   @override
   Body createBody() {
@@ -33,23 +33,21 @@ class ButtonJump extends Entity {
       Vector2(_width , 0), 
       Vector2(_width , _height), 
       Vector2(0, _height)]);
-    final fixtureDef = FixtureDef(shape)
-      ..density = 10
-      ..friction = .6
-      ..restitution = .4;
+    final fixtureDef = FixtureDef(shape);
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
   @override
   Future<void> onLoad() async {
     await super.onLoad();
     paint = Paint()..color = const Color.fromARGB(255, 0, 255, 0);
-    // renderBody = false;
-    // final sprite = backdropSprite;
-    // add(SpriteComponent(
-    //   sprite: sprite,
-    //   size: Vector2(_width, _height),
-    //   position: Vector2(0,-.02),
-    //   anchor: Anchor.topLeft
-    // ));
+    renderBody = false;
+    final sprite = buttonJumpSprite;
+    add(SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0,-.02),
+      anchor: Anchor.topLeft,
+      paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.4)
+    ));
   }
 }

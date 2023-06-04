@@ -18,10 +18,10 @@ class Rosant extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = 1.2*Screen.worldSize.x/40;
-    _height = 1.2*Screen.worldSize.y/9;
+    _width = 2*Screen.worldSize.x/40;
+    _height = 2*Screen.worldSize.y/9;
     _x = 1;
-    _y = horizon - _height/2;
+    _y = horizon - _height/2 - 0.02;
     goingToWalkRight = false;
     goingToWalkLeft = false;
     direction = RosantDirection.right;
@@ -38,8 +38,8 @@ class Rosant extends Entity {
     );
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
     final fixtureDef = FixtureDef(shape)
-      ..density = 10
-      ..friction = 0.3
+      ..density = 7
+      ..friction = 0.05
       ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = 0x0002;
@@ -51,7 +51,7 @@ class Rosant extends Entity {
     await super.onLoad();
     renderBody = false;
     priority = 10;
-    body.linearDamping = 5;
+    body.linearDamping = 4;
     final sprite = rosantSprite;
     add(SpriteComponent(
       sprite: sprite,

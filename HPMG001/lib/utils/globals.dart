@@ -8,6 +8,8 @@ late Sprite leftArrowSprite;
 late Sprite rightArrowSprite;
 late Sprite upArrowSprite;
 late Sprite downArrowSprite;
+late Sprite buttonJumpSprite;
+late Sprite buttonAttackSprite;
 late Sprite rosantSprite;
 AudioPlayer player = AudioPlayer();
 bool assetsLoaded = false;

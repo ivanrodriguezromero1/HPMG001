@@ -21,8 +21,8 @@ class AlienBullet extends Projectile {
   void initializing(){
     _x = _alien.body.position.x;
     _y = _alien.body.position.y - _alien.height/10;
-    _width = 0.05;
-    _height = 0.05;
+    _width = 0.1;
+    _height = 0.1;
     _direction = _alien.direction;
     _alien.body.setTransform(_alien.body.position, 0);
   }
@@ -36,7 +36,7 @@ class AlienBullet extends Projectile {
     );
     final shape = PolygonShape()..setAsBoxXY(_width, _height);
     final fixtureDef = FixtureDef(shape)
-      ..density = 10
+      ..density = 5
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();
