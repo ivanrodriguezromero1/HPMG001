@@ -6,14 +6,17 @@ import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
 import 'package:flutter/material.dart';
-import 'package:hpmg001/models/aliens/alien_bullet.dart';
+import 'package:hpmg001/models/controls/button_down.dart';
+import 'package:hpmg001/models/controls/button_up.dart';
+import '/models/aliens/alien_bullet.dart';
+import '/models/controls/button_right.dart';
 import '/controllers/alien_controller.dart';
 import '/models/aliens/alien.dart';
 import '../models/rosant/rosant_direction.dart';
 import '../models/rosant/rosant_bullet.dart';
 import '/models/controls/button_jump.dart';
 import '/models/controls/button_shoot.dart';
-import '/models/controls/joystick_left.dart';
+import '/models/controls/button_left.dart';
 import '/controllers/rosant_controller.dart';
 import '/models/scenery/floor.dart';
 import '/models/rosant/rosant.dart';
@@ -53,7 +56,10 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   late Floor floor;
   late Wall wall;
   late Rosant rosant;
-  late JoystickLeft joystickLeft;
+  late ButtonLeft buttonLeft;
+  late ButtonRight buttonRight;
+  late ButtonUp buttonUp;
+  late ButtonDown buttonDown;
   late ButtonJump buttonJump;
   late ButtonShoot buttonShoot;
   late DisplayText displayRosantLife;
@@ -70,9 +76,12 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     // Max X 8.36
     rosant = Rosant();
     background = Background(rosant: rosant);
-    floor = Floor();
+    floor = Floor(rosant: rosant);
     wall = Wall();
-    joystickLeft = JoystickLeft();
+    buttonLeft = ButtonLeft();
+    buttonRight = ButtonRight();
+    buttonUp = ButtonUp();
+    buttonDown = ButtonDown();
     buttonJump = ButtonJump();
     buttonShoot = ButtonShoot();
     displayRosantLife = DisplayText(x: 0.2, y: 0.3);
@@ -81,7 +90,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     // displayVelocityY = DisplayText(x: 0.2,y: 0.6);
     walkPointersId = [];
     alienCount = 0;
-    maximumAlienCount = 20;
+    maximumAlienCount = 0;
     // alien = Alien();
   }
   void addToWorld(){
@@ -89,7 +98,10 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     add(floor);
     add(wall);
     add(rosant);
-    add(joystickLeft);
+    add(buttonLeft);
+    add(buttonRight);
+    add(buttonUp);
+    add(buttonDown);
     add(buttonJump);
     add(buttonShoot);
     add(displayRosantLife);
@@ -155,7 +167,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   @override
   void onTapDown(int pointerId, TapDownInfo info) {
     super.onTapDown(pointerId, info);
-    bool goingToWalk = RosantController.checkWalkCondition(rosant, info.eventPosition.game, joystickLeft);
+    bool goingToWalk = RosantController.checkWalkCondition(rosant, info.eventPosition.game, buttonRight, buttonLeft);
     if(goingToWalk) {
       walkPointersId.add(pointerId);
     }
@@ -180,12 +192,12 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   @override
   void update(double dt) {
     super.update(dt);
-    if(rosant.goingToWalkRight){
-      RosantController.walkRight(rosant);
-    }
-    if(rosant.goingToWalkLeft){
-      RosantController.walkLeft(rosant);
-    }
+    // if(rosant.goingToWalkRight){
+    RosantController.walkRight(rosant);
+    // }
+    // if(rosant.goingToWalkLeft){
+    RosantController.walkLeft(rosant);
+    // }
 
     displayRosantLife.textComponent.text = 'Rosant\'s life points: ${rosant.life}';
     displayAlienCount.textComponent.text = 'Number of remaining Aliens : ${maximumAlienCount-rosant.numberOfDeadAliens}';

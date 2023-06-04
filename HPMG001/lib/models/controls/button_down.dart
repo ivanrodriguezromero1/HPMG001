@@ -1,13 +1,12 @@
 import 'dart:ui';
-
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import '/models/entity.dart';
 import '/models/scenery/screen.dart';
 import '/utils/globals.dart';
 
-class JoystickLeft extends Entity {
-  JoystickLeft();
+class ButtonDown extends Entity {
+  ButtonDown();
   late double _x;
   late double _y;
   late double _width;
@@ -16,10 +15,10 @@ class JoystickLeft extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = Screen.worldSize.x/4;
-    _height = Screen.worldSize.y/4;    
-    _x = 0;
-    _y = Screen.worldSize.y - _height;
+    _height = buttonUnit;
+    _width = 2*buttonUnit;    
+    _x = buttonUnit;
+    _y = Screen.worldSize.y - buttonUnit;
   }
   @override
   Body createBody() {
@@ -44,13 +43,13 @@ class JoystickLeft extends Entity {
   Future<void> onLoad() async {
     await super.onLoad();
     paint = Paint()..color = const Color.fromARGB(255, 0, 0, 255);
-    renderBody = false;
-    final sprite = arrowSprite;
-    add(SpriteComponent(
-      sprite: sprite,
-      size: Vector2(_width, _height),
-      position: Vector2(0,-.02),
-      anchor: Anchor.topLeft
-    ));
+    // renderBody = false;
+    // final sprite = leftArrowSprite;
+    // add(SpriteComponent(
+    //   sprite: sprite,
+    //   size: Vector2(_width, _height),
+    //   position: Vector2(0,-.02),
+    //   anchor: Anchor.topLeft
+    // ));
   }
 }

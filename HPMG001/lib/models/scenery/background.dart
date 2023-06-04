@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:hpmg001/controllers/background_controller.dart';
@@ -19,7 +21,7 @@ class Background extends Entity {
     _x = 0;
     _y = 0;
     _width = 2*Screen.worldSize.x + 2;//49.83, 2*Screen.worldSize.x + 2
-    _height = Screen.worldSize.y;//2*Screen.worldSize.y/3
+    _height = horizon;//2*Screen.worldSize.y/3
   }
   @override
   Body createBody() {
@@ -33,7 +35,7 @@ class Background extends Entity {
     final shape = EdgeShape()..set(Vector2(-1, 0), Vector2(_width, 0));
     final fixtureDef = FixtureDef(shape)
       ..density = 10
-      ..friction = 0.3
+      ..friction = 0.2
       ..restitution = .4;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -45,10 +47,9 @@ class Background extends Entity {
     add(SpriteComponent(
       sprite: sprite,
       size: Vector2(_width, _height),
-      position: Vector2(0,-.02),
+      position: Vector2(0,0),
       anchor: Anchor.topLeft
     ));
-    // body.linearVelocity = Vector2(-0.2, 0);R
   }
   @override
   void update(double dt){

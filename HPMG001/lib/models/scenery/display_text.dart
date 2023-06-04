@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '/models/entity.dart';
 
 class DisplayText extends Entity {
-  late double _x;
-  late double _y;
+  final double _x;
+  final double _y;
   DisplayText({required double x, required double y}): _x = x, _y = y ;
   late TextComponent textComponent;
   late double _xScale;

@@ -11,9 +11,9 @@ class Assets {
   }
   Future<void> loadAssets() async {
     if (!assetsLoaded) {
-      // floorSprite = await Sprite.load(floorFilename);
+      floorSprite = await Sprite.load(floorFilename);
       backgroundSprite = await Sprite.load(backgroundFilename);
-      arrowSprite = await Sprite.load(arrowFilename);
+      leftArrowSprite = await Sprite.load(leftArrowFilename);
       
       assetsLoaded = true;
     }

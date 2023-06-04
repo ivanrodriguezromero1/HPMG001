@@ -1,10 +1,11 @@
 import 'package:flame/components.dart';
+import 'package:hpmg001/models/controls/button_right.dart';
 import 'package:hpmg001/models/scenery/background.dart';
 import 'package:hpmg001/models/scenery/screen.dart';
 import '/models/controls/button_shoot.dart';
 import '../models/rosant/rosant_direction.dart';
 import '/models/controls/button_jump.dart';
-import '/models/controls/joystick_left.dart';
+import '../models/controls/button_left.dart';
 import '/models/rosant/rosant.dart';
 import '/utils/globals.dart';
 
@@ -15,30 +16,36 @@ class RosantServices {
       rosant.body.applyLinearImpulse(force);
   }
   static void walkLeft(Rosant rosant){
-    rosant.body.setTransform(rosant.body.position, 0);
-    // if(rosant.body.position.x > Screen.worldSize.x/20){
+    if(rosant.goingToWalkLeft){
+      rosant.body.setTransform(rosant.body.position, 0);
+      // if(rosant.body.position.x > Screen.worldSize.x/20){
       final force = Vector2(-0.1, 0);
       rosant.body.applyLinearImpulse(force);
     // }
+    }
   }
   static void walkRight(Rosant rosant){
-    rosant.body.setTransform(rosant.body.position, 0);
-    // if(rosant.body.position.x < 19*Screen.worldSize.x/20){
+    if(rosant.goingToWalkRight){
+      rosant.body.setTransform(rosant.body.position, 0);
+      // if(rosant.body.position.x < 19*Screen.worldSize.x/20){
       final force = Vector2(0.1, 0);
       rosant.body.applyLinearImpulse(force);
-    // }
+      // }
+    }
   }
-  static bool checkWalkCondition(Rosant rosant, Vector2 touch, JoystickLeft joystickLeft) {
-    final jx = joystickLeft.body.position.x;
-    final jy = joystickLeft.body.position.y;
-    if(touch.x >= jx + joystickLeft.width/2 && touch.x <= jx + joystickLeft.width  
-      && touch.y >= jy && touch.y <= jy + joystickLeft.height) {
+  static bool checkWalkCondition(Rosant rosant, Vector2 touch, ButtonRight buttonRight, ButtonLeft buttonLeft) {
+    double bLeftx = buttonLeft.body.position.x;
+    double bLefty = buttonLeft.body.position.y;
+    double bRightx = buttonRight.body.position.x;
+    double bRighty = buttonRight.body.position.y;
+    if(touch.x >= bRightx && touch.x <= bRightx + buttonRight.width  
+      && touch.y >= bRighty && touch.y <= bRighty + buttonRight.height) {
       rosant.goingToWalkRight = true;
       rosant.goingToWalkLeft = false;
       rosant.direction = RosantDirection.right;
       return true;
-    } else if (touch.x >= jx && touch.x < jx + joystickLeft.width/2 
-      && touch.y >= jy && touch.y <= jy + joystickLeft.height) {
+    } else if (touch.x >= bLeftx && touch.x < bLeftx + buttonLeft.width
+      && touch.y >= bLefty && touch.y <= bLefty + buttonLeft.height) {
       rosant.goingToWalkLeft = true;
       rosant.goingToWalkRight = false;
       rosant.direction = RosantDirection.left;

@@ -1,5 +1,5 @@
 import 'package:flame/game.dart';
-import '../models/scenery/screen.dart';
+import '/models/scenery/screen.dart';
 
 void configCamera(Camera camera){
     double width = 836; //3652 - 49.83
