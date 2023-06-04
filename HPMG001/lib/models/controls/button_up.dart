@@ -16,7 +16,7 @@ class ButtonUp extends Entity {
   @override
   void initializing(){
     _height = buttonUnit;
-    _width = 2*buttonUnit;    
+    _width = buttonUnit;    
     _x = buttonUnit;
     _y = Screen.worldSize.y - 3*buttonUnit;
   }
@@ -43,13 +43,14 @@ class ButtonUp extends Entity {
   Future<void> onLoad() async {
     await super.onLoad();
     paint = Paint()..color = const Color.fromARGB(255, 0, 0, 255);
-    // renderBody = false;
-    // final sprite = leftArrowSprite;
-    // add(SpriteComponent(
-    //   sprite: sprite,
-    //   size: Vector2(_width, _height),
-    //   position: Vector2(0,-.02),
-    //   anchor: Anchor.topLeft
-    // ));
+    renderBody = false;
+    final sprite = upArrowSprite;
+    add(SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0,-.02),
+      anchor: Anchor.topLeft,
+      paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.5)
+    ));
   }
 }
