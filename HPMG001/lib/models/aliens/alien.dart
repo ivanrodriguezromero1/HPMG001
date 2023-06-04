@@ -57,7 +57,7 @@ class Alien extends Entity with ContactCallbacks {
     final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
     final fixtureDef = FixtureDef(shape)
       ..density = alienConfiguration.density
-      ..friction = 0.1
+      ..friction = 0.05
       ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = 0x0004;

@@ -8,6 +8,7 @@ late Sprite leftArrowSprite;
 late Sprite rightArrowSprite;
 late Sprite upArrowSprite;
 late Sprite downArrowSprite;
+late Sprite rosantSprite;
 AudioPlayer player = AudioPlayer();
 bool assetsLoaded = false;
 Vector2 initialWorldLinearVelocity = Vector2(-4, 0);

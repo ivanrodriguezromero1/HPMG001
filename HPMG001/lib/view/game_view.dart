@@ -192,20 +192,10 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   @override
   void update(double dt) {
     super.update(dt);
-    // if(rosant.goingToWalkRight){
     RosantController.walkRight(rosant);
-    // }
-    // if(rosant.goingToWalkLeft){
     RosantController.walkLeft(rosant);
-    // }
-
     displayRosantLife.textComponent.text = 'Rosant\'s life points: ${rosant.life}';
     displayAlienCount.textComponent.text = 'Number of remaining Aliens : ${maximumAlienCount-rosant.numberOfDeadAliens}';
-    // print((alien.body.angle*180/pi).round());
-    // alien.body.linearVelocity = Vector2(-1, 0);
-    
-    // displayVelocityX.textComponent.text = "La velocidad en x es ${rosant.body.linearVelocity.x}";
-    // displayVelocityY.textComponent.text = "La velocidad en y es ${rosant.body.linearVelocity.y}";
   }
   //--------------------------------------------------------------
 }

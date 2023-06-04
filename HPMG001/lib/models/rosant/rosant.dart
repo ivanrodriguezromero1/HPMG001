@@ -18,8 +18,8 @@ class Rosant extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = Screen.worldSize.x/40;
-    _height = Screen.worldSize.y/9;
+    _width = 1.2*Screen.worldSize.x/40;
+    _height = 1.2*Screen.worldSize.y/9;
     _x = 1;
     _y = horizon - _height/2;
     goingToWalkRight = false;
@@ -49,9 +49,16 @@ class Rosant extends Entity {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    // renderBody = false;
+    renderBody = false;
     priority = 10;
     body.linearDamping = 5;
+    final sprite = rosantSprite;
+    add(SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0, 0),
+      anchor: Anchor.center
+    ));
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,

@@ -12,14 +12,14 @@ import '/utils/globals.dart';
 class RosantServices {
   static void jump(Rosant rosant){
       rosant.body.setTransform(rosant.body.position, 0);
-      final force = Vector2(0, -7);
+      final force = Vector2(0, -8);
       rosant.body.applyLinearImpulse(force);
   }
   static void walkLeft(Rosant rosant){
     if(rosant.goingToWalkLeft){
       rosant.body.setTransform(rosant.body.position, 0);
       // if(rosant.body.position.x > Screen.worldSize.x/20){
-      final force = Vector2(-0.1, 0);
+      final force = Vector2(-0.2, 0);
       rosant.body.applyLinearImpulse(force);
     // }
     }
@@ -28,7 +28,7 @@ class RosantServices {
     if(rosant.goingToWalkRight){
       rosant.body.setTransform(rosant.body.position, 0);
       // if(rosant.body.position.x < 19*Screen.worldSize.x/20){
-      final force = Vector2(0.1, 0);
+      final force = Vector2(0.2, 0);
       rosant.body.applyLinearImpulse(force);
       // }
     }

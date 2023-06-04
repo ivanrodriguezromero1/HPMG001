@@ -35,7 +35,7 @@ class Background extends Entity {
     final shape = EdgeShape()..set(Vector2(-1, 0), Vector2(_width, 0));
     final fixtureDef = FixtureDef(shape)
       ..density = 10
-      ..friction = 0.2
+      ..friction = 0.1
       ..restitution = .4;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
