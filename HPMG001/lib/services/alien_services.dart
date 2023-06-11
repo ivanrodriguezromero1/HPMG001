@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:hpmg001/models/aliens/alien_direction.dart';
+import 'package:hpmg001/models/scenery/screen.dart';
 import '/models/aliens/alien.dart';
 import '/models/rosant/rosant.dart';
 
@@ -9,10 +10,10 @@ class AlienService {
     if(!alien.isFallen && rosant.life != 0){
       if(alien.body.position.x > rosant.body.position.x){
         alien.direction = AlienDirection.left;
-        alien.body.linearVelocity = Vector2(-0.5, 0);
+        alien.body.linearVelocity = Vector2(-0.5, alien.body.linearVelocity.y);
       }else if(alien.body.position.x < rosant.body.position.x){
         alien.direction = AlienDirection.right;
-        alien.body.linearVelocity = Vector2(0.5, 0);
+        alien.body.linearVelocity = Vector2(0.5, alien.body.linearVelocity.y);
       }
     }
   }
@@ -36,6 +37,11 @@ class AlienService {
         rosant.life--;
       }
       alien.elapsedTimeSinceContact = 0;
+    }
+  }
+  static void follenOut(Alien alien){
+    if(alien.body.position.y >= Screen.worldSize.y){
+      alien.life = 0;
     }
   }
 }

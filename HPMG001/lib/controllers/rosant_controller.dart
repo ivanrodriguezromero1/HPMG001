@@ -1,10 +1,11 @@
 import 'package:flame/components.dart';
-import 'package:hpmg001/models/controls/button_right.dart';
-import '../models/controls/button_shoot.dart';
-import '../models/controls/button_left.dart';
-import '../models/controls/button_jump.dart';
-import '../models/rosant/rosant.dart';
-import '../services/rosant_services.dart';
+import '/models/controls/button_right.dart';
+import '/models/controls/button_up.dart';
+import '/models/controls/button_shoot.dart';
+import '/models/controls/button_left.dart';
+import '/models/controls/button_jump.dart';
+import '/models/rosant/rosant.dart';
+import '/services/rosant_services.dart';
 
 class RosantController {
   static void jump(Rosant rosant){
@@ -21,6 +22,9 @@ class RosantController {
   }
   static bool checkJumpCondition(Rosant rosant, Vector2 touch, ButtonJump buttonJump) {
     return RosantServices.checkJumpCondition(rosant, touch, buttonJump);
+  }
+  static bool checkLookUpwardCondition(Rosant rosant, Vector2 touch, ButtonUp buttonUp) {
+    return RosantServices.checkLookUpwardCondition(rosant, touch, buttonUp);
   }
   static bool checkShootCondition(Rosant rosant, Vector2 touch, ButtonShoot buttonShoot) {
     return RosantServices.checkShootCondition(rosant, touch, buttonShoot);

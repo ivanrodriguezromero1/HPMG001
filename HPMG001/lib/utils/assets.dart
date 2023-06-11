@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
-import '../utils/constants.dart';
-import '../utils/globals.dart';
+import '/utils/constants.dart';
+import '/utils/globals.dart';
 
 class Assets {
   static Assets? _instance;
@@ -9,7 +9,7 @@ class Assets {
     _instance ??= Assets._();
     return _instance!;
   }
-  Future<void> loadAssets() async {
+  Future<void> loadSprites() async {
     if (!assetsLoaded) {
       floorSprite = await Sprite.load(floorFilename);
       backgroundSprite = await Sprite.load(backgroundFilename);
@@ -19,7 +19,8 @@ class Assets {
       downArrowSprite = await Sprite.load(downArrowFilename);
       buttonJumpSprite = await Sprite.load(buttonJumpFilename);
       buttonAttackSprite = await Sprite.load(buttonAttackFilename);
-      rosantSprite = await Sprite.load(rosantFilename);
+      rosantRightSprite = await Sprite.load(rosantRightFilename);
+      rosantLeftSprite = await Sprite.load(rosantLeftFilename);
       assetsLoaded = true;
     }
 }

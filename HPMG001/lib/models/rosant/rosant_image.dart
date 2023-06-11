@@ -1,45 +1,29 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:hpmg001/models/scenery/screen.dart';
-import 'package:hpmg001/models/scenery/wall_left.dart';
-import 'package:hpmg001/models/scenery/wall_right.dart';
+import 'package:hpmg001/models/rosant/rosant.dart';
 import 'rosant_units.dart';
 import '/models/category_bits.dart';
 import '/models/entity.dart';
 import '/utils/globals.dart';
 import 'rosant_direction.dart';
 
-class Rosant extends Entity {
+class RosantImage extends Entity {
+  final Rosant _rosant;
+  RosantImage({required Rosant rosant}): _rosant = rosant;
   late double _width;
   late double _height;
   late double _x;
   late double _y;
-  late bool goingToWalkRight;
-  late bool goingToWalkLeft;
-  late RosantDirection direction;
-  late int life;
-  late int numberOfDeadAliens;
-  late WeldJoint joint;
-  late bool canJump;
-  late bool goingToJump;
+  late SpriteComponent spriteComponent;
+
   double get width => _width;
   double get height => _height;
-
   @override
   void initializing(){
     _width = RosantUnits.width;
     _height = RosantUnits.height;
-    _x = 5;
+    _x = 2;
     _y = horizon - _height - 0.04;
-    goingToWalkRight = false;
-    goingToWalkLeft = false;
-    direction = RosantDirection.right;
-    life = 40;
-    numberOfDeadAliens = 0;
-    canJump = false;
-    goingToJump = false;
   }
   @override
   Body createBody(){
@@ -47,20 +31,21 @@ class Rosant extends Entity {
     final bodyDef = BodyDef(
       userData: this,
       position: Vector2(_x, _y),
-      type: BodyType.dynamic,
+      type: BodyType.kinematic,
     );
-    // final shape = PolygonShape()..set(
-    //   [Vector2(0, 0),
-    //   Vector2(_width , 0),
-    //   Vector2(_width , _height),
-    //   Vector2(0, _height)]);
-    final shape = CircleShape()..radius = _height/4;
+    final shape = PolygonShape()..set(
+      [Vector2(0, 0),
+      Vector2(_width , 0),
+      Vector2(_width , _height),
+      Vector2(0, _height)]);
+    // final shape = CircleShape()..radius = _width;
     final fixtureDef = FixtureDef(shape)
-      ..density = 0.4
-      ..friction = 0.3
+      ..density = 0.7
+      ..friction = 0.05
       ..restitution = 0;
     final filter = Filter();
-    filter.categoryBits = CategoryBits.rosant;
+    // filter.categoryBits = CategoryBits.rosant;
+    filter.maskBits = CategoryBits.none;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -68,16 +53,18 @@ class Rosant extends Entity {
   Future<void> onLoad() async {
     await super.onLoad();
     renderBody = false;
-    priority = 10;
-    body.linearDamping = 1;
+    priority = 11;
+    body.linearDamping = 0;
     // body.gravityOverride = Vector2(0, 0);
-    // final sprite = rosantRightSprite;
+    // final sprite = rosantSprite;
     // add(SpriteComponent(
     //   sprite: sprite,
     //   size: Vector2(_width, _height),
     //   position: Vector2(0, 0),
-    //   anchor: Anchor.topLeft
+    //   anchor: Anchor.center
     // ));
+    spriteComponent = createSpriteComponent(rosantRightSprite);
+    add(spriteComponent);
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,
@@ -86,13 +73,30 @@ class Rosant extends Entity {
     //   anchor: Anchor.center,
     //   removeOnFinish: false,
     // ));
-
+  }
+  SpriteComponent createSpriteComponent(Sprite sprite) {
+    return SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0, -_height/4),
+      anchor: Anchor.center,
+    );
   }
   @override
   void update(double dt){
     super.update(dt);
-    if(life<=0){
+    if(_rosant.life <= 0){
       destroyBody();
+    }
+    body.setTransform(_rosant.body.position, body.angle);
+    if(_rosant.goingToWalkRight){
+      remove(spriteComponent);
+      spriteComponent = createSpriteComponent(rosantRightSprite);
+      add(spriteComponent);
+    } else if(_rosant.goingToWalkLeft){
+      remove(spriteComponent);
+      spriteComponent = createSpriteComponent(rosantLeftSprite);
+      add(spriteComponent);
     }
   }
 }

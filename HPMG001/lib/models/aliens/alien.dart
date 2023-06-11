@@ -4,6 +4,8 @@ import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:hpmg001/models/aliens/alien_bullet.dart';
 import 'package:hpmg001/models/aliens/alien_direction.dart';
+import 'package:hpmg001/models/aliens/alien_units.dart';
+import 'package:hpmg001/models/category_bits.dart';
 import '/models/aliens/alien_configuration.dart';
 import '/models/aliens/alien_factory.dart';
 import '/models/scenery/display_text.dart';
@@ -12,7 +14,7 @@ import '/controllers/alien_controller.dart';
 import '/models/scenery/screen.dart';
 import '/models/entity.dart';
 import '/utils/globals.dart';
-import '../rosant/rosant_direction.dart';
+import '/models/rosant/rosant_direction.dart';
 
 class Alien extends Entity with ContactCallbacks {
   final Rosant _rosant;
@@ -30,37 +32,44 @@ class Alien extends Entity with ContactCallbacks {
   late DisplayText displayAlienLife;
   late AlienConfiguration alienConfiguration;
 
+  double get width => _width;
   double get height => _height;
+
   @override
-  void initializing(){
+  void initializing() {
     alienConfiguration = AlienFactory.createRandomAlien();
     _width = alienConfiguration.width;
     _height = alienConfiguration.height;
     life = alienConfiguration.life;
-    _x = Random().nextInt(2) == 0 ? Screen.worldSize.x : 0;
-    _y = horizon - _height/2;
-    direction = AlienDirection.right;
+    _x = (Random().nextInt(1) == 0) ? Screen.worldSize.x : 0;
+    _y = alienConfiguration.y;
+    direction = AlienDirection.left;
     elapsedTimeSinceFall = 0;
     isFallen = false;
     elapsedTimeSinceContact = 0;
     isContacted = false;
-    displayAlienLife = DisplayText(x: 0, y: 0);
+    displayAlienLife = DisplayText(x: _width/3, y: _height/2);
   }
   @override
-  Body createBody(){
+  Body createBody() {
     initializing();
     final bodyDef = BodyDef(
       userData: this,
       position: Vector2(_x, _y),
       type: BodyType.dynamic,
     );
-    final shape = PolygonShape()..setAsBoxXY(_width/2,_height/2);
+    final shape = PolygonShape()..set(
+      [Vector2(0, 0),
+      Vector2(_width , 0), 
+      Vector2(_width , _height), 
+      Vector2(0, _height)]);
     final fixtureDef = FixtureDef(shape)
       ..density = alienConfiguration.density
-      ..friction = 0.05
+      ..friction = 0.1
       ..restitution = 0;
     final filter = Filter();
-    filter.categoryBits = 0x0004;
+    filter.categoryBits = CategoryBits.alien;
+    filter.maskBits = ~CategoryBits.alien;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -71,6 +80,7 @@ class Alien extends Entity with ContactCallbacks {
     priority = 10;
     body.linearDamping = 20;
     paint = Paint()..color = const Color.fromARGB(255, 136, 0, 255);
+    body.gravityOverride = alienConfiguration.gravity;
     add(displayAlienLife);
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
@@ -99,7 +109,7 @@ class Alien extends Entity with ContactCallbacks {
     }
   }
   @override
-  void update(double dt){
+  void update(double dt) {
     super.update(dt);
     if(life<=0){
       _rosant.numberOfDeadAliens++;
@@ -108,6 +118,7 @@ class Alien extends Entity with ContactCallbacks {
     AlienController.walk(this, _rosant);
     AlienController.standUp(this, dt);
     AlienController.contact(this, _rosant, dt);
+    AlienController.follenOut(this);
     displayAlienLife.textComponent.text = '$life';
   }
 }

@@ -10,12 +10,12 @@ late Sprite upArrowSprite;
 late Sprite downArrowSprite;
 late Sprite buttonJumpSprite;
 late Sprite buttonAttackSprite;
-late Sprite rosantSprite;
+late Sprite rosantRightSprite;
+late Sprite rosantLeftSprite;
 AudioPlayer player = AudioPlayer();
 bool assetsLoaded = false;
 Vector2 initialWorldLinearVelocity = Vector2(-4, 0);
 double initialBladeAngularVelocity = radians(360);
 Vector2 worldLinearVelocity = initialWorldLinearVelocity;
 double bladeAngularVelocity = initialBladeAngularVelocity;
-double horizon = Screen.worldSize.y - Screen.worldSize.y/3; // 2 * Screen.worldSize.y/3
-double buttonUnit = (Screen.worldSize.y - horizon)/3;
+double horizon = Screen.worldSize.y/2;

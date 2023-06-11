@@ -1,19 +1,19 @@
 import 'dart:math';
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:flame/components.dart' hide Timer;
+import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame_forge2d/flame_forge2d.dart' hide Timer;
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:hpmg001/models/controls/button_down.dart';
 import 'package:hpmg001/models/controls/button_up.dart';
+import 'package:hpmg001/models/rosant/rosant_image.dart';
+import 'package:hpmg001/models/scenery/wall_right.dart';
 import '/models/aliens/alien_bullet.dart';
 import '/models/controls/button_right.dart';
-import '/controllers/alien_controller.dart';
 import '/models/aliens/alien.dart';
-import '../models/rosant/rosant_direction.dart';
-import '../models/rosant/rosant_bullet.dart';
+import '/models/rosant/rosant_bullet.dart';
 import '/models/controls/button_jump.dart';
 import '/models/controls/button_shoot.dart';
 import '/models/controls/button_left.dart';
@@ -23,22 +23,19 @@ import '/models/rosant/rosant.dart';
 import '/models/scenery/background.dart';
 import '/models/scenery/screen.dart';
 import '/models/scenery/display_text.dart';
-import '/models/scenery/wall.dart';
+import '../models/scenery/wall_left.dart';
 import '/utils/camera.dart';
-import '/utils/constants.dart';
-import '/utils/globals.dart';
-import '/utils/load.dart';
+import '/utils/assets.dart';
 
-
-class GameEngineer extends StatefulWidget {
-  const GameEngineer({Key? key}) : super(key: key);
+class GameEpicron extends StatefulWidget {
+  const GameEpicron({Key? key}) : super(key: key);
   @override
-  GameEngineerState createState() => GameEngineerState();
+  GameEpicronState createState() => GameEpicronState();
 }
 Game controlledGameBuilder() {
-  return MyGameEngineer();
+  return MyGameEpicron();
 }
-class GameEngineerState extends State<GameEngineer> {
+class GameEpicronState extends State<GameEpicron> {
   Widget buildGameWidget(BuildContext context) => const GameWidget.controlled(
     gameFactory: controlledGameBuilder
   );
@@ -47,15 +44,17 @@ class GameEngineerState extends State<GameEngineer> {
     return buildGameWidget(context);
   }
 }
-class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
-  MyGameEngineer(): super(zoom: 100, gravity: Vector2(0, 9.81));
+class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector  {
+  MyGameEpicron(): super(zoom: 100, gravity: Vector2(0, 98.1));
  
   //--------------Main Code-------------------------------------------
   
   late Background background;
   late Floor floor;
-  late Wall wall;
+  late WallLeft wallLeft;
+  late WallRight wallRight;
   late Rosant rosant;
+  late RosantImage rosantImage;
   late ButtonLeft buttonLeft;
   late ButtonRight buttonRight;
   late ButtonUp buttonUp;
@@ -64,20 +63,19 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   late ButtonShoot buttonShoot;
   late DisplayText displayRosantLife;
   late DisplayText displayAlienCount;
-  // late DisplayText displayVelocityX;
-  // late DisplayText displayVelocityY;
   late List<int> walkPointersId;
-  // late Timer alienTimer;
+  late List<int> jumpPointersId;
   late int alienCount;
   late int maximumAlienCount;
-  // late List<Alien> aliens;
 
-  void initialize(){
+  void initialize() {
     // Max X 8.36
     rosant = Rosant();
+    rosantImage = RosantImage(rosant: rosant);
     background = Background(rosant: rosant);
     floor = Floor(rosant: rosant);
-    wall = Wall();
+    wallLeft = WallLeft();
+    wallRight = WallRight();
     buttonLeft = ButtonLeft();
     buttonRight = ButtonRight();
     buttonUp = ButtonUp();
@@ -86,18 +84,18 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     buttonShoot = ButtonShoot();
     displayRosantLife = DisplayText(x: 0.2, y: 0.3);
     displayAlienCount = DisplayText(x: Screen.worldSize.x/2, y: 0.3);
-    // displayVelocityX = DisplayText(x: 0.2,y: 0.3);
-    // displayVelocityY = DisplayText(x: 0.2,y: 0.6);
     walkPointersId = [];
+    jumpPointersId = [];
     alienCount = 0;
-    maximumAlienCount = 20;
-    // alien = Alien();
+    maximumAlienCount = 0;
   }
-  void addToWorld(){
+  void addToWorld() {
     add(background);
     add(floor);
-    add(wall);
+    add(wallLeft);
+    add(wallRight);
     add(rosant);
+    add(rosantImage);
     add(buttonLeft);
     add(buttonRight);
     add(buttonUp);
@@ -106,9 +104,6 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     add(buttonShoot);
     add(displayRosantLife);
     add(displayAlienCount);
-    // add(displayVelocityX);
-    // add(displayVelocityY);
-    // add(alien);
   }
   // void destroyBodies(){
   //   backgrounds[0].destroy();
@@ -125,7 +120,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   //   // displayVelocityY.destroy();
   //   // alien.destroy();
   // }
-  void addMainComponents(){
+  void addMainComponents() {
     initialize();
     addToWorld();
   }
@@ -137,7 +132,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   void addAliens() {
     int interval = Random().nextInt(3) + 1;
     Future.delayed(Duration(seconds: interval), (){
-      if(alienCount < maximumAlienCount){
+      if(alienCount < maximumAlienCount && rosant.life > 0){
           Alien alien = Alien(rosant: rosant);
           add(alien);
           addAlienBullet(alien);
@@ -151,7 +146,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   void addAlienBullet(Alien alien) {
     int interval = Random().nextInt(1) + 1;    
     Future.delayed(Duration(seconds: interval), (){
-    if(alien.life > 0){
+    if(alien.life > 0 && rosant.life > 0){
         add(AlienBullet(alien: alien));
         addAlienBullet(alien);
       }
@@ -160,7 +155,7 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
   @override
   Future<void> onLoad() async {
     configCamera(camera);
-    await Assets.instance.loadAssets();
+    await Assets.instance.loadSprites();
     addMainComponents();
     addAliens();
   }
@@ -171,31 +166,51 @@ class MyGameEngineer extends Forge2DGame with MultiTouchTapDetector  {
     if(goingToWalk) {
       walkPointersId.add(pointerId);
     }
+    bool goingToLookUpward = RosantController.checkLookUpwardCondition(rosant, info.eventPosition.game, buttonUp);
+    if(goingToLookUpward) {
+        //animación de mirar hacia arriba
+    }
     bool goingToJump = RosantController.checkJumpCondition(rosant, info.eventPosition.game, buttonJump);
     if(goingToJump){
-      RosantController.jump(rosant);
+      jumpPointersId.add(pointerId);
+      // RosantController.jump(rosant);
+      // rosant.canJump =  true;
     }
     bool goingToShoot = RosantController.checkShootCondition(rosant, info.eventPosition.game, buttonShoot);
     if(goingToShoot){
       add(RosantBullet(rosant: rosant));
     }
   }
-  @override
-  void onTapUp(int pointerId, TapUpInfo info) {
-    super.onTapUp(pointerId, info);
+  void cancelMove(int pointerId){
     if (walkPointersId.contains(pointerId)){
       rosant.goingToWalkRight = false;
       rosant.goingToWalkLeft = false;
       walkPointersId.clear();
     }
+    if (jumpPointersId.contains(pointerId)){
+      rosant.goingToJump = false;
+      jumpPointersId.clear();
+    }
+
+  }
+  @override
+  void onTapUp(int pointerId, TapUpInfo info) {
+    super.onTapUp(pointerId, info);
+    cancelMove(pointerId);
+  }
+  @override
+  void onTapCancel(int pointerId) {
+    super.onTapCancel(pointerId);
+    cancelMove(pointerId);
   }
   @override
   void update(double dt) {
     super.update(dt);
     RosantController.walkRight(rosant);
     RosantController.walkLeft(rosant);
-    displayRosantLife.textComponent.text = 'Rosant\'s life points: ${rosant.life}';
-    displayAlienCount.textComponent.text = 'Number of remaining Aliens : ${maximumAlienCount-rosant.numberOfDeadAliens}';
+    RosantController.jump(rosant);
+    displayRosantLife.textComponent.text = 'Puntos de vida de Rosant: ${rosant.life}';
+    displayAlienCount.textComponent.text = 'Número de Aliens restantes: ${maximumAlienCount-rosant.numberOfDeadAliens}';
   }
   //--------------------------------------------------------------
 }

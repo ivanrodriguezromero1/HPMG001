@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:hpmg001/models/controls/controls_units.dart';
+import '/models/category_bits.dart';
 import '/models/entity.dart';
 import '/models/scenery/screen.dart';
 import '/utils/globals.dart';
@@ -15,10 +17,10 @@ class ButtonJump extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = 2*buttonUnit;
-    _height = 2*buttonUnit;    
-    _x = Screen.worldSize.x - 4*buttonUnit;
-    _y = Screen.worldSize.y - 2*buttonUnit;
+    _width = 2*ControlsUnits.width;
+    _height = 2*ControlsUnits.height;
+    _x = Screen.worldSize.x - 4*ControlsUnits.width;
+    _y = Screen.worldSize.y - 2*ControlsUnits.height;
   }
   @override
   Body createBody() {
@@ -34,6 +36,9 @@ class ButtonJump extends Entity {
       Vector2(_width , _height), 
       Vector2(0, _height)]);
     final fixtureDef = FixtureDef(shape);
+    final filter = Filter();
+    filter.maskBits = CategoryBits.none;
+    fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
   @override
@@ -41,6 +46,7 @@ class ButtonJump extends Entity {
     await super.onLoad();
     paint = Paint()..color = const Color.fromARGB(255, 0, 255, 0);
     renderBody = false;
+    priority = 16;
     final sprite = buttonJumpSprite;
     add(SpriteComponent(
       sprite: sprite,

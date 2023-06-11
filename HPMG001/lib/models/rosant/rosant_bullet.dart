@@ -1,5 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
+import 'package:hpmg001/models/category_bits.dart';
 import '/models/aliens/alien.dart';
 import 'rosant_direction.dart';
 import '/models/rosant/rosant.dart';
@@ -17,8 +18,8 @@ class RosantBullet extends Projectile {
   late RosantDirection _direction;
   @override
   void initializing(){
-    _x = _rosant.body.position.x;
-    _y = _rosant.body.position.y - _rosant.height/5;
+    _x = _rosant.body.position.x + _rosant.width/2;
+    _y = _rosant.body.position.y + _rosant.height/2;
     _width = 0.1;
     _height = 0.08;
     _direction = _rosant.direction;
@@ -38,8 +39,8 @@ class RosantBullet extends Projectile {
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();
-    filter.categoryBits = 0x0006;
-    filter.maskBits = 0xFFFF & ~0x0002;
+    filter.categoryBits = CategoryBits.rosantBullet;
+    filter.maskBits = CategoryBits.all & ~CategoryBits.rosant;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -51,17 +52,16 @@ class RosantBullet extends Projectile {
     paint = Paint()..color = const Color.fromARGB(255, 255, 0, 0);
     body.gravityOverride = Vector2(0, 0);
     Vector2 force;
-    double fx= 8;
-    double fy = 0;
+    double magnitude = 8;
     switch(_direction){
       case RosantDirection.right:
-        force = Vector2(fx, fy);
+        force = Vector2(magnitude, 0);
         break;
       case RosantDirection.left:
-        force = Vector2(-fx, fy);
+        force = Vector2(-magnitude, 0);
         break;
       default:
-        force = Vector2(fx, fy);
+        force = Vector2(0, -magnitude);
         break;
     }    
     body.applyLinearImpulse(force);

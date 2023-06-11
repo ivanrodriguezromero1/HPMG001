@@ -8,7 +8,8 @@ class Screen {
   static Vector2 get worldSize => _worldSize;
 
   static void setScreenSize(Vector2 size) {
-    _screenSize = size;
-    _worldSize = size/100;
+    _screenSize = size*10;
+    // _worldSize = size/100;
+    _worldSize = size/10;
   }
 }

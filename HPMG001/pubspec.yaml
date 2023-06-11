@@ -15,7 +15,7 @@ dependencies:
   flame: ^1.6.0
   flame_forge2d: ^0.12.5
   audioplayers: ^4.0.1
-
+  xml: ^6.2.2
 
 dev_dependencies:
   flutter_test:
@@ -30,5 +30,6 @@ flutter:
   assets:
   - assets/images/
   - assets/audio/
+  - assets/xml/
 
 

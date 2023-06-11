@@ -14,14 +14,14 @@ class DisplayText extends Entity {
   
   @override
   void initializing(){
-    _xScale = 0.4;
-    _yScale = 0.4;
-    _fontSize = 0.5;
+    _xScale = 0.5;
+    _yScale = 0.5;
+    _fontSize = 5;
     textComponent = TextComponent(
       position: Vector2.zero(),
       text: '0',
       textRenderer: TextPaint(
-        style: TextStyle(color: const Color.fromARGB(255, 1, 1, 1), fontSize: _fontSize)
+        style: TextStyle(color:const Color.fromARGB(255, 255, 255, 255), fontSize: _fontSize)
       ),
     )..scale = Vector2(_xScale, _yScale);
   }
@@ -32,11 +32,7 @@ class DisplayText extends Entity {
       position: Vector2(_x, _y),
       type: BodyType.static,
     );
-    final shape = PolygonShape()..setAsBoxXY(0,0);
-    final fixtureDef = FixtureDef(shape)
-      ..density = 10
-      ..restitution = .1;
-    return world.createBody(bodyDef)..createFixture(fixtureDef);
+    return world.createBody(bodyDef);
   }
   @override
   Future<void> onLoad() async {

@@ -15,13 +15,14 @@ class Background extends Entity {
   late double _y;
   late double _width;
   late double _height;
+  late SpriteComponent spriteComponent;
   double get width => _width;
   @override
   void initializing(){
     _x = 0;
     _y = 0;
-    _width = 2*Screen.worldSize.x + 2;//49.83, 2*Screen.worldSize.x + 2
-    _height = horizon;//2*Screen.worldSize.y/3
+    _width = 4*Screen.worldSize.x;
+    _height = Screen.worldSize.y;
   }
   @override
   Body createBody() {
@@ -32,7 +33,7 @@ class Background extends Entity {
       type: BodyType.kinematic,
     );
 
-    final shape = EdgeShape()..set(Vector2(-1, 0), Vector2(_width, 0));
+    final shape = EdgeShape()..set(Vector2(0, 0), Vector2(_width, 0));
     final fixtureDef = FixtureDef(shape)
       ..density = 10
       ..friction = 0.1
@@ -44,12 +45,14 @@ class Background extends Entity {
     await super.onLoad();
     renderBody = false;
     final sprite = backgroundSprite;
-    add(SpriteComponent(
+    spriteComponent = SpriteComponent(
       sprite: sprite,
       size: Vector2(_width, _height),
-      position: Vector2(0,0),
-      anchor: Anchor.topLeft
-    ));
+      position: Vector2(0, 0),
+      anchor: Anchor.topLeft,
+    );
+
+    add(spriteComponent);
   }
   @override
   void update(double dt){

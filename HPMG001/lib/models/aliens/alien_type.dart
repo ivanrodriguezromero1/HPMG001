@@ -1,4 +1,5 @@
 enum AlienType {
   typeA,
-  typeB
+  typeB,
+  typeC
 }

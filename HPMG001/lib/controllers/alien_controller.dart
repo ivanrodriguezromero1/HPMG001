@@ -1,6 +1,6 @@
-import '../services/alien_services.dart';
-import '../models/aliens/alien.dart';
-import '../models/rosant/rosant.dart';
+import '/services/alien_services.dart';
+import '/models/aliens/alien.dart';
+import '/models/rosant/rosant.dart';
 
 class AlienController{
   static void walk(Alien alien, Rosant rosant){
@@ -11,5 +11,8 @@ class AlienController{
   }
   static void contact(Alien alien, Rosant rosant, double dt){
     return AlienService.contact(alien, rosant, dt);
+  }
+  static void follenOut(Alien alien){
+    return AlienService.follenOut(alien);
   }
 }

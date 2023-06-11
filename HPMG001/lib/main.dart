@@ -7,6 +7,6 @@ void main() async {
   await Flame.device.fullScreen();
   await Flame.device.setLandscape();
   runApp(const MaterialApp(
-    home: GameEngineer(),
+    home: GameEpicron(),
   ));
 }

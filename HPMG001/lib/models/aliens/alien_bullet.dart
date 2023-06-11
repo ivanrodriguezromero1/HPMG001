@@ -1,7 +1,9 @@
 import 'dart:math';
-
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
+import 'package:hpmg001/models/aliens/alien_units.dart';
+import 'package:hpmg001/models/category_bits.dart';
+import 'package:hpmg001/models/scenery/display_text.dart';
 import '/models/rosant/rosant.dart';
 import '/models/aliens/alien.dart';
 import '/models/aliens/alien_direction.dart';
@@ -18,16 +20,16 @@ class AlienBullet extends Projectile {
   late double _height;
   late AlienDirection _direction;
   @override
-  void initializing(){
-    _x = _alien.body.position.x;
-    _y = _alien.body.position.y - _alien.height/10;
+  void initializing() {
+    _x = _alien.body.position.x + _alien.width/2;
+    _y = _alien.body.position.y + _alien.height/3;
     _width = 0.1;
     _height = 0.1;
     _direction = _alien.direction;
     _alien.body.setTransform(_alien.body.position, 0);
   }
   @override
-  Body createBody(){
+  Body createBody() {
     initializing();
     final bodyDef = BodyDef(
       userData: this,
@@ -40,8 +42,8 @@ class AlienBullet extends Projectile {
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();
-    filter.categoryBits = 0x0005;
-    filter.maskBits = 0xFFFF & ~0x0004 & ~0x0005;
+    filter.categoryBits = CategoryBits.alienBullet;
+    filter.maskBits = CategoryBits.all & ~CategoryBits.alien & ~CategoryBits.alienBullet;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -50,20 +52,19 @@ class AlienBullet extends Projectile {
     await super.onLoad();
     renderBody = true;
     priority = 5;
-    paint = Paint()..color = const Color.fromARGB(255, 123, 0, 255);
+    paint = Paint()..color = const Color.fromARGB(255, 229, 255, 0);
     body.gravityOverride = Vector2(0, 0);
     Vector2 force;
-    double fx= 0.3;
-    double fy = 0;
+    double magnitude= 0.3;
     switch(_direction){
       case AlienDirection.right:
-        force = Vector2(fx, fy);
+        force = Vector2(magnitude, 0);
         break;
       case AlienDirection.left:
-        force = Vector2(-fx, fy);
+        force = Vector2(-magnitude, 0);
         break;
       default:
-        force = Vector2(fx, fy);
+        force = Vector2(0, magnitude);
         break;
     }    
     body.applyLinearImpulse(force);
@@ -72,7 +73,10 @@ class AlienBullet extends Projectile {
   void beginContact(Object other, Contact contact) {
     super.beginContact(other, contact);
     if(other is Rosant){
-      other.life--;
+      if(other.life >= 1){
+        other.life--;
+      }
     }
   }
+
 }
