@@ -20,14 +20,14 @@ class RosantServices {
   static void walkLeft(Rosant rosant){
     if(rosant.goingToWalkLeft){
       // rosant.body.setTransform(rosant.body.position, 0);
-      final force = Vector2(-12, 0);
+      final force = Vector2(-15, 0);
       rosant.body.applyLinearImpulse(force);
     }
   }
   static void walkRight(Rosant rosant){
     if(rosant.goingToWalkRight){
       // rosant.body.setTransform(rosant.body.position, 0);
-      final force = Vector2(12, 0);
+      final force = Vector2(15, 0);
       rosant.body.applyLinearImpulse(force);
     }
   }
