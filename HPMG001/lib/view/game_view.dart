@@ -7,7 +7,7 @@ import 'package:flame/game.dart';
 import 'package:flame/input.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:hpmg001/models/controls/button.dart';
+import '/models/controls/button.dart';
 import '/models/controls/button_down.dart';
 import '/models/controls/button_up.dart';
 import '/models/controls/controls_units.dart';
@@ -58,11 +58,8 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
   late WallLeft wallLeft;
   late WallRight wallRight;
   late Rosant rosant;
-  // late RosantImage rosantImage;
   late ButtonLeft buttonLeft;
   late ButtonRight buttonRight;
-  // late ButtonUp buttonUp;
-  // late ButtonDown buttonDown;
   late ButtonJump buttonJump;
   late ButtonShoot buttonShoot;
   late DisplayText displayRosantLife;
@@ -71,21 +68,15 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
   late List<int> jumpPointersId;
   late int alienCount;
   late int maximumAlienCount;
-  late Button leftArrowButton;
-  // late ButtonComponent button;
 
   void initialize() {
-    // Max X 8.36
     rosant = Rosant();
-    // rosantImage = RosantImage(rosant: rosant);
     background = Background(rosant: rosant);
     floor = Floor(rosant: rosant);
     wallLeft = WallLeft();
     wallRight = WallRight();
     buttonLeft = ButtonLeft();
     buttonRight = ButtonRight();
-    // buttonUp = ButtonUp();
-    // buttonDown = ButtonDown();
     buttonJump = ButtonJump();
     buttonShoot = ButtonShoot();
     displayRosantLife = DisplayText(x: 0.2, y: 0.3);
@@ -94,61 +85,24 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     jumpPointersId = [];
     alienCount = 0;
     maximumAlienCount = 0;
-    leftArrowButton = Button(
-      position: Vector2(0, Screen.worldSize.y - ControlsUnits.height),
-      sprite: leftArrowSprite,
-      onPressed: (){
-        print("onPressed");
-      },
-      onReleased: (){
-        print("onReleased");
-      }, 
-      onCancelled: (){
-        print("onCancelled");
-      }
-    );
   }
   void addToWorld() {
-    // add(leftArrowButton);
     add(background);
     add(floor);
     add(wallLeft);
     add(wallRight);
     add(rosant);
-    // add(rosantImage);
     add(buttonLeft);
     add(buttonRight);
-    // add(buttonUp);
-    // add(buttonDown);
     add(buttonJump);
     add(buttonShoot);
     add(displayRosantLife);
     add(displayAlienCount);
   }
-  // void destroyBodies(){
-  //   backgrounds[0].destroy();
-  //   backgrounds[1].destroy();
-  //   floors[0].destroy();
-  //   floors[1].destroy();
-  //   wall.destroy();
-  //   rosant.destroy();
-  //   joystickLeft.destroy();
-  //   buttonJump.destroy();
-  //   buttonShoot.destroy();
-  //   displayRosantLife.destroy();
-  //   // displayVelocityX.destroy();
-  //   // displayVelocityY.destroy();
-  //   // alien.destroy();
-  // }
   void addMainComponents() {
     initialize();
     addToWorld();
   }
-  // void resetWorld(){
-  //   // player.play(AssetSource(loseSoundFilename));
-  //   // destroyBodies();
-  //   addMainComponents();
-  // }
   void addAliens() {
     int interval = Random().nextInt(3) + 1;
     Future.delayed(Duration(seconds: interval), (){
@@ -191,41 +145,40 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     //     //animación de mirar hacia arriba
     // }
     bool goingToJump = RosantController.checkJumpCondition(rosant, info.eventPosition.game, buttonJump);
-    if(goingToJump){
+    if(goingToJump) {
       jumpPointersId.add(pointerId);
       // RosantController.jump(rosant);
       // rosant.canJump =  true;
     }
     bool goingToShoot = RosantController.checkShootCondition(rosant, info.eventPosition.game, buttonShoot);
-    if(goingToShoot){
-      // print("hola");
+    if(goingToShoot) {
       add(RosantBullet(rosant: rosant));
     }
-    // button.onTapDown(info);
   }
   void cancelMove(int pointerId){
     if (walkPointersId.contains(pointerId)){
       rosant.goingToWalkRight = false;
       rosant.goingToWalkLeft = false;
       buttonLeft.updateSprite(1);
+      buttonRight.updateSprite(1);
       walkPointersId.clear();
     }
     if (jumpPointersId.contains(pointerId)){
       rosant.goingToJump = false;
+      buttonJump.updateSprite(1);
       jumpPointersId.clear();
     }
+    buttonShoot.updateSprite(1);
   }
   @override
   void onTapUp(int pointerId, TapUpInfo info) {
     super.onTapUp(pointerId, info);
     cancelMove(pointerId);
-    // button.onTapUp(info);
   }
   @override
   void onTapCancel(int pointerId) {
     super.onTapCancel(pointerId);
     cancelMove(pointerId);
-    // button.onTapCancel();
   }
   @override
   void update(double dt) {

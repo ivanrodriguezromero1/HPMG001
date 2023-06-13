@@ -1,48 +1,64 @@
 import 'dart:ui';
 import 'package:flame/components.dart';
-import 'package:flame/game.dart';
-import 'package:flame/input.dart';
+import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:hpmg001/models/controls/controls_units.dart';
+import '/models/category_bits.dart';
+import '/models/entity.dart';
 
-class Button extends FlameGame with HasTappables{
-  final Sprite _sprite;
-  final Vector2 _position;
-  final void Function() _onPressed;
-  final void Function() _onReleased;
-  final void Function() _onCancelled;
-  Button(
-    { 
-      required Sprite sprite,
-      required Vector2 position,
-      required void Function() onPressed,
-      required void Function() onReleased,
-      required void Function() onCancelled,
-    }): 
-    _position = position, 
-    _sprite = sprite,
-    _onPressed = onPressed,
-    _onReleased = onReleased,
-    _onCancelled = onCancelled;
-
-  late ButtonComponent button;
+class Button extends Entity {
+  late Sprite sprite;
+  late Vector2 position;
+  late double _width;
+  late double _height;
+  late SpriteComponent _spriteComponent;
+  double get width => _width;
+  double get height => _height;
+  @override
+  void initializing(){
+    _width = ControlsUnits.width;
+    _height = ControlsUnits.height;
+  }
+  @override
+  Body createBody() {
+    initializing();
+    final bodyDef = BodyDef(
+      userData: this,
+      position: position,
+      type: BodyType.kinematic,
+    );
+    final shape = PolygonShape()..set(
+      [Vector2(0,0),
+      Vector2(_width , 0), 
+      Vector2(_width , _height), 
+      Vector2(0, _height)]);
+    final fixtureDef = FixtureDef(shape);
+    final filter = Filter();
+    filter.maskBits = CategoryBits.none;
+    fixtureDef.filter = filter;
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
+  }
   @override
   Future<void> onLoad() async {
-    button = ButtonComponent(
-      button: SpriteComponent(
-        sprite: _sprite,
-        size: Vector2(ControlsUnits.width, ControlsUnits.height)
-      ),
-      buttonDown: SpriteComponent(
-        sprite: _sprite,
-        size: Vector2(ControlsUnits.width, ControlsUnits.height),
-        paint: Paint()..color = const Color.fromARGB(150, 255, 255, 255)
-      ),
-      position: _position,
-      onPressed: _onPressed,
-      onReleased: _onReleased,
-      onCancelled: _onCancelled,
+    await super.onLoad();
+    renderBody = false;
+    priority = 16;
+    addSprite(1);
+  }
+  SpriteComponent createSpriteComponent(double opacity){
+    return SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0,-.02),
+      anchor: Anchor.topLeft,
+      paint: Paint()..color = Color.fromRGBO(255, 255, 255, opacity)
     );
-    priority = 20;
-    add(button);
+  }
+  void addSprite(double opacity){
+    _spriteComponent = createSpriteComponent(opacity);
+    add(_spriteComponent);
+  }
+  void updateSprite(double opacity){
+    remove(_spriteComponent);
+    addSprite(opacity);
   }
 }

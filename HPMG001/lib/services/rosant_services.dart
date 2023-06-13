@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flame/components.dart';
-import '/utils/globals.dart';
 import '/models/controls/button_right.dart';
 import '/models/controls/button_up.dart';
 import '/models/controls/button_shoot.dart';
@@ -12,23 +9,19 @@ import '/models/rosant/rosant.dart';
 
 class RosantServices {
   static void jump(Rosant rosant){
-    // print(rosant.goingToJump);
     if(rosant.goingToJump && rosant.canJump){
-      // rosant.body.setTransform(rosant.body.position, 0);
       final force = Vector2(0, -400);
       rosant.body.applyLinearImpulse(force);
     }
   }
   static void walkLeft(Rosant rosant){
     if(rosant.goingToWalkLeft){
-      // rosant.body.setTransform(rosant.body.position, 0);
       final force = Vector2(-15, 0);
       rosant.body.applyLinearImpulse(force);
     }
   }
   static void walkRight(Rosant rosant){
     if(rosant.goingToWalkRight){
-      // rosant.body.setTransform(rosant.body.position, 0);
       final force = Vector2(15, 0);
       rosant.body.applyLinearImpulse(force);
     }
@@ -44,6 +37,7 @@ class RosantServices {
       rosant.goingToWalkRight = true;
       rosant.goingToWalkLeft = false;
       rosant.direction = RosantDirection.right;
+      buttonRight.updateSprite(0.5);
       buttonLeft.updateSprite(1);
       return true;
     } else if (touch.x >= bLeftx && touch.x < bLeftx + buttonLeft.width
@@ -52,9 +46,9 @@ class RosantServices {
       rosant.goingToWalkRight = false;
       rosant.direction = RosantDirection.left;
       buttonLeft.updateSprite(0.5);
+      buttonRight.updateSprite(1);
       return true;
     } else {
-      buttonLeft.updateSprite(1);
       return false;
     }
   }
@@ -74,15 +68,11 @@ class RosantServices {
     if(rosant.life <= 0) return false;
     final bx = buttonJump.body.position.x;
     final by = buttonJump.body.position.y;
-    // final rvy = rosant.body.linearVelocity.y;
-    // final rfy = rosant.body.force.y;
     if(touch.x >= bx && touch.x <= bx + buttonJump.width  
       && touch.y >= by && touch.y <= by + buttonJump.height
-      // && rosant.canJump
-      // && rvy.round() == 0 
-      // && rfy.round() == 0
       ) {
         rosant.goingToJump = true;
+        buttonJump.updateSprite(0.5);
         return true;
     } else {
       return false;
@@ -95,6 +85,7 @@ class RosantServices {
     if(touch.x >= bx && touch.x <= bx + buttonShoot.width  
       && touch.y >= by && touch.y <= by + buttonShoot.height
       ) {
+        buttonShoot.updateSprite(0.5);
         return true;
     } else {
       return false;
