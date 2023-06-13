@@ -19,8 +19,8 @@ class ButtonUp extends Entity {
   void initializing(){
     _width = ControlsUnits.width;
     _height = ControlsUnits.height;   
-    _x = ControlsUnits.width;
-    _y = Screen.worldSize.y - 3*ControlsUnits.height;
+    _x = 0;
+    _y = Screen.worldSize.y - 2*ControlsUnits.height;
   }
   @override
   Body createBody() {
@@ -56,7 +56,7 @@ class ButtonUp extends Entity {
       size: Vector2(_width, _height),
       position: Vector2(0, 0),
       anchor: Anchor.topLeft,
-      paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.5)
+      paint: Paint()..color = Color.fromRGBO(255, 255, 255, ControlsUnits.opacity)
     ));
   }
 }

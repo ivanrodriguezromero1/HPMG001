@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flame/components.dart';
 import '/utils/globals.dart';
 import '/models/controls/button_right.dart';
@@ -13,7 +15,7 @@ class RosantServices {
     // print(rosant.goingToJump);
     if(rosant.goingToJump && rosant.canJump){
       // rosant.body.setTransform(rosant.body.position, 0);
-      final force = Vector2(0, -200);
+      final force = Vector2(0, -400);
       rosant.body.applyLinearImpulse(force);
     }
   }
@@ -42,14 +44,17 @@ class RosantServices {
       rosant.goingToWalkRight = true;
       rosant.goingToWalkLeft = false;
       rosant.direction = RosantDirection.right;
+      buttonLeft.updateSprite(1);
       return true;
     } else if (touch.x >= bLeftx && touch.x < bLeftx + buttonLeft.width
       && touch.y >= bLefty && touch.y <= bLefty + buttonLeft.height) {
       rosant.goingToWalkLeft = true;
       rosant.goingToWalkRight = false;
       rosant.direction = RosantDirection.left;
+      buttonLeft.updateSprite(0.5);
       return true;
     } else {
+      buttonLeft.updateSprite(1);
       return false;
     }
   }

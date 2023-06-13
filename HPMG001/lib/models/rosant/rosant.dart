@@ -49,12 +49,12 @@ class Rosant extends Entity {
       position: Vector2(_x, _y),
       type: BodyType.dynamic,
     );
-    // final shape = PolygonShape()..set(
-    //   [Vector2(0, 0),
-    //   Vector2(_width , 0),
-    //   Vector2(_width , _height),
-    //   Vector2(0, _height)]);
-    final shape = CircleShape()..radius = _height/4;
+    final shape = PolygonShape()..set(
+      [Vector2(0, 0),
+      Vector2(_width , 0),
+      Vector2(_width , _height),
+      Vector2(0, _height)]);
+    // final shape = CircleShape()..radius = _height/4;
     final fixtureDef = FixtureDef(shape)
       ..density = 0.4
       ..friction = 0.3
@@ -71,13 +71,13 @@ class Rosant extends Entity {
     priority = 10;
     body.linearDamping = 1;
     // body.gravityOverride = Vector2(0, 0);
-    // final sprite = rosantRightSprite;
-    // add(SpriteComponent(
-    //   sprite: sprite,
-    //   size: Vector2(_width, _height),
-    //   position: Vector2(0, 0),
-    //   anchor: Anchor.topLeft
-    // ));
+    final sprite = rosantRightSprite;
+    add(SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0, 0),
+      anchor: Anchor.topLeft
+    ));
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,

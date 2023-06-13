@@ -13,6 +13,8 @@ class ButtonLeft extends Entity {
   late double _y;
   late double _width;
   late double _height;
+  late bool isPressed;
+  late SpriteComponent _spriteComponent;
   double get width => _width;
   double get height => _height;
   @override
@@ -20,7 +22,8 @@ class ButtonLeft extends Entity {
     _width = ControlsUnits.width;
     _height = ControlsUnits.height;
     _x = 0;
-    _y = Screen.worldSize.y - 2*ControlsUnits.height;
+    _y = Screen.worldSize.y - ControlsUnits.height;
+    isPressed = false;
   }
   @override
   Body createBody() {
@@ -50,13 +53,23 @@ class ButtonLeft extends Entity {
     paint = Paint()..color = const Color.fromARGB(255, 0, 0, 255);
     renderBody = false;
     priority = 16;
-    final sprite = leftArrowSprite;
-    add(SpriteComponent(
-      sprite: sprite,
+    addSprite(1);
+  }
+  SpriteComponent createSpriteComponent(double opacity){
+    return SpriteComponent(
+      sprite: leftArrowSprite,
       size: Vector2(_width, _height),
       position: Vector2(0,-.02),
       anchor: Anchor.topLeft,
-      paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.5)
-    ));
+      paint: Paint()..color = Color.fromRGBO(255, 255, 255, opacity)
+    );
+  }
+  void addSprite(double opacity){
+    _spriteComponent = createSpriteComponent(opacity);
+    add(_spriteComponent);
+  }
+  void updateSprite(double opacity){
+    remove(_spriteComponent);
+    addSprite(opacity);
   }
 }

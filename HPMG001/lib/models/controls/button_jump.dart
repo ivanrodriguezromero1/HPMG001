@@ -17,10 +17,10 @@ class ButtonJump extends Entity {
   double get height => _height;
   @override
   void initializing(){
-    _width = 2*ControlsUnits.width;
-    _height = 2*ControlsUnits.height;
-    _x = Screen.worldSize.x - 4*ControlsUnits.width;
-    _y = Screen.worldSize.y - 2*ControlsUnits.height;
+    _width = ControlsUnits.width;
+    _height = ControlsUnits.height;
+    _x = Screen.worldSize.x - ControlsUnits.width;
+    _y = Screen.worldSize.y - ControlsUnits.height;
   }
   @override
   Body createBody() {
@@ -53,7 +53,7 @@ class ButtonJump extends Entity {
       size: Vector2(_width, _height),
       position: Vector2(0,-.02),
       anchor: Anchor.topLeft,
-      paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.4)
+      paint: Paint()..color = Color.fromRGBO(255, 255, 255, ControlsUnits.opacity)
     ));
   }
 }

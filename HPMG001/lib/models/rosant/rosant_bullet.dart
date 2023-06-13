@@ -20,10 +20,10 @@ class RosantBullet extends Projectile {
   void initializing(){
     _x = _rosant.body.position.x + _rosant.width/2;
     _y = _rosant.body.position.y + _rosant.height/2;
-    _width = 0.1;
-    _height = 0.08;
+    _width = 1;
+    _height = 0.8;
     _direction = _rosant.direction;
-    _rosant.body.setTransform(_rosant.body.position, 0);
+    // _rosant.body.setTransform(_rosant.body.position, 0);
   }
   @override
   Body createBody(){
@@ -40,7 +40,7 @@ class RosantBullet extends Projectile {
       ..restitution = 0.8;
     final filter = Filter();
     filter.categoryBits = CategoryBits.rosantBullet;
-    filter.maskBits = CategoryBits.all & ~CategoryBits.rosant;
+    filter.maskBits = CategoryBits.all & ~CategoryBits.rosant & ~CategoryBits.rosantBullet;
     fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
@@ -52,7 +52,7 @@ class RosantBullet extends Projectile {
     paint = Paint()..color = const Color.fromARGB(255, 255, 0, 0);
     body.gravityOverride = Vector2(0, 0);
     Vector2 force;
-    double magnitude = 8;
+    double magnitude = 4000;
     switch(_direction){
       case RosantDirection.right:
         force = Vector2(magnitude, 0);
@@ -75,4 +75,5 @@ class RosantBullet extends Projectile {
       }
     }
   }
+ 
 }

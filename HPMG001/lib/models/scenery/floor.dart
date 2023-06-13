@@ -1,4 +1,5 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:hpmg001/models/controls/controls_units.dart';
 import '/utils/xml.dart';
 import '/models/rosant/rosant.dart';
 import '/models/entity.dart';
@@ -19,7 +20,7 @@ class Floor extends Entity with ContactCallbacks {
   void initializing(){
     _x = 0;
     _y = 0;
-    _width = 4*Screen.worldSize.x;
+    _width = 2*Screen.worldSize.x;
     // _height = 3*buttonUnit;
     contacts = [];
   }
@@ -31,22 +32,29 @@ class Floor extends Entity with ContactCallbacks {
       position: Vector2(_x, _y),
       type: BodyType.kinematic,
     );
-    return world.createBody(bodyDef);
+    final shape = EdgeShape()..set(
+      Vector2(0, Screen.worldSize.y - ControlsUnits.height), 
+      Vector2(Screen.worldSize.x, Screen.worldSize.y - ControlsUnits.height)
+      );
+    final fixtureDef = FixtureDef(shape)
+      ..density = 1000
+      ..friction =  0.5;
+    return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
   @override
   Future<void> onLoad() async {
     await super.onLoad();
     renderBody = false;
     priority = 15;
-    final polygons  = await Xml.createBodiesFromXml();
-    for (final polygonVertices in polygons) {
-      final shape = PolygonShape()..set(polygonVertices);
-      final fixtureDef = FixtureDef(shape)
-        ..density = 100
-        ..friction = 0.5;
-        // ..restitution = 0;
-      body.createFixture(fixtureDef);
-    }
+    // final polygons  = await Xml.createBodiesFromXml();
+    // for (final polygonVertices in polygons) {
+    //   final shape = PolygonShape()..set(polygonVertices);
+    //   final fixtureDef = FixtureDef(shape)
+    //     ..density = 100
+    //     ..friction = 0.5;
+    //     // ..restitution = 0;
+    //   body.createFixture(fixtureDef);
+    // }
     // final sprite = floorSprite;
     // add(SpriteComponent(
     //   sprite: sprite,

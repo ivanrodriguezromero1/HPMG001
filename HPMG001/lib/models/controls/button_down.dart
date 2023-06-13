@@ -19,7 +19,7 @@ class ButtonDown extends Entity {
   void initializing(){
     _width = ControlsUnits.width;
     _height = ControlsUnits.height;
-    _x = ControlsUnits.width;
+    _x = 0;
     _y = Screen.worldSize.y - ControlsUnits.height;
   }
   @override
@@ -56,7 +56,7 @@ class ButtonDown extends Entity {
       size: Vector2(_width, _height),
       position: Vector2(0,-.02),
       anchor: Anchor.topLeft,
-      paint: Paint()..color = const Color.fromRGBO(255, 255, 255, 0.5)
+      paint: Paint()..color = Color.fromRGBO(255, 255, 255, ControlsUnits.opacity)
     ));
   }
 }
