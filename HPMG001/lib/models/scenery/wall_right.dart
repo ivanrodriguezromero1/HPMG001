@@ -24,7 +24,7 @@ class WallRight extends Entity with ContactCallbacks {
       type: BodyType.kinematic,
     );
     final shape = EdgeShape()..set(
-      Vector2(Screen.worldSize.x, 0), Vector2(Screen.worldSize.x, _height));
+      Vector2(Screen.worldSize.x, 0), Vector2(2*Screen.worldSize.x, _height));
     final fixtureDef = FixtureDef(shape)
       ..density = 10
       ..restitution = 0.01;
@@ -36,7 +36,8 @@ class WallRight extends Entity with ContactCallbacks {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    // renderBody = false;
+    renderBody = false;
+    // priority = 16;
   }
   @override
   void beginContact(Object other, Contact contact) {

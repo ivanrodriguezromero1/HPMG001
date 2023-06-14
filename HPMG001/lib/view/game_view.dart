@@ -1,22 +1,18 @@
-import 'dart:math';
 import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/input.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import '/models/controls/button.dart';
-import '/models/controls/button_down.dart';
-import '/models/controls/button_up.dart';
-import '/models/controls/controls_units.dart';
-import '/models/rosant/rosant_image.dart';
+import 'package:hpmg001/models/controls/button_ax.dart';
+import 'package:hpmg001/models/controls/button_bow.dart';
+import 'package:hpmg001/models/controls/button_macana.dart';
+import 'package:hpmg001/models/controls/button_physical_attack.dart';
+import '/models/aliens/alien_add_world.dart';
 import '/models/scenery/wall_right.dart';
 import '/utils/globals.dart';
-import '/models/aliens/alien_bullet.dart';
 import '/models/controls/button_right.dart';
-import '/models/aliens/alien.dart';
 import '/models/rosant/rosant_bullet.dart';
 import '/models/controls/button_jump.dart';
 import '/models/controls/button_shoot.dart';
@@ -49,7 +45,7 @@ class GameEpicronState extends State<GameEpicron> {
   }
 }
 class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables  {
-  MyGameEpicron(): super(zoom: 100, gravity: Vector2(0, 98.1));
+  MyGameEpicron(): super(zoom: 100, gravity: Globals.gravity);
  
   //--------------Main Code-------------------------------------------
   
@@ -61,13 +57,16 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
   late ButtonLeft buttonLeft;
   late ButtonRight buttonRight;
   late ButtonJump buttonJump;
+  late ButtonPhysicalAttack buttonPhysicalAttack;
   late ButtonShoot buttonShoot;
+  late ButtonAx buttonAx;
+  late ButtonBow buttonBow;
+  late ButtonMacana buttonMacana;
   late DisplayText displayRosantLife;
   late DisplayText displayAlienCount;
   late List<int> walkPointersId;
   late List<int> jumpPointersId;
-  late int alienCount;
-  late int maximumAlienCount;
+  late AlienAddWorld alienAddWorld;
 
   void initialize() {
     rosant = Rosant();
@@ -78,13 +77,16 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     buttonLeft = ButtonLeft();
     buttonRight = ButtonRight();
     buttonJump = ButtonJump();
+    buttonPhysicalAttack = ButtonPhysicalAttack();
     buttonShoot = ButtonShoot();
+    buttonAx = ButtonAx();
+    buttonBow = ButtonBow();
+    buttonMacana = ButtonMacana();
     displayRosantLife = DisplayText(x: 0.2, y: 0.3);
     displayAlienCount = DisplayText(x: Screen.worldSize.x/2, y: 0.3);
     walkPointersId = [];
     jumpPointersId = [];
-    alienCount = 0;
-    maximumAlienCount = 0;
+    alienAddWorld = AlienAddWorld(rosant: rosant);
   }
   void addToWorld() {
     add(background);
@@ -95,7 +97,11 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     add(buttonLeft);
     add(buttonRight);
     add(buttonJump);
+    add(buttonPhysicalAttack);
     add(buttonShoot);
+    add(buttonAx);
+    add(buttonBow);
+    add(buttonMacana);
     add(displayRosantLife);
     add(displayAlienCount);
   }
@@ -103,35 +109,12 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     initialize();
     addToWorld();
   }
-  void addAliens() {
-    int interval = Random().nextInt(3) + 1;
-    Future.delayed(Duration(seconds: interval), (){
-      if(alienCount < maximumAlienCount && rosant.life > 0){
-          Alien alien = Alien(rosant: rosant);
-          add(alien);
-          addAlienBullet(alien);
-          alienCount++;
-          addAliens();
-        } else {
-        alienCount = 0;
-      }
-    });
-  }
-  void addAlienBullet(Alien alien) {
-    int interval = Random().nextInt(1) + 1;    
-    Future.delayed(Duration(seconds: interval), (){
-    if(alien.life > 0 && rosant.life > 0){
-        add(AlienBullet(alien: alien));
-        addAlienBullet(alien);
-      }
-    });
-  }
   @override
   Future<void> onLoad() async {
     configCamera(camera);
     await Assets.instance.loadSprites();
     addMainComponents();
-    addAliens();
+    alienAddWorld.addAliens(add);
   }
   @override
   void onTapDown(int pointerId, TapDownInfo info) {
@@ -140,15 +123,9 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     if(goingToWalk) {
       walkPointersId.add(pointerId);
     }
-    // bool goingToLookUpward = RosantController.checkLookUpwardCondition(rosant, info.eventPosition.game, buttonUp);
-    // if(goingToLookUpward) {
-    //     //animación de mirar hacia arriba
-    // }
     bool goingToJump = RosantController.checkJumpCondition(rosant, info.eventPosition.game, buttonJump);
     if(goingToJump) {
       jumpPointersId.add(pointerId);
-      // RosantController.jump(rosant);
-      // rosant.canJump =  true;
     }
     bool goingToShoot = RosantController.checkShootCondition(rosant, info.eventPosition.game, buttonShoot);
     if(goingToShoot) {
@@ -187,7 +164,8 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     RosantController.walkLeft(rosant);
     RosantController.jump(rosant);
     displayRosantLife.textComponent.text = 'Puntos de vida de Rosant: ${rosant.life}';
-    displayAlienCount.textComponent.text = 'Número de Aliens restantes: ${maximumAlienCount-rosant.numberOfDeadAliens}';
+    displayAlienCount.textComponent.text = 'Número de Aliens restantes: ${alienAddWorld.maximumAlienCount-rosant.numberOfDeadAliens}';
+
   }
   //--------------------------------------------------------------
 }

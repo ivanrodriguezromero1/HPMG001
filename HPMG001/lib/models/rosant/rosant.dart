@@ -1,15 +1,11 @@
-import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:hpmg001/models/scenery/screen.dart';
-import 'package:hpmg001/models/scenery/wall_left.dart';
-import 'package:hpmg001/models/scenery/wall_right.dart';
 import 'rosant_units.dart';
 import '/models/category_bits.dart';
 import '/models/entity.dart';
 import '/utils/globals.dart';
-import 'rosant_direction.dart';
+import '/models/rosant/rosant_direction.dart';
 
 class Rosant extends Entity {
   late double _width;
@@ -32,7 +28,7 @@ class Rosant extends Entity {
     _width = RosantUnits.width;
     _height = RosantUnits.height;
     _x = 5;
-    _y = horizon - _height - 0.04;
+    _y = Globals.horizon - _height - 0.04;
     goingToWalkRight = false;
     goingToWalkLeft = false;
     direction = RosantDirection.right;
@@ -71,7 +67,7 @@ class Rosant extends Entity {
     priority = 10;
     body.linearDamping = 1;
     // body.gravityOverride = Vector2(0, 0);
-    final sprite = rosantRightSprite;
+    final sprite = Globals.rosantRightSprite;
     add(SpriteComponent(
       sprite: sprite,
       size: Vector2(_width, _height),

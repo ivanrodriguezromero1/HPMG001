@@ -1,7 +1,6 @@
 import 'package:flame/components.dart';
 import '/models/controls/button_right.dart';
-import '/models/controls/button_up.dart';
-import '/models/controls/button_shoot.dart';
+import '../models/controls/button_shoot.dart';
 import '/models/rosant/rosant_direction.dart';
 import '/models/controls/button_jump.dart';
 import '/models/controls/button_left.dart';
@@ -47,18 +46,6 @@ class RosantServices {
       rosant.direction = RosantDirection.left;
       buttonLeft.updateSprite(0.5);
       buttonRight.updateSprite(1);
-      return true;
-    } else {
-      return false;
-    }
-  }
-  static bool checkLookUpwardCondition(Rosant rosant, Vector2 touch, ButtonUp buttonUp) {
-    if(rosant.life <= 0) return false;
-    double bx = buttonUp.body.position.x;
-    double by = buttonUp.body.position.y;
-    if(touch.x >= bx && touch.x <= bx + buttonUp.width  
-      && touch.y >= by && touch.y <= by + buttonUp.height) {
-      rosant.direction = RosantDirection.up;
       return true;
     } else {
       return false;

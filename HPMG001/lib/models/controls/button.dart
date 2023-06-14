@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:hpmg001/models/controls/controls_units.dart';
+import '/models/controls/controls_units.dart';
 import '/models/category_bits.dart';
 import '/models/entity.dart';
 
@@ -48,7 +48,7 @@ class Button extends Entity {
     return SpriteComponent(
       sprite: sprite,
       size: Vector2(_width, _height),
-      position: Vector2(0,-.02),
+      position: Vector2(0, 0),
       anchor: Anchor.topLeft,
       paint: Paint()..color = Color.fromRGBO(255, 255, 255, opacity)
     );

@@ -10,10 +10,10 @@ class AlienService {
     if(!alien.isFallen && rosant.life != 0){
       if(alien.body.position.x > rosant.body.position.x){
         alien.direction = AlienDirection.left;
-        alien.body.linearVelocity = Vector2(-0.5, alien.body.linearVelocity.y);
+        alien.body.linearVelocity = Vector2(-3, alien.body.linearVelocity.y);
       }else if(alien.body.position.x < rosant.body.position.x){
         alien.direction = AlienDirection.right;
-        alien.body.linearVelocity = Vector2(0.5, alien.body.linearVelocity.y);
+        alien.body.linearVelocity = Vector2(3, alien.body.linearVelocity.y);
       }
     }
   }
@@ -24,7 +24,7 @@ class AlienService {
       alien.elapsedTimeSinceFall += dt;
     }
     if(alien.elapsedTimeSinceFall >= 1){
-      alien.body.setTransform(alien.body.position, 0);
+      // alien.body.setTransform(alien.body.position, 0);
       alien.elapsedTimeSinceFall = 0;
     }
   }
@@ -39,7 +39,7 @@ class AlienService {
       alien.elapsedTimeSinceContact = 0;
     }
   }
-  static void follenOut(Alien alien){
+  static void fallenOut(Alien alien){
     if(alien.body.position.y >= Screen.worldSize.y){
       alien.life = 0;
     }

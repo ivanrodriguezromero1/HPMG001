@@ -14,9 +14,9 @@ class DisplayText extends Entity {
   
   @override
   void initializing(){
-    _xScale = 0.5;
-    _yScale = 0.5;
-    _fontSize = 5;
+    _xScale = 1;
+    _yScale = 1;
+    _fontSize = 2.5;
     textComponent = TextComponent(
       position: Vector2.zero(),
       text: '0',
@@ -32,6 +32,7 @@ class DisplayText extends Entity {
       position: Vector2(_x, _y),
       type: BodyType.static,
     );
+
     return world.createBody(bodyDef);
   }
   @override

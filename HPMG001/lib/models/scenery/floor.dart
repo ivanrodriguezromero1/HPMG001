@@ -1,5 +1,6 @@
+import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:hpmg001/models/controls/controls_units.dart';
+import '/models/controls/controls_units.dart';
 import '/utils/xml.dart';
 import '/models/rosant/rosant.dart';
 import '/models/entity.dart';
@@ -12,7 +13,7 @@ class Floor extends Entity with ContactCallbacks {
   late double _x;
   late double _y;
   late double _width;
-  // late double _height;
+  late double _height;
   late List<Contact> contacts;
 
   double get width => _width;
@@ -21,7 +22,7 @@ class Floor extends Entity with ContactCallbacks {
     _x = 0;
     _y = 0;
     _width = 2*Screen.worldSize.x;
-    // _height = 3*buttonUnit;
+    _height = Screen.worldSize.y - ControlsUnits.height;
     contacts = [];
   }
   @override
@@ -33,8 +34,8 @@ class Floor extends Entity with ContactCallbacks {
       type: BodyType.kinematic,
     );
     final shape = EdgeShape()..set(
-      Vector2(0, Screen.worldSize.y - ControlsUnits.height), 
-      Vector2(Screen.worldSize.x, Screen.worldSize.y - ControlsUnits.height)
+      Vector2(0, _height), 
+      Vector2(_width, _height)
       );
     final fixtureDef = FixtureDef(shape)
       ..density = 1000
@@ -55,27 +56,27 @@ class Floor extends Entity with ContactCallbacks {
     //     // ..restitution = 0;
     //   body.createFixture(fixtureDef);
     // }
-    // final sprite = floorSprite;
-    // add(SpriteComponent(
-    //   sprite: sprite,
-    //   size: Vector2(_width, _height),
-    //   position: Vector2(0, -0.02),
-    //   anchor: Anchor.topLeft
-    // ));
+    final spriteControls = Globals.controlsSprite;
+    add(SpriteComponent(
+      sprite: spriteControls,
+      size: Vector2(Screen.worldSize.x, ControlsUnits.height),
+      position: Vector2(0, Globals.horizon),
+      anchor: Anchor.topLeft
+    ));
   }
   @override
   void beginContact(Object other, Contact contact) {
     super.beginContact(other, contact);
-    contacts.add(contact);
     if(other is Rosant){
+      contacts.add(contact);
       other.canJump = true;
     }
   }
   @override
   void endContact(Object other, Contact contact) {
     super.endContact(other, contact);
-    contacts.remove(contact);
     if(other is Rosant){
+      contacts.remove(contact);
       if(contacts.isEmpty){
         other.canJump = false;
       }

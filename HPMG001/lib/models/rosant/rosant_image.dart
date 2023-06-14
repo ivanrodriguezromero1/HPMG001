@@ -23,7 +23,7 @@ class RosantImage extends Entity {
     _width = RosantUnits.width;
     _height = RosantUnits.height;
     _x = 2;
-    _y = horizon - _height - 0.04;
+    _y = Globals.horizon - _height - 0.04;
   }
   @override
   Body createBody(){
@@ -63,7 +63,7 @@ class RosantImage extends Entity {
     //   position: Vector2(0, 0),
     //   anchor: Anchor.center
     // ));
-    spriteComponent = createSpriteComponent(rosantRightSprite);
+    spriteComponent = createSpriteComponent(Globals.rosantRightSprite);
     add(spriteComponent);
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
@@ -91,11 +91,11 @@ class RosantImage extends Entity {
     body.setTransform(_rosant.body.position, body.angle);
     if(_rosant.goingToWalkRight){
       remove(spriteComponent);
-      spriteComponent = createSpriteComponent(rosantRightSprite);
+      spriteComponent = createSpriteComponent(Globals.rosantRightSprite);
       add(spriteComponent);
     } else if(_rosant.goingToWalkLeft){
       remove(spriteComponent);
-      spriteComponent = createSpriteComponent(rosantLeftSprite);
+      spriteComponent = createSpriteComponent(Globals.rosantLeftSprite);
       add(spriteComponent);
     }
   }

@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
-import 'alien_units.dart';
+import '/utils/globals.dart';
 import '/models/aliens/alien_configuration.dart';
+import '/models/aliens/alien_units.dart';
 
 class TypeC implements AlienConfiguration{
   @override
@@ -12,7 +13,9 @@ class TypeC implements AlienConfiguration{
   @override
   int life = 8;
   @override
-  double density = 25;
+  double density = 50;
   @override
   Vector2 gravity = Vector2(0, 0);
+  @override
+  Sprite sprite  = Globals.alienTypeCSprite;
 }

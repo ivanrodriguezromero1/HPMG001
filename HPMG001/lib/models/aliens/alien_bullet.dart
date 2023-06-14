@@ -23,8 +23,8 @@ class AlienBullet extends Projectile {
   void initializing() {
     _x = _alien.body.position.x + _alien.width/2;
     _y = _alien.body.position.y + _alien.height/3;
-    _width = 0.1;
-    _height = 0.1;
+    _width = 1;
+    _height = 1;
     _direction = _alien.direction;
     _alien.body.setTransform(_alien.body.position, 0);
   }
@@ -55,7 +55,7 @@ class AlienBullet extends Projectile {
     paint = Paint()..color = const Color.fromARGB(255, 229, 255, 0);
     body.gravityOverride = Vector2(0, 0);
     Vector2 force;
-    double magnitude= 0.3;
+    double magnitude= 400;
     switch(_direction){
       case AlienDirection.right:
         force = Vector2(magnitude, 0);

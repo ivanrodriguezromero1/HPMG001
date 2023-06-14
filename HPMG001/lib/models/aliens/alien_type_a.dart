@@ -1,10 +1,9 @@
 import 'package:flame/components.dart';
-import 'alien_units.dart';
 import '/utils/globals.dart';
-import '/models/scenery/screen.dart';
 import '/models/aliens/alien_configuration.dart';
+import '/models/aliens/alien_units.dart';
 
-class TypeA implements AlienConfiguration{
+class TypeA implements AlienConfiguration {
   @override
   double width = AlienUnits.width;
   @override
@@ -14,10 +13,12 @@ class TypeA implements AlienConfiguration{
   @override
   int life = 5;
   @override
-  double density = 25;
+  double density = 100;
   @override
-  Vector2 gravity = Vector2(0, 9.81);
+  Vector2 gravity = Globals.gravity;
+  @override
+  Sprite sprite  = Globals.alienTypeASprite;
   TypeA(){
-    y = horizon - height;
+    y = Globals.horizon - height;
   }
 }

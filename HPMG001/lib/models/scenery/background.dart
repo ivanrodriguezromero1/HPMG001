@@ -1,10 +1,8 @@
-import 'dart:io';
-
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:hpmg001/controllers/background_controller.dart';
-import 'package:hpmg001/models/controls/controls_units.dart';
-import 'package:hpmg001/models/rosant/rosant.dart';
+import '/controllers/background_controller.dart';
+import '/models/controls/controls_units.dart';
+import '/models/rosant/rosant.dart';
 import '/models/entity.dart';
 import '/models/scenery/screen.dart';
 import '/utils/globals.dart';
@@ -16,7 +14,6 @@ class Background extends Entity {
   late double _y;
   late double _width;
   late double _height;
-  // late SpriteComponent spriteComponent;
   double get width => _width;
   @override
   void initializing(){
@@ -45,7 +42,7 @@ class Background extends Entity {
   Future<void> onLoad() async {
     await super.onLoad();
     renderBody = false;
-    final sprite = backgroundSprite;
+    final sprite = Globals.backgroundSprite;
     priority = 1;
     add(SpriteComponent(
       sprite: sprite,
@@ -53,19 +50,11 @@ class Background extends Entity {
       position: Vector2(0, 0),
       anchor: Anchor.topLeft,
     ));
-    final spriteControls = controlsSprite;
-    add(SpriteComponent(
-      sprite: spriteControls,
-      size: Vector2(Screen.worldSize.x, ControlsUnits.height),
-      position: Vector2(0, Screen.worldSize.y - ControlsUnits.height),
-      anchor: Anchor.topLeft
-    ));
-    // add(spriteComponent);
     
   }
   @override
   void update(double dt){
     super.update(dt);
-    // BackgroundController.move(this, _rosant);
+    BackgroundController.move(this, _rosant);
   }
 }

@@ -2,10 +2,10 @@ import 'dart:math';
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:hpmg001/models/aliens/alien_bullet.dart';
-import 'package:hpmg001/models/aliens/alien_direction.dart';
-import 'package:hpmg001/models/aliens/alien_units.dart';
-import 'package:hpmg001/models/category_bits.dart';
+import '/models/aliens/alien_bullet.dart';
+import '/models/aliens/alien_direction.dart';
+import '/models/aliens/alien_units.dart';
+import '/models/category_bits.dart';
 import '/models/aliens/alien_configuration.dart';
 import '/models/aliens/alien_factory.dart';
 import '/models/scenery/display_text.dart';
@@ -48,7 +48,7 @@ class Alien extends Entity with ContactCallbacks {
     isFallen = false;
     elapsedTimeSinceContact = 0;
     isContacted = false;
-    displayAlienLife = DisplayText(x: _width/3, y: _height/2);
+    displayAlienLife = DisplayText(x: _width/3, y: -_height/3);
   }
   @override
   Body createBody() {
@@ -76,12 +76,19 @@ class Alien extends Entity with ContactCallbacks {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    // renderBody = false;
+    renderBody = false;
     priority = 10;
-    body.linearDamping = 20;
+    body.linearDamping = 10;
     paint = Paint()..color = const Color.fromARGB(255, 136, 0, 255);
     body.gravityOverride = alienConfiguration.gravity;
     add(displayAlienLife);
+    final sprite = alienConfiguration.sprite;
+    add(SpriteComponent(
+      sprite: sprite,
+      size: Vector2(_width, _height),
+      position: Vector2(0, 0),
+      anchor: Anchor.topLeft
+    ));
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
     // add(SpriteAnimationComponent(
     //   animation: walkAnimation,
@@ -118,7 +125,7 @@ class Alien extends Entity with ContactCallbacks {
     AlienController.walk(this, _rosant);
     AlienController.standUp(this, dt);
     AlienController.contact(this, _rosant, dt);
-    AlienController.follenOut(this);
+    AlienController.fallenOut(this);
     displayAlienLife.textComponent.text = '$life';
   }
 }

@@ -9,8 +9,8 @@ class ButtonShoot extends Button {
   @override
   void initializing() {
     super.initializing();
-    position = Vector2(Screen.worldSize.x - 2*ControlsUnits.width, 
-      Screen.worldSize.y - ControlsUnits.height);
-    sprite = buttonPhysicalAttackSprite;
+    position = Vector2(Screen.worldSize.x - 3*ControlsUnits.width, 
+      Globals.horizon);
+    sprite = Globals.buttonShootSprite;
   }
 }

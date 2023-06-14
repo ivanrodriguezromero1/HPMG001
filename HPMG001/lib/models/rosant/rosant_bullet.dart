@@ -1,12 +1,12 @@
+import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:hpmg001/models/category_bits.dart';
+import 'package:hpmg001/utils/globals.dart';
 import '/models/aliens/alien.dart';
 import 'rosant_direction.dart';
 import '/models/rosant/rosant.dart';
 import '/models/projectile.dart';
-import '/utils/globals.dart';
-import '/models/scenery/screen.dart';
 
 class RosantBullet extends Projectile {
   final Rosant _rosant;
@@ -47,9 +47,14 @@ class RosantBullet extends Projectile {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    renderBody = true;
+    renderBody = false;
     priority = 5;
     paint = Paint()..color = const Color.fromARGB(255, 255, 0, 0);
+    add(SpriteComponent(
+      sprite: Globals.stoneSprite,
+      size: Vector2(2*_width, 2*_height),
+      anchor: Anchor.center
+    ));
     body.gravityOverride = Vector2(0, 0);
     Vector2 force;
     double magnitude = 4000;
@@ -63,7 +68,7 @@ class RosantBullet extends Projectile {
       default:
         force = Vector2(0, -magnitude);
         break;
-    }    
+    }
     body.applyLinearImpulse(force);
   }
   @override

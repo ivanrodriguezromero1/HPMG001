@@ -7,4 +7,5 @@ abstract class AlienConfiguration{
   late int life;
   late double density;
   late Vector2 gravity;
+  late Sprite sprite;
 }

@@ -9,7 +9,7 @@ class AlienFactory{
   static AlienConfiguration createRandomAlien(){
     AlienType type;
     int randomIndex = Random().nextInt(3);
-    randomIndex = 0;
+    // randomIndex = 2;
     switch(randomIndex){
       case 0:
         type = AlienType.typeA;

@@ -12,7 +12,7 @@ class AlienController{
   static void contact(Alien alien, Rosant rosant, double dt){
     return AlienService.contact(alien, rosant, dt);
   }
-  static void follenOut(Alien alien){
-    return AlienService.follenOut(alien);
+  static void fallenOut(Alien alien){
+    return AlienService.fallenOut(alien);
   }
 }
