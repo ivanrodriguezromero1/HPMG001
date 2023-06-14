@@ -1,6 +1,6 @@
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:hpmg001/models/category_bits.dart';
-import 'package:hpmg001/models/scenery/screen.dart';
+import '/models/category_bits.dart';
+import '/models/scenery/screen.dart';
 import '/models/entity.dart';
 
 abstract class Projectile extends Entity with ContactCallbacks {

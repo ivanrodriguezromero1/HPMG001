@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:hpmg001/models/scenery/screen.dart';
+import '/models/scenery/screen.dart';
 import 'rosant_units.dart';
 import '/models/category_bits.dart';
 import '/models/entity.dart';

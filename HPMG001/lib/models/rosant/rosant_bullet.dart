@@ -1,10 +1,10 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:hpmg001/models/category_bits.dart';
-import 'package:hpmg001/utils/globals.dart';
+import '/models/category_bits.dart';
+import '/utils/globals.dart';
 import '/models/aliens/alien.dart';
-import 'rosant_direction.dart';
+import '/models/rosant/rosant_direction.dart';
 import '/models/rosant/rosant.dart';
 import '/models/projectile.dart';
 

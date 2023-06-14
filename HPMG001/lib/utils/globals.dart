@@ -1,6 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
-import 'package:hpmg001/models/controls/controls_units.dart';
+import '/models/controls/controls_units.dart';
 import '/models/scenery/screen.dart';
 
 class Globals {

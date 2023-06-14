@@ -1,6 +1,5 @@
 import 'dart:math';
-import 'package:hpmg001/models/aliens/alien.dart';
-
+import '/models/aliens/alien.dart';
 import '/models/rosant/rosant.dart';
 import '/models/aliens/alien_bullet.dart';
 

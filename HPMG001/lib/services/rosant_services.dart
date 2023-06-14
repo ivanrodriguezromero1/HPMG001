@@ -1,6 +1,6 @@
 import 'package:flame/components.dart';
 import '/models/controls/button_right.dart';
-import '../models/controls/button_shoot.dart';
+import '/models/controls/button_shoot.dart';
 import '/models/rosant/rosant_direction.dart';
 import '/models/controls/button_jump.dart';
 import '/models/controls/button_left.dart';

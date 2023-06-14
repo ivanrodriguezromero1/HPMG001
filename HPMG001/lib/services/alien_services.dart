@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'package:flame/components.dart';
-import 'package:hpmg001/models/aliens/alien_direction.dart';
-import 'package:hpmg001/models/scenery/screen.dart';
+import '/models/aliens/alien_direction.dart';
+import '/models/scenery/screen.dart';
 import '/models/aliens/alien.dart';
 import '/models/rosant/rosant.dart';
 

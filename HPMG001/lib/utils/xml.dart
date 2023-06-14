@@ -1,8 +1,7 @@
 import 'dart:math';
-
 import 'package:flame/components.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:hpmg001/models/scenery/screen.dart';
+import '/models/scenery/screen.dart';
 import 'package:xml/xml.dart' as xml;
 
 class Xml {

@@ -1,11 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:hpmg001/models/rosant/rosant.dart';
-import 'rosant_units.dart';
+import '/models/rosant/rosant.dart';
+import '/models/rosant/rosant_units.dart';
 import '/models/category_bits.dart';
 import '/models/entity.dart';
 import '/utils/globals.dart';
-import 'rosant_direction.dart';
+import '/models/rosant/rosant_direction.dart';
 
 class RosantImage extends Entity {
   final Rosant _rosant;

@@ -2,13 +2,11 @@ import 'dart:async';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
-import 'package:flame/game.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/material.dart';
-import 'package:hpmg001/models/controls/button_ax.dart';
-import 'package:hpmg001/models/controls/button_bow.dart';
-import 'package:hpmg001/models/controls/button_macana.dart';
-import 'package:hpmg001/models/controls/button_physical_attack.dart';
+import '/models/controls/button_ax.dart';
+import '/models/controls/button_bow.dart';
+import '/models/controls/button_macana.dart';
+import '/models/controls/button_physical_attack.dart';
 import '/models/aliens/alien_add_world.dart';
 import '/models/scenery/wall_right.dart';
 import '/utils/globals.dart';
@@ -27,28 +25,8 @@ import '/models/scenery/wall_left.dart';
 import '/utils/camera.dart';
 import '/utils/assets.dart';
 
-class GameEpicron extends StatefulWidget {
-  const GameEpicron({Key? key}) : super(key: key);
-  @override
-  GameEpicronState createState() => GameEpicronState();
-}
-Game controlledGameBuilder() {
-  return MyGameEpicron();
-}
-class GameEpicronState extends State<GameEpicron> {
-  Widget buildGameWidget(BuildContext context) => const GameWidget.controlled(
-    gameFactory: controlledGameBuilder
-  );
-  @override
-  Widget build(BuildContext context) {
-    return buildGameWidget(context);
-  }
-}
-class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables  {
-  MyGameEpicron(): super(zoom: 100, gravity: Globals.gravity);
- 
-  //--------------Main Code-------------------------------------------
-  
+class Epicron extends Forge2DGame with MultiTouchTapDetector, HasTappables  {
+  Epicron(): super(zoom: 100, gravity: Globals.gravity);  
   late Background background;
   late Floor floor;
   late WallLeft wallLeft;
@@ -167,5 +145,4 @@ class MyGameEpicron extends Forge2DGame with MultiTouchTapDetector, HasTappables
     displayAlienCount.textComponent.text = 'Número de Aliens restantes: ${alienAddWorld.maximumAlienCount-rosant.numberOfDeadAliens}';
 
   }
-  //--------------------------------------------------------------
 }

@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
-import 'package:hpmg001/models/aliens/alien_units.dart';
-import 'package:hpmg001/models/category_bits.dart';
-import 'package:hpmg001/models/scenery/display_text.dart';
+import '/models/aliens/alien_units.dart';
+import '/models/category_bits.dart';
+import '/models/scenery/display_text.dart';
 import '/models/rosant/rosant.dart';
 import '/models/aliens/alien.dart';
 import '/models/aliens/alien_direction.dart';
