@@ -9,19 +9,19 @@ import '/models/rosant/rosant.dart';
 class RosantServices {
   static void jump(Rosant rosant){
     if(rosant.goingToJump && rosant.canJump){
-      final force = Vector2(0, -400);
+      final force = Vector2(0, -600);
       rosant.body.applyLinearImpulse(force);
     }
   }
   static void walkLeft(Rosant rosant){
     if(rosant.goingToWalkLeft){
-      final force = Vector2(-15, 0);
+      final force = Vector2(-40, 0);
       rosant.body.applyLinearImpulse(force);
     }
   }
   static void walkRight(Rosant rosant){
     if(rosant.goingToWalkRight){
-      final force = Vector2(15, 0);
+      final force = Vector2(40, 0);
       rosant.body.applyLinearImpulse(force);
     }
   }

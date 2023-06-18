@@ -19,7 +19,7 @@ class RosantBullet extends Projectile {
   @override
   void initializing(){
     _x = _rosant.body.position.x + _rosant.width/2;
-    _y = _rosant.body.position.y + _rosant.height/2;
+    _y = _rosant.body.position.y + _rosant.height/4;
     _width = 1;
     _height = 0.8;
     _direction = _rosant.direction;
@@ -35,7 +35,7 @@ class RosantBullet extends Projectile {
     );
     final shape = PolygonShape()..setAsBoxXY(_width, _height);
     final fixtureDef = FixtureDef(shape)
-      ..density = 50
+      ..density = 20
       ..friction = 0.1
       ..restitution = 0.8;
     final filter = Filter();
@@ -55,19 +55,20 @@ class RosantBullet extends Projectile {
       size: Vector2(2*_width, 2*_height),
       anchor: Anchor.center
     ));
-    body.gravityOverride = Vector2(0, 0);
+    body.gravityOverride = Vector2(0, 98.1);
     Vector2 force;
-    double magnitude = 4000;
+    double magnitudeX = 6000;
+    double magnitudeY = -2000;
     switch(_direction){
       case RosantDirection.right:
-        force = Vector2(magnitude, 0);
-        break;
-      case RosantDirection.left:
-        force = Vector2(-magnitude, 0);
+        force = Vector2(magnitudeX, magnitudeY);
         break;
       default:
-        force = Vector2(0, -magnitude);
+        force = Vector2(-magnitudeX, magnitudeY);
         break;
+      // default:
+      //   force = Vector2(-2000, -magnitudeX);
+      //   break;
     }
     body.applyLinearImpulse(force);
   }

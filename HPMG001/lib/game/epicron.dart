@@ -35,11 +35,11 @@ class Epicron extends Forge2DGame with MultiTouchTapDetector, HasTappables  {
   late ButtonLeft buttonLeft;
   late ButtonRight buttonRight;
   late ButtonJump buttonJump;
-  late ButtonPhysicalAttack buttonPhysicalAttack;
+  // late ButtonPhysicalAttack buttonPhysicalAttack;
   late ButtonShoot buttonShoot;
-  late ButtonAx buttonAx;
-  late ButtonBow buttonBow;
-  late ButtonMacana buttonMacana;
+  // late ButtonAx buttonAx;
+  // late ButtonBow buttonBow;
+  // late ButtonMacana buttonMacana;
   late DisplayText displayRosantLife;
   late DisplayText displayAlienCount;
   late List<int> walkPointersId;
@@ -55,11 +55,11 @@ class Epicron extends Forge2DGame with MultiTouchTapDetector, HasTappables  {
     buttonLeft = ButtonLeft();
     buttonRight = ButtonRight();
     buttonJump = ButtonJump();
-    buttonPhysicalAttack = ButtonPhysicalAttack();
+    // buttonPhysicalAttack = ButtonPhysicalAttack();
     buttonShoot = ButtonShoot();
-    buttonAx = ButtonAx();
-    buttonBow = ButtonBow();
-    buttonMacana = ButtonMacana();
+    // buttonAx = ButtonAx();
+    // buttonBow = ButtonBow();
+    // buttonMacana = ButtonMacana();
     displayRosantLife = DisplayText(x: 0.2, y: 0.3);
     displayAlienCount = DisplayText(x: Screen.worldSize.x/2, y: 0.3);
     walkPointersId = [];
@@ -75,11 +75,11 @@ class Epicron extends Forge2DGame with MultiTouchTapDetector, HasTappables  {
     add(buttonLeft);
     add(buttonRight);
     add(buttonJump);
-    add(buttonPhysicalAttack);
+    // add(buttonPhysicalAttack);
     add(buttonShoot);
-    add(buttonAx);
-    add(buttonBow);
-    add(buttonMacana);
+    // add(buttonAx);
+    // add(buttonBow);
+    // add(buttonMacana);
     add(displayRosantLife);
     add(displayAlienCount);
   }

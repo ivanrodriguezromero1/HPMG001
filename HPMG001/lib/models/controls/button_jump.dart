@@ -9,7 +9,7 @@ class ButtonJump extends Button {
   @override
   void initializing() {
     super.initializing();
-    position = Vector2(Screen.worldSize.x - ControlsUnits.width, 
+    position = Vector2(Screen.worldSize.x - 3*ControlsUnits.width, 
       Globals.horizon);
     sprite = Globals.buttonJumpSprite;
   }
