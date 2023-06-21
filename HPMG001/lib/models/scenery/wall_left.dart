@@ -34,7 +34,7 @@ class WallLeft extends Entity with ContactCallbacks {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    // renderBody = false;
+    renderBody = false;
   }
 
 }

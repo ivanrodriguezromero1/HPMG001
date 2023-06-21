@@ -27,7 +27,7 @@ class Rosant extends Entity {
   void initializing(){
     _width = RosantUnits.width;
     _height = RosantUnits.height;
-    _x = 5;
+    _x = Screen.worldSize.x/2;
     _y = Globals.horizon - _height - 0.04;
     goingToWalkRight = false;
     goingToWalkLeft = false;
@@ -82,7 +82,7 @@ class Rosant extends Entity {
     //   anchor: Anchor.center,
     //   removeOnFinish: false,
     // ));
-
+    // camera.followBodyComponent(this);
   }
   @override
   void update(double dt){

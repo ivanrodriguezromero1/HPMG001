@@ -22,7 +22,7 @@ class Floor extends Entity with ContactCallbacks {
     _x = 0;
     _y = 0;
     _width = 2*Screen.worldSize.x;
-    _height = Screen.worldSize.y - ControlsUnits.height;
+    _height = Screen.worldSize.y;
     contacts = [];
   }
   @override
@@ -56,13 +56,13 @@ class Floor extends Entity with ContactCallbacks {
     //     // ..restitution = 0;
     //   body.createFixture(fixtureDef);
     // }
-    final spriteControls = Globals.controlsSprite;
-    add(SpriteComponent(
-      sprite: spriteControls,
-      size: Vector2(Screen.worldSize.x, ControlsUnits.height),
-      position: Vector2(0, Globals.horizon),
-      anchor: Anchor.topLeft
-    ));
+    // final spriteControls = Globals.controlsSprite;
+    // add(SpriteComponent(
+    //   sprite: spriteControls,
+    //   size: Vector2(Screen.worldSize.x, ControlsUnits.height),
+    //   position: Vector2(0, Globals.horizon),
+    //   anchor: Anchor.topLeft
+    // ));
   }
   @override
   void beginContact(Object other, Contact contact) {

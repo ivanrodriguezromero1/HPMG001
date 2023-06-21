@@ -20,7 +20,7 @@ class Background extends Entity {
     _x = 0;
     _y = 0;
     _width = 2*Screen.worldSize.x;
-    _height = Screen.worldSize.y - ControlsUnits.height;
+    _height = Screen.worldSize.y;
   }
   @override
   Body createBody() {
