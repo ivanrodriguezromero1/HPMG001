@@ -65,8 +65,8 @@ class LeftJoystickState extends State<LeftJoystick> {
   }
   Offset calculateOffset(Offset startPosition) {
     return Offset(
-      (startPosition.dx - radius).clamp(radius, screenSize.x/2 - radius).toDouble(),
-      (startPosition.dy - radius).clamp(radius, screenSize.y - radius).toDouble(),
+      (startPosition.dx - radius).clamp(0, screenSize.x/2 - 2*radius).toDouble(),
+      (startPosition.dy - radius).clamp(0, screenSize.y - 2*radius).toDouble(),
     );
   }
 
