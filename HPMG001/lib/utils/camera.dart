@@ -5,5 +5,5 @@ void configCamera(Camera camera){
   double width = 836; //836
   double height = 393;  
   Screen.setScreenSize(Vector2(width, height));
-  camera.viewport = FixedResolutionViewport(Screen.screenSize);
+  camera.viewport = FixedResolutionViewport(Screen.cameraSize);
 }

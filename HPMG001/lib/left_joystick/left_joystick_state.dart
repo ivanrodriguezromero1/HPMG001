@@ -3,26 +3,28 @@ import 'package:flutter/material.dart';
 import '/models/scenery/screen.dart';
 import '/models/rosant/rosant.dart';
 import '/left_joystick/left_joystick.dart';
-import '/left_joystick/left_joystick_background.dart';
+import 'left_joystick_element.dart';
 
 class LeftJoystickState extends State<LeftJoystick> {
   late Rosant rosant;
   late Vector2 screenSize; 
   late Offset startLocalPosition;
   late Offset currentLocalPosition;
-  late double radius;
-
+  late double baseRadius;
+  late double thumbRadius;
   @override
   void initState(){
     super.initState();
     rosant = widget.rosant;
     screenSize = Screen.worldSize*10;
-    radius = 40;
+    baseRadius = 45;
+    thumbRadius = 18;
     initialPosition();
   }
   @override
   Widget build(BuildContext context) {
-    final offset = calculateOffset(startLocalPosition);
+    final baseOffset = calculateOffset(startLocalPosition, baseRadius);
+    final thumbOffset = calculateOffset(startLocalPosition, thumbRadius);
     return SizedBox(
       width: screenSize.x / 2,
       height: screenSize.y,
@@ -47,27 +49,31 @@ class LeftJoystickState extends State<LeftJoystick> {
             onTapUp: (details) {
               setState(() {
                 initialPosition();
-              });  
+              });
             },
           ),
-          LeftJoystickBackground(
-            left: offset.dx, 
-            top: offset.dy, 
-            diameter: radius*2
+          LeftJoystickElement(
+            left: baseOffset.dx,
+            top: baseOffset.dy,
+            diameter: baseRadius*2
+          ),
+          LeftJoystickElement(
+            left: thumbOffset.dx,
+            top: thumbOffset.dy,
+            diameter: thumbRadius*2
           ),
         ],
       ),
     );
   }
   void initialPosition(){
-    startLocalPosition = Offset(1.5*radius, 3*screenSize.y/4);
+    startLocalPosition = Offset(1.5*baseRadius, 3*screenSize.y/4);
     currentLocalPosition = const Offset(0, 0);
   }
-  Offset calculateOffset(Offset startPosition) {
+  Offset calculateOffset(Offset startPosition, double radius) {
     return Offset(
-      (startPosition.dx - radius).clamp(0, screenSize.x/2 - 2*radius).toDouble(),
-      (startPosition.dy - radius).clamp(0, screenSize.y - 2*radius).toDouble(),
+      (startPosition.dx - radius).clamp(baseRadius - radius, screenSize.x/2 - (baseRadius + radius)).toDouble(),
+      (startPosition.dy - radius).clamp(baseRadius - radius, screenSize.y - (baseRadius + radius)).toDouble(),
     );
   }
-
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class LeftJoystickBackground extends StatelessWidget {
+class LeftJoystickElement extends StatelessWidget {
   final double left;
   final double top;
   final double diameter;
-  const LeftJoystickBackground({
+  const LeftJoystickElement({
     required this.left,
     required this.top,
     required this.diameter,
