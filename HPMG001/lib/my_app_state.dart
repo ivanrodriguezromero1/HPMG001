@@ -30,7 +30,10 @@ class MyAppState extends State<MyApp> {
         children: [
           EpicronStatelessWidget(rosant: widget.rosant),
           if(shouldRenderLeftJoystick)
-            LeftJoystick(rosant: widget.rosant),
+            LeftJoystick(
+              rosant: widget.rosant,
+              myFunction: widget.performMovement
+            ),
         ],
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import '/models/controls/button_right.dart';
 import '/models/controls/button_shoot.dart';
 import '/models/rosant/rosant_direction.dart';
@@ -78,5 +79,14 @@ class RosantServices {
       return false;
     }
   }
-
+  static void performMovement(Rosant rosant, Offset unitVector) {
+    if(rosant.life >= 0){
+      double maxSpeedX = 20;
+      double maxSpeedY = 60;
+      double speedX = maxSpeedX*unitVector.dx;
+      double speedY = (rosant.canJump) 
+        ? maxSpeedY*unitVector.dy : rosant.body.linearVelocity.y;
+      rosant.body.linearVelocity = Vector2(speedX, speedY);
+    }
+  }
 }

@@ -52,8 +52,8 @@ class Rosant extends Entity {
       Vector2(0, _height)]);
     // final shape = CircleShape()..radius = _height/4;
     final fixtureDef = FixtureDef(shape)
-      ..density = 0.4
-      ..friction = 0.3;
+      ..density = 0.4;
+      // ..friction = 0.3;
       // ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = CategoryBits.rosant;
@@ -65,7 +65,7 @@ class Rosant extends Entity {
     await super.onLoad();
     renderBody = false;
     priority = 10;
-    body.linearDamping = 1;
+    body.linearDamping = 2;
     // body.gravityOverride = Vector2(0, 0);
     final sprite = Globals.rosantRightSprite;
     add(SpriteComponent(

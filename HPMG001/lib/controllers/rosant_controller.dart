@@ -1,4 +1,5 @@
 import 'package:flame/components.dart';
+import 'package:flutter/material.dart';
 import '/models/controls/button_right.dart';
 import '/models/controls/button_shoot.dart';
 import '/models/controls/button_left.dart';
@@ -24,5 +25,8 @@ class RosantController {
   }
   static bool checkShootCondition(Rosant rosant, Vector2 touch, ButtonShoot buttonShoot) {
     return RosantServices.checkShootCondition(rosant, touch, buttonShoot);
+  }
+  static void performMovement(Rosant rosant, Offset unitVector) {
+    return RosantServices.performMovement(rosant, unitVector);
   }
 }
