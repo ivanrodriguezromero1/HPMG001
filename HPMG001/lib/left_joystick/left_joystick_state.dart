@@ -8,8 +8,8 @@ import 'left_joystick_element.dart';
 class LeftJoystickState extends State<LeftJoystick> {
   late Rosant rosant;
   late Vector2 screenSize; 
-  late Offset startLocalPosition;
-  late Offset currentLocalPosition;
+  late Offset basePosition;
+  late Offset thumbPosition;
   late double baseRadius;
   late double thumbRadius;
   @override
@@ -17,14 +17,14 @@ class LeftJoystickState extends State<LeftJoystick> {
     super.initState();
     rosant = widget.rosant;
     screenSize = Screen.worldSize*10;
-    baseRadius = 50;
-    thumbRadius = 25;
-    initialPosition();
+    baseRadius = 45;
+    thumbRadius = 30;
+    defaultPosition();
   }
   @override
   Widget build(BuildContext context) {
-    final baseOffset = calculateOffset(startLocalPosition, baseRadius);
-    final thumbOffset = calculateOffset(startLocalPosition, thumbRadius);
+    final baseOffset = calculateOffset(basePosition, baseRadius);
+    final thumbOffset = calculateOffset(thumbPosition, thumbRadius);
     return SizedBox(
       width: screenSize.x / 2,
       height: screenSize.y,
@@ -33,22 +33,27 @@ class LeftJoystickState extends State<LeftJoystick> {
           GestureDetector(
             onTapDown: (details) {
               setState(() {
-                startLocalPosition = details.localPosition;
+                basePosition = details.localPosition;
+                thumbPosition = details.localPosition;
               });
             },
             onPanUpdate: (details) {
               setState(() {
-                currentLocalPosition = details.localPosition;
+                final currentPosition = details.localPosition;
+                final positionDifference = currentPosition - basePosition;
+                final distance = positionDifference.distance;
+                final unitVector = (distance!=0)? positionDifference/distance: const Offset(0, 0);
+                thumbPosition = basePosition + unitVector*baseRadius;
               });
             },
             onPanEnd: (details) {
               setState(() {
-                initialPosition();
+                defaultPosition();
               });              
             },
             onTapUp: (details) {
               setState(() {
-                initialPosition();
+                defaultPosition();
               });
             },
           ),
@@ -68,9 +73,9 @@ class LeftJoystickState extends State<LeftJoystick> {
       ),
     );
   }
-  void initialPosition(){
-    startLocalPosition = Offset(1.5*baseRadius, 3*screenSize.y/4);
-    currentLocalPosition = const Offset(0, 0);
+  void defaultPosition(){
+    basePosition = Offset(1.5*baseRadius, 3*screenSize.y/4);
+    thumbPosition = Offset(1.5*baseRadius, 3*screenSize.y/4);
   }
   Offset calculateOffset(Offset startPosition, double radius) {
     return Offset(
