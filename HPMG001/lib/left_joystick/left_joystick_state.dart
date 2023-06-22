@@ -23,8 +23,8 @@ class LeftJoystickState extends State<LeftJoystick> {
   }
   @override
   Widget build(BuildContext context) {
-    final baseOffset = calculateOffset(basePosition, baseRadius);
-    final thumbOffset = calculateOffset(thumbPosition, thumbRadius);
+    final baseOffset = calculateBaseOffset();
+    final thumbOffset = calculateThumbOffset();
     return SizedBox(
       width: screenSize.x / 2,
       height: screenSize.y,
@@ -74,13 +74,19 @@ class LeftJoystickState extends State<LeftJoystick> {
     );
   }
   void defaultPosition(){
-    basePosition = Offset(1.5*baseRadius, 3*screenSize.y/4);
-    thumbPosition = Offset(1.5*baseRadius, 3*screenSize.y/4);
+    basePosition = Offset(baseRadius + thumbRadius, 3*screenSize.y/4);
+    thumbPosition = Offset(baseRadius + thumbRadius, 3*screenSize.y/4);
   }
-  Offset calculateOffset(Offset startPosition, double radius) {
+  Offset calculateBaseOffset() {
     return Offset(
-      (startPosition.dx - radius).clamp(baseRadius - radius, screenSize.x/2 - (baseRadius + radius)).toDouble(),
-      (startPosition.dy - radius).clamp(baseRadius - radius, screenSize.y - (baseRadius + radius)).toDouble(),
+      (basePosition.dx - baseRadius).clamp(thumbRadius, screenSize.x/2 - (2*baseRadius + thumbRadius)).toDouble(),
+      (basePosition.dy - baseRadius).clamp(thumbRadius, screenSize.y - (2*baseRadius + thumbRadius)).toDouble(),
+    );
+  }
+  Offset calculateThumbOffset() {
+    return Offset(
+      (thumbPosition.dx - thumbRadius).clamp(0, screenSize.x/2 - (2*thumbRadius)).toDouble(),
+      (thumbPosition.dy - thumbRadius).clamp(0, screenSize.y - (2*thumbRadius)).toDouble(),
     );
   }
 }
