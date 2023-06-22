@@ -17,8 +17,8 @@ class LeftJoystickState extends State<LeftJoystick> {
     super.initState();
     rosant = widget.rosant;
     screenSize = Screen.worldSize*10;
-    baseRadius = 45;
-    thumbRadius = 18;
+    baseRadius = 50;
+    thumbRadius = 25;
     initialPosition();
   }
   @override
@@ -55,12 +55,14 @@ class LeftJoystickState extends State<LeftJoystick> {
           LeftJoystickElement(
             left: baseOffset.dx,
             top: baseOffset.dy,
-            diameter: baseRadius*2
+            diameter: baseRadius*2,
+            color: const Color.fromRGBO(58, 42, 51, 0.35),
           ),
           LeftJoystickElement(
             left: thumbOffset.dx,
             top: thumbOffset.dy,
-            diameter: thumbRadius*2
+            diameter: thumbRadius*2,
+            color: const Color.fromRGBO(58, 42, 51, 0.60),
           ),
         ],
       ),

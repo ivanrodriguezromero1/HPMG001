@@ -53,8 +53,8 @@ class Rosant extends Entity {
     // final shape = CircleShape()..radius = _height/4;
     final fixtureDef = FixtureDef(shape)
       ..density = 0.4
-      ..friction = 0.3
-      ..restitution = 0;
+      ..friction = 0.3;
+      // ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = CategoryBits.rosant;
     fixtureDef.filter = filter;

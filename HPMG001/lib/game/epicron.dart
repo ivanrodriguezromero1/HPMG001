@@ -143,6 +143,8 @@ class Epicron extends Forge2DGame with MultiTouchTapDetector, HasTappables  {
     RosantController.jump(_rosant);
     displayRosantLife.textComponent.text = 'Puntos de vida de Rosant: ${_rosant.life}';
     displayAlienCount.textComponent.text = 'Número de Aliens restantes: ${alienAddWorld.maximumAlienCount-_rosant.numberOfDeadAliens}';
-
+    // if(_rosant.canJump){
+    //   _rosant.body.linearVelocity = Vector2(-40, -40);
+    // }
   }
 }
