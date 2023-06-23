@@ -7,11 +7,13 @@ import '/models/entity.dart';
 class WallRight extends Entity with ContactCallbacks {
   late double _x;
   late double _y;
+  late double _width;
   late double _height;
 
   @override
   void initializing(){
     _height = Screen.worldSize.y;
+    _width = 2*Screen.worldSize.x;
     _x = 0;
     _y = 0;
   }
@@ -24,7 +26,7 @@ class WallRight extends Entity with ContactCallbacks {
       type: BodyType.kinematic,
     );
     final shape = EdgeShape()..set(
-      Vector2(Screen.worldSize.x, 0), Vector2(2*Screen.worldSize.x, _height));
+      Vector2(_width, 0), Vector2(_width, _height));
     final fixtureDef = FixtureDef(shape)
       ..density = 10
       ..restitution = 0.01;

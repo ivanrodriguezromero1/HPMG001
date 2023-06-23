@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/material.dart';
 import '/models/scenery/screen.dart';
 import 'rosant_units.dart';
 import '/models/category_bits.dart';
@@ -28,7 +29,7 @@ class Rosant extends Entity {
     _width = RosantUnits.width;
     _height = RosantUnits.height;
     _x = Screen.worldSize.x/2;
-    _y = Globals.horizon - _height - 0.04;
+    _y = Screen.worldSize.y - _height - 0.04;
     goingToWalkRight = false;
     goingToWalkLeft = false;
     direction = RosantDirection.right;
@@ -52,8 +53,8 @@ class Rosant extends Entity {
       Vector2(0, _height)]);
     // final shape = CircleShape()..radius = _height/4;
     final fixtureDef = FixtureDef(shape)
-      ..density = 0.4;
-      // ..friction = 0.3;
+      ..density = 0.4
+      ..friction = 0.1;
       // ..restitution = 0;
     final filter = Filter();
     filter.categoryBits = CategoryBits.rosant;
@@ -65,7 +66,7 @@ class Rosant extends Entity {
     await super.onLoad();
     renderBody = false;
     priority = 10;
-    body.linearDamping = 0;
+    // body.linearDamping = 0;
     // body.gravityOverride = Vector2(0, 0);
     final sprite = Globals.rosantRightSprite;
     add(SpriteComponent(
@@ -85,10 +86,23 @@ class Rosant extends Entity {
     // camera.followBodyComponent(this);
   }
   @override
-  void update(double dt){
+  void update(double dt) {
     super.update(dt);
-    if(life<=0){
+    if(life<=0) {
       destroyBody();
     }
+    if(isCameraMoveAllowed())
+    {
+      camera.followVector2(Vector2(body.position.x, Screen.worldSize.y/2));      
+    }
+  }
+  bool isInRange(double minX, double maxX) {
+    return (body.position.x >= minX) && (body.position.x <= maxX);
+  }
+  bool isCameraMoveAllowed(){
+    bool isLeftRestricted  = isInRange(0, Screen.worldSize.x/2);
+    bool isRightRestricted = isInRange(1.5*Screen.worldSize.x, 2*Screen.worldSize.x);
+    bool isRestricted = isLeftRestricted || isRightRestricted;
+    return  !isRestricted;
   }
 }
