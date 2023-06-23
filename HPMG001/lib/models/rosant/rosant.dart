@@ -65,7 +65,7 @@ class Rosant extends Entity {
     await super.onLoad();
     renderBody = false;
     priority = 10;
-    body.linearDamping = 2;
+    body.linearDamping = 0;
     // body.gravityOverride = Vector2(0, 0);
     final sprite = Globals.rosantRightSprite;
     add(SpriteComponent(

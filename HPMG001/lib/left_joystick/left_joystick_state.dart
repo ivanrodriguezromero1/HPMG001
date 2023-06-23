@@ -7,7 +7,7 @@ import 'left_joystick_element.dart';
 
 class LeftJoystickState extends State<LeftJoystick> {
   late Rosant rosant;
-  late Function myFunction;
+  late Function performMovement;
   late Vector2 screenSize; 
   late Offset basePosition;
   late Offset thumbPosition;
@@ -17,7 +17,7 @@ class LeftJoystickState extends State<LeftJoystick> {
   void initState(){
     super.initState();
     rosant = widget.rosant;
-    myFunction = widget.myFunction;
+    performMovement = widget.performMovement;
     screenSize = Screen.worldSize*10;
     baseRadius = 45;
     thumbRadius = 30;
@@ -39,6 +39,12 @@ class LeftJoystickState extends State<LeftJoystick> {
                 thumbPosition = details.localPosition;
               });
             },
+            onPanStart: (details) {
+              setState(() {
+                basePosition = details.localPosition;
+                thumbPosition = details.localPosition;
+              });
+            },
             onPanUpdate: (details) {
               setState(() {
                 final currentPosition = details.localPosition;
@@ -46,17 +52,19 @@ class LeftJoystickState extends State<LeftJoystick> {
                 final distance = positionDifference.distance;
                 final unitVector = (distance!=0)? positionDifference/distance: const Offset(0, 0);
                 thumbPosition = basePosition + unitVector*baseRadius;
-                myFunction(rosant, unitVector);
+                performMovement(rosant, unitVector:unitVector);
               });
             },
             onPanEnd: (details) {
               setState(() {
                 defaultPosition();
+                performMovement(rosant);
               });              
             },
             onTapUp: (details) {
               setState(() {
                 defaultPosition();
+                performMovement(rosant);
               });
             },
           ),

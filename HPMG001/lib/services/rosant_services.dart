@@ -79,12 +79,12 @@ class RosantServices {
       return false;
     }
   }
-  static void performMovement(Rosant rosant, Offset unitVector) {
-    if(rosant.life >= 0){
+  static void performMovement(Rosant rosant, unitVector) {
+    if(rosant.life >= 0) {
       double maxSpeedX = 20;
       double maxSpeedY = 60;
       double speedX = maxSpeedX*unitVector.dx;
-      double speedY = (rosant.canJump) 
+      double speedY = (rosant.canJump)
         ? maxSpeedY*unitVector.dy : rosant.body.linearVelocity.y;
       rosant.body.linearVelocity = Vector2(speedX, speedY);
     }

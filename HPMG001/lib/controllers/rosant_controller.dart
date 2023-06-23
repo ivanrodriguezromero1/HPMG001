@@ -26,7 +26,7 @@ class RosantController {
   static bool checkShootCondition(Rosant rosant, Vector2 touch, ButtonShoot buttonShoot) {
     return RosantServices.checkShootCondition(rosant, touch, buttonShoot);
   }
-  static void performMovement(Rosant rosant, Offset unitVector) {
+  static void performMovement(Rosant rosant, {Offset unitVector = Offset.zero}) {
     return RosantServices.performMovement(rosant, unitVector);
   }
 }

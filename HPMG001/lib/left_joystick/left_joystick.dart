@@ -4,10 +4,10 @@ import '/models/rosant/rosant.dart';
 
 class LeftJoystick extends StatefulWidget {
   final Rosant rosant;
-  final Function myFunction;
+  final Function performMovement;
   const LeftJoystick({
     required this.rosant, 
-    required this.myFunction,
+    required this.performMovement,
     Key? key}): super(key: key);
   @override
   LeftJoystickState createState() => LeftJoystickState();

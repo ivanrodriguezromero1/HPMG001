@@ -32,7 +32,7 @@ class MyAppState extends State<MyApp> {
           if(shouldRenderLeftJoystick)
             LeftJoystick(
               rosant: widget.rosant,
-              myFunction: widget.performMovement
+              performMovement: widget.performMovement
             ),
         ],
     );
