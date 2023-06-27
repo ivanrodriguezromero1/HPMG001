@@ -43,7 +43,7 @@ class MyAppState extends State<MyApp> {
             Joystick(
               rosant: widget.rosant,
               customJoystick: RightCustomJoystick(),
-              joystickGestureDetector: RightJoystickGestureDetector(),
+              joystickGestureDetector: RightJoystickDetector(),
             ),  
         ],
     );

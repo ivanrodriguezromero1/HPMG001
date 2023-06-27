@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hpmg001/joysticks/custom_joystick.dart';
-import 'package:hpmg001/joysticks/joystick_gesture_detector.dart';
+import 'package:hpmg001/joysticks/joystick_detector.dart';
 import 'joystick_state.dart';
 import '/models/rosant/rosant.dart';
 

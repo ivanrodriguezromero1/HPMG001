@@ -9,12 +9,12 @@ abstract class CustomJoystick {
   late Color thumbColor;
   late double baseRadius;
   late double thumbRadius;
-  late Offset basePosition;
-  late Offset thumbPosition;
-  late double baseMinX;
-  late double baseMaxX;
-  late double baseMinY;
-  late double baseMaxY;
+  late Offset baseCenter;
+  late Offset thumbCenter;
+  late double baseCenterMinX;
+  late double baseCenterMaxX;
+  late double baseCenterMinY;
+  late double baseCenterMaxY;
   void defaultPosition();
   Offset calculateBaseOffset();
   Offset calculateThumbOffset();

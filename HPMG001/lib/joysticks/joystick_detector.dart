@@ -3,7 +3,7 @@ import 'package:hpmg001/joysticks/custom_joystick.dart';
 import 'package:hpmg001/models/rosant/rosant.dart';
 
 abstract class JoystickDetector {
-  void onTapDown(TapDownDetails details, CustomJoystick customJoystick);
+  late Offset unitVector;
   void onPanStart(DragStartDetails details, CustomJoystick customJoystick);
   void onPanUpdate(DragUpdateDetails details, CustomJoystick customJoystick, Rosant rosant);
   void onPanEnd(DragEndDetails details, CustomJoystick customJoystick, Rosant rosant);

@@ -79,7 +79,7 @@ class RosantServices {
       return false;
     }
   }
-  static void performMovement(Rosant rosant, unitVector) {
+  static void performMovement(Rosant rosant, Offset unitVector) {
     if(rosant.life >= 0) {
       double maxSpeedX = 20;
       double maxSpeedY = 60;

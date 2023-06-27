@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hpmg001/joysticks/joystick_gesture_detector.dart';
+import 'package:hpmg001/joysticks/joystick_detector.dart';
 import '/joysticks/custom_joystick.dart';
 import '/models/rosant/rosant.dart';
 import 'joystick.dart';
@@ -30,11 +30,6 @@ class JoystickState extends State<Joystick> {
         child: Stack(
           children: [
             GestureDetector(
-              onTapDown: (details) {
-                setState(() {
-                  joystickDetector.onTapDown(details, customJoystick);
-                });
-              },
               onPanStart: (details) {
                 setState(() {
                   joystickDetector.onPanStart(details, customJoystick);
