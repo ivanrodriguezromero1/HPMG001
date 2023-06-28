@@ -14,7 +14,7 @@ class Button extends Entity {
   double get width => _width;
   double get height => _height;
   @override
-  void initializing(){
+  void initializing() {
     _width = ControlsUnits.width;
     _height = ControlsUnits.height;
   }
@@ -44,7 +44,7 @@ class Button extends Entity {
     priority = 16;
     addSprite(1);
   }
-  SpriteComponent createSpriteComponent(double opacity){
+  SpriteComponent createSpriteComponent(double opacity) {
     return SpriteComponent(
       sprite: sprite,
       size: Vector2(_width, _height),
@@ -53,11 +53,11 @@ class Button extends Entity {
       paint: Paint()..color = Color.fromRGBO(255, 255, 255, opacity)
     );
   }
-  void addSprite(double opacity){
+  void addSprite(double opacity) {
     _spriteComponent = createSpriteComponent(opacity);
     add(_spriteComponent);
   }
-  void updateSprite(double opacity){
+  void updateSprite(double opacity) {
     remove(_spriteComponent);
     addSprite(opacity);
   }
