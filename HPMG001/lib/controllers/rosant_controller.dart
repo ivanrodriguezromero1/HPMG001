@@ -29,4 +29,13 @@ class RosantController {
   static void performMovement(Rosant rosant, {Offset unitVector = Offset.zero}) {
     return RosantServices.performMovement(rosant, unitVector);
   }
+  static void setMovingState(Rosant rosant, Offset unitVector) {
+    return RosantServices.setMovingState(rosant, unitVector);
+  }
+  static void setIdleState(Rosant rosant) {
+    return RosantServices.setIdleState(rosant);
+  }
+  static void updateRosantAnimation(Rosant rosant) {
+    return RosantServices.updateRosantAnimation(rosant);
+  }
 }

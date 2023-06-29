@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '/models/category_bits.dart';
 import '/utils/globals.dart';
 import '/models/aliens/alien.dart';
-import '/models/rosant/rosant_direction.dart';
+import '../../utils/character_state.dart';
 import '/models/rosant/rosant.dart';
 import '/models/projectile.dart';
 
@@ -15,14 +15,14 @@ class RosantBullet extends Projectile {
   late double _y;
   late double _width;
   late double _height;
-  late RosantDirection _direction;
+  late CharacterState _state;
   @override
   void initializing(){
     _x = _rosant.body.position.x + _rosant.width/2;
     _y = _rosant.body.position.y + _rosant.height/4;
     _width = 1;
     _height = 0.8;
-    _direction = _rosant.direction;
+    _state = _rosant.state;
     // _rosant.body.setTransform(_rosant.body.position, 0);
   }
   @override
@@ -59,8 +59,8 @@ class RosantBullet extends Projectile {
     Vector2 force;
     double magnitudeX = 6000;
     double magnitudeY = -2000;
-    switch(_direction){
-      case RosantDirection.right:
+    switch(_state){
+      case CharacterState.idleRight:
         force = Vector2(magnitudeX, magnitudeY);
         break;
       default:

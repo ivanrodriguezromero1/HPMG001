@@ -1,12 +1,15 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/material.dart';
+import 'package:hpmg001/controllers/rosant_controller.dart';
+import 'package:hpmg001/utils/horizontal_orientation.dart';
+import 'package:hpmg001/utils/animations.dart';
+import 'package:hpmg001/utils/camera.dart';
+import 'package:hpmg001/utils/globals.dart';
 import '/models/scenery/screen.dart';
-import 'rosant_units.dart';
+import '/models/rosant/rosant_units.dart';
 import '/models/category_bits.dart';
 import '/models/entity.dart';
-import '/utils/globals.dart';
-import '/models/rosant/rosant_direction.dart';
+import '../../utils/character_state.dart';
 
 class Rosant extends Entity {
   late double _width;
@@ -15,12 +18,16 @@ class Rosant extends Entity {
   late double _y;
   late bool goingToWalkRight;
   late bool goingToWalkLeft;
-  late RosantDirection direction;
+  late CharacterState state;
+  late CharacterState stateUpdate;
+  late HorizontalOrientation horizontalOrientation;
   late int life;
   late int numberOfDeadAliens;
   late WeldJoint joint;
   late bool canJump;
   late bool goingToJump;
+  late SpriteAnimationComponent animation;
+  late Map<CharacterState, List<int>> rosantStateRanges;
   double get width => _width;
   double get height => _height;
 
@@ -32,11 +39,19 @@ class Rosant extends Entity {
     _y = Screen.worldSize.y - _height - 0.04;
     goingToWalkRight = false;
     goingToWalkLeft = false;
-    direction = RosantDirection.right;
+    state = CharacterState.idleRight;
+    stateUpdate = CharacterState.idleRight;
+    horizontalOrientation = HorizontalOrientation.right;
     life = 40;
     numberOfDeadAliens = 0;
     canJump = false;
     goingToJump = false;
+    rosantStateRanges = {
+      CharacterState.idleRight: [0, 6],
+      CharacterState.idleLeft: [6, 12],
+      CharacterState.walkRight: [12, 18],
+      CharacterState.walkLeft: [18, 24],
+    };
   }
   @override
   Body createBody(){
@@ -51,11 +66,8 @@ class Rosant extends Entity {
       Vector2(_width , 0),
       Vector2(_width , _height),
       Vector2(0, _height)]);
-    // final shape = CircleShape()..radius = _height/4;
     final fixtureDef = FixtureDef(shape)
-      ..density = 0.4
-      ..friction = 0.1;
-      // ..restitution = 0;
+      ..density = 0.4;
     final filter = Filter();
     filter.categoryBits = CategoryBits.rosant;
     fixtureDef.filter = filter;
@@ -66,43 +78,18 @@ class Rosant extends Entity {
     await super.onLoad();
     renderBody = false;
     priority = 10;
-    // body.linearDamping = 0;
-    // body.gravityOverride = Vector2(0, 0);
-    final sprite = Globals.rosantRightSprite;
-    add(SpriteComponent(
-      sprite: sprite,
-      size: Vector2(_width, _height),
-      position: Vector2(0, 0),
-      anchor: Anchor.topLeft
-    ));
-    // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);
-    // add(SpriteAnimationComponent(
-    //   animation: walkAnimation,
-    //   size: Vector2(2*_width, 2*_height),
-    //   position: Vector2(0,0.1),
-    //   anchor: Anchor.center,
-    //   removeOnFinish: false,
-    // ));
-    // camera.followBodyComponent(this);
+    animation = Animations.generateCharacterAnimations(
+      sprites: Globals.rosantSprites.sublist(0, 6), 
+      width: _width,
+      height: _height);
+    add(animation);
   }
   @override
   void update(double dt) {
     super.update(dt);
-    if(life<=0) {
-      destroyBody();
-    }
-    if(isCameraMoveAllowed())
-    {
-      camera.followVector2(Vector2(body.position.x, Screen.worldSize.y/2));      
-    }
+    if(life<=0) destroyBody();    
+    CameraConfigurator.updateCameraMovement(camera, body);
+    RosantController.updateRosantAnimation(this);
   }
-  bool isInRange(double minX, double maxX) {
-    return (body.position.x >= minX) && (body.position.x <= maxX);
-  }
-  bool isCameraMoveAllowed(){
-    bool isLeftRestricted  = isInRange(0, Screen.worldSize.x/2);
-    bool isRightRestricted = isInRange(1.5*Screen.worldSize.x, 2*Screen.worldSize.x);
-    bool isRestricted = isLeftRestricted || isRightRestricted;
-    return  !isRestricted;
-  }
+  
 }

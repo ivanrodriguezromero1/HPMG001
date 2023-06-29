@@ -14,7 +14,7 @@ import '/controllers/alien_controller.dart';
 import '/models/scenery/screen.dart';
 import '/models/entity.dart';
 import '/utils/globals.dart';
-import '/models/rosant/rosant_direction.dart';
+import '../../utils/character_state.dart';
 
 class Alien extends Entity with ContactCallbacks {
   final Rosant _rosant;

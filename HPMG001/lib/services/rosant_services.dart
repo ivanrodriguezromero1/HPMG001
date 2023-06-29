@@ -1,8 +1,11 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:hpmg001/utils/animations.dart';
+import 'package:hpmg001/utils/globals.dart';
+import 'package:hpmg001/utils/horizontal_orientation.dart';
 import '/models/controls/button_right.dart';
 import '/models/controls/button_shoot.dart';
-import '/models/rosant/rosant_direction.dart';
+import '../utils/character_state.dart';
 import '/models/controls/button_jump.dart';
 import '/models/controls/button_left.dart';
 import '/models/rosant/rosant.dart';
@@ -36,7 +39,7 @@ class RosantServices {
       && touch.y >= bRighty && touch.y <= bRighty + buttonRight.height) {
       rosant.goingToWalkRight = true;
       rosant.goingToWalkLeft = false;
-      rosant.direction = RosantDirection.right;
+      rosant.state = CharacterState.idleRight;
       buttonRight.updateSprite(0.5);
       buttonLeft.updateSprite(1);
       return true;
@@ -44,7 +47,7 @@ class RosantServices {
       && touch.y >= bLefty && touch.y <= bLefty + buttonLeft.height) {
       rosant.goingToWalkLeft = true;
       rosant.goingToWalkRight = false;
-      rosant.direction = RosantDirection.left;
+      rosant.state = CharacterState.idleLeft;
       buttonLeft.updateSprite(0.5);
       buttonRight.updateSprite(1);
       return true;
@@ -87,6 +90,41 @@ class RosantServices {
       double speedY = (rosant.canJump)
         ? maxSpeedY*unitVector.dy : rosant.body.linearVelocity.y;
       rosant.body.linearVelocity = Vector2(speedX, speedY);
+    }
+  }
+  static void setMovingState(Rosant rosant, Offset unitVector) {
+    if(rosant.life >= 0) {
+      double angle = degrees(unitVector.direction);
+      if(angle >= -90 && angle <= 90) {
+        rosant.stateUpdate = CharacterState.walkRight;
+        rosant.horizontalOrientation = HorizontalOrientation.right;
+      } else {
+        rosant.stateUpdate = CharacterState.walkLeft;
+        rosant.horizontalOrientation = HorizontalOrientation.left;
+      }
+    }
+  }
+  static void setIdleState(Rosant rosant) {
+    if(rosant.life >= 0) {
+      final horizontalOrientation = rosant.horizontalOrientation;
+      if(horizontalOrientation == HorizontalOrientation.right) {
+        rosant.stateUpdate = CharacterState.idleRight;
+      } else {
+        rosant.stateUpdate = CharacterState.idleLeft;
+      }
+    }
+  }
+  static void updateRosantAnimation(Rosant rosant) {
+    if (rosant.state != rosant.stateUpdate) {
+      rosant.remove(rosant.animation);
+      final List<int> range = rosant.rosantStateRanges[rosant.stateUpdate] ?? [];
+      rosant.animation = Animations.generateCharacterAnimations(
+        sprites: Globals.rosantSprites.sublist(range[0], range[1]),
+        width: rosant.width,
+        height: rosant.height,
+      );
+      rosant.add(rosant.animation);
+      rosant.state = rosant.stateUpdate;
     }
   }
 }

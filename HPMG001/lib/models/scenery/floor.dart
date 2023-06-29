@@ -38,8 +38,7 @@ class Floor extends Entity with ContactCallbacks {
       Vector2(_width, _height)
       );
     final fixtureDef = FixtureDef(shape)
-      ..density = 1000
-      ..friction =  0.1;
+      ..density = 1000;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
   @override

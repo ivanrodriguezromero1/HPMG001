@@ -9,15 +9,18 @@ class LeftJoystickDetector extends JoystickDetectorImpl {
   void onPanUpdate(DragUpdateDetails details, CustomJoystick customJoystick, Rosant rosant) {
     super.onPanUpdate(details, customJoystick, rosant);
     RosantController.performMovement(rosant, unitVector: unitVector);
+    RosantController.setMovingState(rosant, unitVector);
   }
   @override
   void onPanEnd(DragEndDetails details, CustomJoystick customJoystick, Rosant rosant) {
     super.onPanEnd(details, customJoystick, rosant);
     RosantController.performMovement(rosant);
+    RosantController.setIdleState(rosant);
   }
   @override
   void onTapUp(TapUpDetails details, CustomJoystick customJoystick, Rosant rosant) {
     super.onTapUp(details, customJoystick, rosant);
     RosantController.performMovement(rosant);
+    RosantController.setIdleState(rosant);
   }
 }

@@ -18,6 +18,7 @@ class Globals {
   static late Sprite buttonMacanaSprite;
   static late Sprite rosantRightSprite;
   static late Sprite rosantLeftSprite;
+  static late List<Sprite> rosantSprites;
   static late Sprite controlsSprite;
   static late Sprite stoneSprite;
   static late Sprite alienTypeASprite;

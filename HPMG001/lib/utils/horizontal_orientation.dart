@@ -1,0 +1,4 @@
+enum HorizontalOrientation {
+  right,
+  left
+}
