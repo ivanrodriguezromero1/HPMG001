@@ -48,7 +48,7 @@ class Alien extends Entity with ContactCallbacks {
     isFallen = false;
     elapsedTimeSinceContact = 0;
     isContacted = false;
-    displayAlienLife = DisplayText(x: _width/3, y: -_height/4.5);
+    displayAlienLife = DisplayText(x: 0, y: -_height/4.5);
   }
   @override
   Body createBody() {
@@ -60,8 +60,8 @@ class Alien extends Entity with ContactCallbacks {
     );
     final shape = PolygonShape()..set(
       [Vector2(0, 0),
-      Vector2(_width , 0), 
-      Vector2(_width , _height), 
+      Vector2(_width/4 , 0), 
+      Vector2(_width/4 , _height), 
       Vector2(0, _height)]);
     final fixtureDef = FixtureDef(shape)
       ..density = alienConfiguration.density
@@ -79,14 +79,16 @@ class Alien extends Entity with ContactCallbacks {
     renderBody = false;
     priority = 10;
     body.linearDamping = 10;
+    body.angularDamping = 1000;
     paint = Paint()..color = const Color.fromARGB(255, 136, 0, 255);
-    body.gravityOverride = alienConfiguration.gravity;
+    // body.gravityOverride = alienConfiguration.gravity;
+    body.gravityOverride = Vector2.zero();
     add(displayAlienLife);
     final sprite = alienConfiguration.sprite;
     add(SpriteComponent(
       sprite: sprite,
+      position: Vector2(-3*_width/8, 0),
       size: Vector2(_width, _height),
-      position: Vector2(0, 0),
       anchor: Anchor.topLeft
     ));
     // final walkAnimation = SpriteAnimation.spriteList(ingenierosSprites, stepTime: .08, loop: true);

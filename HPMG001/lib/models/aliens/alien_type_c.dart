@@ -11,7 +11,7 @@ class TypeC implements AlienConfiguration{
   @override
   double y = AlienUnits.height/2;
   @override
-  int life = 80;
+  int life = 40;
   @override
   double density = 50;
   @override

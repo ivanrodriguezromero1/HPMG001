@@ -11,7 +11,7 @@ class TypeB implements AlienConfiguration{
   @override
   late double y;
   @override
-  int life = 100;
+  int life = 50;
   @override
   double density = 100;
   @override

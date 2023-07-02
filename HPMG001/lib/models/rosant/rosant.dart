@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:flutter/widgets.dart';
 import 'package:hpmg001/controllers/rosant_controller.dart';
 import 'package:hpmg001/utils/horizontal_orientation.dart';
 import 'package:hpmg001/utils/animations.dart';
@@ -94,6 +95,7 @@ class Rosant extends Entity {
     if(life<=0) destroyBody();
     CameraConfigurator.updateCameraMovement(camera, body);
     RosantController.updateRosantAnimation(this);
+    RosantController.dontFall(this);
   }
   
 }

@@ -13,7 +13,7 @@ class AlienAddWorld {
     maximumAlienCount = 10;
   }
   void addAliens() {
-    int interval = Random().nextInt(4) + 4;
+    int interval = Random().nextInt(4) + 3;
     Future.delayed(Duration(seconds: interval), () {
       if(_alienCount < maximumAlienCount
         && _rosant.life > 0){

@@ -126,6 +126,13 @@ class RosantServices {
       rosant.state = rosant.stateUpdate;
     }
   }
+  static void dontFall(Rosant rosant) {
+    if (rosant.body.angle.round() != 0) {
+      double targetAngle = 0;
+      double angleDiff = targetAngle - rosant.body.angle;
+      rosant.body.angularVelocity = 3*angleDiff;
+    }
+  }
   static double calculateBulletXPosition(Rosant rosant) {
     double x = rosant.body.position.x + rosant.width / 2;
     if (rosant.horizontalOrientation == HorizontalOrientation.right) {

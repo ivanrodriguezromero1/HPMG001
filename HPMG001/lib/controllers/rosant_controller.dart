@@ -38,6 +38,9 @@ class RosantController {
   static void updateRosantAnimation(Rosant rosant) {
     return RosantServices.updateRosantAnimation(rosant);
   }
+  static void dontFall(Rosant rosant) {
+    return RosantServices.dontFall(rosant);
+  }
   static double calculateBulletXPosition(Rosant rosant) {
     return RosantServices.calculateBulletXPosition(rosant);
   }

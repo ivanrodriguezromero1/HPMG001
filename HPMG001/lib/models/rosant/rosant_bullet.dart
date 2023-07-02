@@ -20,8 +20,8 @@ class RosantBullet extends Projectile {
   late double _height;
   @override
   void initializing(){
-    _width = RosantUnits.width/10;
-    _height = RosantUnits.height/20;
+    _width = RosantUnits.width/8;
+    _height = RosantUnits.height/18;
   }
   @override
   Body createBody(){
