@@ -5,13 +5,13 @@ import '/models/aliens/alien_units.dart';
 
 class TypeA implements AlienConfiguration {
   @override
-  double width = AlienUnits.width;
+  double width = 1.4*AlienUnits.width;
   @override
-  double height = AlienUnits.height;
+  double height = 1.2*AlienUnits.height;
   @override
   late double y;
   @override
-  int life = 5;
+  int life = 50;
   @override
   double density = 100;
   @override

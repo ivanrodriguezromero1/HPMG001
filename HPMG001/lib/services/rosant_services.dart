@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
+import 'package:hpmg001/models/rosant/rosant_bullet.dart';
 import 'package:hpmg001/utils/animations.dart';
 import 'package:hpmg001/utils/globals.dart';
 import 'package:hpmg001/utils/horizontal_orientation.dart';
@@ -83,35 +84,33 @@ class RosantServices {
     }
   }
   static void performMovement(Rosant rosant, Offset unitVector) {
-    if(rosant.life >= 0) {
-      double maxSpeedX = 20;
-      double maxSpeedY = 60;
-      double speedX = maxSpeedX*unitVector.dx;
-      double speedY = (rosant.canJump)
-        ? maxSpeedY*unitVector.dy : rosant.body.linearVelocity.y;
-      rosant.body.linearVelocity = Vector2(speedX, speedY);
-    }
+    if(rosant.renderBody == true) return;
+    if(rosant.life <= 0) return;
+    double maxSpeedX = 20;
+    double maxSpeedY = 60;
+    double speedX = maxSpeedX*unitVector.dx;
+    double speedY = (rosant.canJump)
+      ? maxSpeedY*unitVector.dy : rosant.body.linearVelocity.y;
+    rosant.body.linearVelocity = Vector2(speedX, speedY);    
   }
   static void setMovingState(Rosant rosant, Offset unitVector) {
-    if(rosant.life >= 0) {
-      double angle = degrees(unitVector.direction);
-      if(angle >= -90 && angle <= 90) {
-        rosant.stateUpdate = CharacterState.walkRight;
-        rosant.horizontalOrientation = HorizontalOrientation.right;
-      } else {
-        rosant.stateUpdate = CharacterState.walkLeft;
-        rosant.horizontalOrientation = HorizontalOrientation.left;
-      }
+    if(rosant.life <= 0) return;
+    double angle = degrees(unitVector.direction);
+    if(angle >= -90 && angle <= 90) {
+      rosant.stateUpdate = CharacterState.walkRight;
+      rosant.horizontalOrientation = HorizontalOrientation.right;
+    } else {
+      rosant.stateUpdate = CharacterState.walkLeft;
+      rosant.horizontalOrientation = HorizontalOrientation.left;
     }
   }
   static void setIdleState(Rosant rosant) {
-    if(rosant.life >= 0) {
-      final horizontalOrientation = rosant.horizontalOrientation;
-      if(horizontalOrientation == HorizontalOrientation.right) {
-        rosant.stateUpdate = CharacterState.idleRight;
-      } else {
-        rosant.stateUpdate = CharacterState.idleLeft;
-      }
+    if(rosant.life <= 0) return;
+    final horizontalOrientation = rosant.horizontalOrientation;
+    if(horizontalOrientation == HorizontalOrientation.right) {
+      rosant.stateUpdate = CharacterState.idleRight;
+    } else {
+      rosant.stateUpdate = CharacterState.idleLeft;
     }
   }
   static void updateRosantAnimation(Rosant rosant) {
@@ -138,5 +137,24 @@ class RosantServices {
   }
   static double calculateBulletYPosition(Rosant rosant) {
     return rosant.body.position.y + rosant.height / 1.5;
+  }
+  static void shoot(Rosant rosant, Offset unitVector) {
+    if(rosant.renderBody == true) return;
+    if(rosant.life<=0) return;
+    double x = calculateBulletXPosition(rosant);
+    double y = calculateBulletYPosition(rosant);
+    if(rosant.canShoot) {
+      rosant.canShoot = false;
+      rosant.gameRef.add(
+        RosantBullet(
+          x: x,
+          y: y,
+          unitVector: unitVector,
+        )
+      );
+      Future.delayed(const Duration(milliseconds: 250), () {
+        rosant.canShoot = true;
+      });
+    }
   }
 }

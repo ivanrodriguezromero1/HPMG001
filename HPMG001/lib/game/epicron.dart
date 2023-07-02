@@ -55,7 +55,7 @@ class Epicron extends Forge2DGame {
     CameraConfigurator.configCamera(camera);
     await Assets.instance.loadSprites();
     addMainComponents();
-    alienAddWorld.addAliens(add);
+    alienAddWorld.addAliens();
   }
   @override
   void update(double dt) {

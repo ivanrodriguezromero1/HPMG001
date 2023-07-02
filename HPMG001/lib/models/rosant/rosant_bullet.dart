@@ -2,11 +2,9 @@ import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
 import 'package:flutter/material.dart';
 import 'package:hpmg001/models/rosant/rosant_units.dart';
-import 'package:hpmg001/utils/horizontal_orientation.dart';
 import '/models/category_bits.dart';
 import '/utils/globals.dart';
 import '/models/aliens/alien.dart';
-import '../../utils/character_state.dart';
 import '/models/projectile.dart';
 
 class RosantBullet extends Projectile {
@@ -22,11 +20,8 @@ class RosantBullet extends Projectile {
   late double _height;
   @override
   void initializing(){
-    // _x = _rosant.body.position.x + _rosant.width/2;
-    // _y = _rosant.body.position.y + _rosant.height/4;
     _width = RosantUnits.width/10;
     _height = RosantUnits.height/20;
-    // _rosant.body.setTransform(_rosant.body.position, 0);
   }
   @override
   Body createBody(){

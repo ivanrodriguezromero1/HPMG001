@@ -44,4 +44,7 @@ class RosantController {
   static double calculateBulletYPosition(Rosant rosant) {
     return RosantServices.calculateBulletYPosition(rosant);
   }
+  static void shoot(Rosant rosant, Offset unitVector) {
+    return RosantServices.shoot(rosant, unitVector);
+  }
 }

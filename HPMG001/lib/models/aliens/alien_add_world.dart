@@ -10,29 +10,29 @@ class AlienAddWorld {
   AlienAddWorld({required Rosant rosant})
     :_rosant = rosant {
     _alienCount = 0;
-    maximumAlienCount = 0;
+    maximumAlienCount = 10;
   }
-  void addAliens(Function add) {
+  void addAliens() {
     int interval = Random().nextInt(4) + 4;
     Future.delayed(Duration(seconds: interval), () {
       if(_alienCount < maximumAlienCount
         && _rosant.life > 0){
           Alien alien = Alien(rosant: _rosant);
-          add(alien);
-          // addAlienBullet(alien, add);
+          _rosant.gameRef.add(alien);
+          // addAlienBullet(alien);
           _alienCount++;
-          addAliens(add);
+          addAliens();
         } else {
         _alienCount = 0;
       }
     });
   }
-  void addAlienBullet(Alien alien, Function add) {
+  void addAlienBullet(Alien alien) {
     int interval = Random().nextInt(2) + 2;    
     Future.delayed(Duration(seconds: interval), (){
     if(alien.life > 0 && _rosant.life > 0){
-        add(AlienBullet(alien: alien));
-        addAlienBullet(alien, add);
+        _rosant.gameRef.add(AlienBullet(alien: alien));
+        addAlienBullet(alien);
       }
     });
   }

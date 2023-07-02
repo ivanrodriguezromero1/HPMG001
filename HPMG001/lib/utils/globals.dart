@@ -30,6 +30,6 @@ class Globals {
   static double initialBladeAngularVelocity = radians(360);
   static Vector2 worldLinearVelocity = initialWorldLinearVelocity;
   static double bladeAngularVelocity = initialBladeAngularVelocity;
-  static double horizon = Screen.worldSize.y - ControlsUnits.height;
+  static double horizon = Screen.worldSize.y;
   static Vector2 gravity = Vector2(0, 98.1);
 }

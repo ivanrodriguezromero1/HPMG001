@@ -41,14 +41,14 @@ class Alien extends Entity with ContactCallbacks {
     _width = alienConfiguration.width;
     _height = alienConfiguration.height;
     life = alienConfiguration.life;
-    _x = (Random().nextInt(1) == 0) ? Screen.worldSize.x : 0;
+    _x = (Random().nextInt(2) == 0) ? Screen.worldSize.x : 0;
     _y = alienConfiguration.y;
     direction = AlienDirection.left;
     elapsedTimeSinceFall = 0;
     isFallen = false;
     elapsedTimeSinceContact = 0;
     isContacted = false;
-    displayAlienLife = DisplayText(x: _width/3, y: -_height/3);
+    displayAlienLife = DisplayText(x: _width/3, y: -_height/4.5);
   }
   @override
   Body createBody() {

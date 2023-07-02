@@ -12,6 +12,11 @@ import '/models/entity.dart';
 import '../../utils/character_state.dart';
 
 class Rosant extends Entity {
+  Rosant() {
+    life = 50;
+    canJump = false;
+    canShoot = true;
+  }
   late double _width;
   late double _height;
   late double _x;
@@ -26,6 +31,7 @@ class Rosant extends Entity {
   late WeldJoint joint;
   late bool canJump;
   late bool goingToJump;
+  late bool canShoot;
   late SpriteAnimationComponent animation;
   late Map<CharacterState, List<int>> rosantStateRanges;
   double get width => _width;
@@ -42,9 +48,7 @@ class Rosant extends Entity {
     state = CharacterState.idleRight;
     stateUpdate = CharacterState.idleRight;
     horizontalOrientation = HorizontalOrientation.right;
-    life = 40;
     numberOfDeadAliens = 0;
-    canJump = false;
     goingToJump = false;
     rosantStateRanges = {
       CharacterState.idleRight: [0, 6],
@@ -87,7 +91,7 @@ class Rosant extends Entity {
   @override
   void update(double dt) {
     super.update(dt);
-    if(life<=0) destroyBody();    
+    if(life<=0) destroyBody();
     CameraConfigurator.updateCameraMovement(camera, body);
     RosantController.updateRosantAnimation(this);
   }
