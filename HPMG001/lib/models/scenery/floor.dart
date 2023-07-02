@@ -1,5 +1,6 @@
 import 'package:flame/components.dart';
 import 'package:flame_forge2d/flame_forge2d.dart';
+import 'package:hpmg001/models/category_bits.dart';
 import '/models/controls/controls_units.dart';
 import '/utils/xml.dart';
 import '/models/rosant/rosant.dart';
@@ -39,6 +40,9 @@ class Floor extends Entity with ContactCallbacks {
       );
     final fixtureDef = FixtureDef(shape)
       ..density = 1000;
+    final filter = Filter();
+    filter.categoryBits = CategoryBits.floor;
+    fixtureDef.filter = filter;
     return world.createBody(bodyDef)..createFixture(fixtureDef);
   }
   @override

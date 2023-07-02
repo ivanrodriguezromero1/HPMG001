@@ -10,7 +10,7 @@ class RightCustomJoystick extends CustomJoystickImpl {
   }
   @override
   void defaultPosition() {
-    baseCenter = Offset(width - (baseCenterMinX), 3*height/4);
-    thumbCenter = Offset(width - (baseCenterMinX), 3*height/4);
+    baseCenter = Offset(width - (2*baseCenterMinX), 3*height/4);
+    thumbCenter = Offset(width - (2*baseCenterMinX), 3*height/4);
   }
 }

@@ -29,7 +29,7 @@ class Assets {
       Globals.rosantSprites = await loadSpritesFromAtlas('assets/images/atlas_rosant.png',
         402, 740, 6, 4);
       Globals.controlsSprite = await Sprite.load('controls.png');
-      Globals.stoneSprite = await Sprite.load('stone.png');
+      Globals.bulletSprite = await Sprite.load('bullet.png');
       Globals.alienTypeASprite = await Sprite.load('alien_type_A.png');
       Globals.alienTypeBSprite = await Sprite.load('alien_type_B.png');
       Globals.alienTypeCSprite = await Sprite.load('alien_type_C.png');

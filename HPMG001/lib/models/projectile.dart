@@ -14,11 +14,4 @@ abstract class Projectile extends Entity with ContactCallbacks {
       fixture.filterData = newFilter;
     }
   }
-  @override
-  void update(double dt) {
-    super.update(dt);
-    if(body.position.x < 0 || body.position.x > Screen.worldSize.x){
-      destroyBody();
-    }
-  }
 }

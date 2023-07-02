@@ -20,7 +20,7 @@ class Globals {
   static late Sprite rosantLeftSprite;
   static late List<Sprite> rosantSprites;
   static late Sprite controlsSprite;
-  static late Sprite stoneSprite;
+  static late Sprite bulletSprite;
   static late Sprite alienTypeASprite;
   static late Sprite alienTypeBSprite;
   static late Sprite alienTypeCSprite;

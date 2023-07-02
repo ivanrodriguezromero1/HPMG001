@@ -127,4 +127,16 @@ class RosantServices {
       rosant.state = rosant.stateUpdate;
     }
   }
+  static double calculateBulletXPosition(Rosant rosant) {
+    double x = rosant.body.position.x + rosant.width / 2;
+    if (rosant.horizontalOrientation == HorizontalOrientation.right) {
+      x += rosant.width / 2;
+    } else {
+      x -= rosant.width / 2;
+    }
+    return x;
+  }
+  static double calculateBulletYPosition(Rosant rosant) {
+    return rosant.body.position.y + rosant.height / 1.5;
+  }
 }

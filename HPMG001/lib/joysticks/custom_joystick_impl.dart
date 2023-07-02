@@ -15,9 +15,9 @@ class CustomJoystickImpl extends CustomJoystick {
     baseCenter = Offset.zero;
     thumbCenter = Offset.zero;
     baseCenterMinX = baseRadius + thumbRadius;
-    baseCenterMaxX = width - (baseRadius + thumbRadius);
+    baseCenterMaxX = width - baseCenterMinX;
     baseCenterMinY = baseRadius + thumbRadius;
-    baseCenterMaxY = height - (baseRadius + thumbRadius);
+    baseCenterMaxY = height - baseCenterMinY;
   }
   @override
   void defaultPosition() {
